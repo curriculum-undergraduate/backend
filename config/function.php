@@ -77,7 +77,7 @@ function register_user()
                                else
                                    {
                                        $hash = md5($password);
-                                       $sql = "INSERT INTO user (user_id, role_id, user_batch_id, user_email, user_password, user_full_name, user_username, user_dob, user_address, user_gender, user_phone, user_profile_picture, user_social_media) VALUES (NULL, '3', '1', '$email', '$hash', '', '$username', NULL, NULL, NULL, NULL, NULL, NULL)";
+                                       $sql = "INSERT INTO user (user_id, role_id, user_email, user_password, user_full_name, user_username, user_dob, user_address, user_gender, user_phone, user_profile_picture, user_social_media) VALUES (NULL, '3', '$email', '$hash', '', '$username', NULL, NULL, NULL, NULL, NULL, NULL)";
                                        $data = mysqli_query($conn, $sql);
 
                                        if($data)
@@ -104,10 +104,15 @@ function login_user()
     global $conn;
     if(isset($_POST['btn_login']) || $_SERVER['REQUEST_METHOD']=='POST')
     {
-        $username = mysqli_real_escape_string($conn,$_POST['username']);
+        $email = stripslashes($_POST['email']);
+        $username = stripslashes($_POST['username']);
+        $password = stripslashes($_POST['password']);
+
+        $email = mysqli_real_escape_string($conn,$_POST['email']);
+        $email = mysqli_real_escape_string($conn,$_POST['username']);
         $password = mysqli_real_escape_string($conn,$_POST['password']);
 
-        if(empty($username)  || empty($password) )
+        if(empty($email)  || empty($password) )
         {
             $error = "<div> Please Fill in the Blanks</div>";
             set_message($error);
