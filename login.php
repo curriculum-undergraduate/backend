@@ -67,7 +67,7 @@ login_user();
                                     </div>
                                 </div>
                                 <div class="col text-center">
-                                    <button type="submit" name="submit" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100">
+                                    <button type="submit" name="btn_login" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100">
                                         Login
                                     </button>
                                 </div>
