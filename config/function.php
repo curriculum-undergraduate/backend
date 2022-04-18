@@ -1,6 +1,12 @@
 <?php
-session_start();
+// menghubungkan dengan file db.php 
 require_once 'db.php';
+
+// inisiasi session
+session_start();
+
+$messages = '';
+$validate = '';
 
 // Set Session Message
 function set_message($msg)
@@ -23,66 +29,75 @@ function display_message()
 }
 
 
-function register_user()
+function userRegister()
 {
-    global $conn;
-    if (isset($_POST['btn_register']) || $_SERVER['REQUEST_METHOD'] == 'POST') {
-        $username = stripslashes($_POST['username']);
-        $email = stripslashes($_POST['email']);
-        $password = stripslashes($_POST['password']);
-        $confirm_password = stripslashes($_POST['confirm_password']);
+    global $conn, $messages;
 
+    if (isset($_POST['register'])) {
 
-        $username = mysqli_real_escape_string($conn, $_POST['username']);
-        $email = mysqli_real_escape_string($conn, $_POST['email']);
-        $password = mysqli_real_escape_string($conn, $_POST['password']);
-        $confirm_password = mysqli_real_escape_string($conn, $_POST['confirm_password']);
+        // Mengamankan dari XSS
+        $username = htmlspecialchars($_POST['username']);
+        $email = htmlspecialchars($_POST['email']);
+        $password = htmlspecialchars($_POST['password']);
 
-        if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-            $error = "<div>Please Fill in the Blanks</div>";
-            set_message($error);
-        }
-        else {
-            if ($password != $confirm_password) {
-                $error = "<div> Password Not Matched.</div>";
-                set_message($error);
+        // Menghilangkan backslash
+        $username = stripslashes($username);
+        $email = stripslashes($email);
+        $password = stripslashes($password);
+
+        // Mengamankan dari SQL Injection
+        $username = mysqli_real_escape_string($conn, $username);
+        $email = mysqli_real_escape_string($conn, $email);
+        $password = mysqli_real_escape_string($conn, $password);
+
+        // Mengecek apakah form yang diinput kosong atau tidak
+        if (!empty(trim($username)) && !empty(trim($email)) && !empty(trim($password))) {
+
+            // select data berdasarkan input dari user
+            $query = "SELECT * FROM user WHERE user_username='$username' OR user_email='$email'";
+            $result = mysqli_query($conn, $query);
+            $rows = mysqli_num_rows($result);
+
+            // Memeriksa apakah email dan username sudah terdaftar atau belum
+            $length = 0;
+            if ($rows != $length) {
+                $messages = "Akun dengan username/email sudah ada";
             }
             else {
-                $query = "SELECT * FROM user WHERE user_username='$username'";
-                $result = mysqli_query($conn, $query);
 
-                if (mysqli_num_rows($result)) {
-                    $error = "<div> User Name Already Exists.</div>";
-                    set_message($error);
+                // Mengecek lenth password harus lebih dari 8 karakter
+                $length = 8;
+                if (strlen($password) < $length) {
+                    $messages = "Password harus minimal 8 karakter";
                 }
                 else {
-                    $query = "SELECT * FROM user WHERE user_email='$email'";
+                    // Menambahkan user/akun baru
+                    $hash = sha1($password);
+                    $role_id = 3;
+                    $status_id = 0;
+                    $query = "INSERT INTO user (user_id, role_id, status_id, user_email, user_password, user_full_name, user_username, user_dob, user_address, user_gender, user_phone, user_profile_picture) VALUES (NULL, $role_id, $status_id, '$email', '$hash', '', '$username', NULL, NULL, NULL, NULL, NULL)";
                     $result = mysqli_query($conn, $query);
 
-                    if (mysqli_num_rows($result)) {
-                        $error = "<div> Email Already Exists.</div>";
-                        set_message($error);
+                    // Jika akun berhasil didaftarkan, maka system akan mengalihkan ke Login Page
+                    if ($result) {
+                        $messages = "Akun berhasil terdaftar!";
+                        header('Location: login.php');
                     }
                     else {
-                        $hash = md5($password);
-                        $sql = "INSERT INTO user (user_id, role_id, user_email, user_password, user_full_name, user_username, user_dob, user_address, user_gender, user_phone, user_profile_picture) VALUES (NULL, '3', '$email', '$hash', '', '$username', NULL, NULL, NULL, NULL, NULL)";
-                        $data = mysqli_query($conn, $sql);
-
-                        if ($data) {
-                            //    $error = "<div> Record Successfully Registered : ) </div>";
-                            //    set_message($error);
-                            header('Location: login.php');
-                        }
-                        else {
-                            $error = "<div> Something is Wrong; </div>";
-                            echo mysqli_error($conn);
-                            set_message($error);
-                        }
+                        $messages = mysqli_error($conn);
                     }
                 }
+
             }
+
         }
+        else {
+            $error = "Form wajib diisi ya!";
+        }
+
+
     }
+
 }
 
 function login_user()

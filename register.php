@@ -1,7 +1,7 @@
 <?php 
 require_once 'inc/header.php';
 require_once 'config/function.php';
-register_user();
+userRegister();
 
 ?>
 
@@ -24,6 +24,12 @@ register_user();
                                 <span id="signUp" role="button"><a href="login.php" class="text-light"
                                         style="text-decoration: none"><b>Sign In</b></a></span>
                             </p>
+                            
+                            <?php if ($messages != '') { ?>
+                                <div class="alert alert-info">
+                                    <?= $messages ?>
+                                </div>
+                            <?php } ?>
                             <!-- form login section -->
                             <form method="POST" class="mt-5">
                                 <div class="mb-3">
@@ -61,7 +67,7 @@ register_user();
                                 <div class="pt-3" style="margin-bottom: -10px">
                                     <div class="row mb-3">
                                         <div class="form-check">
-                                            <input type="checkbox" class="form-check-input" id="dropdownCheck" />
+                                            <input type="checkbox" class="form-check-input" id="dropdownCheck" required />
                                             <label class="form-check-label" for="dropdownCheck">
                                                 By signing in, I agree to the CU Privacy Statement and
                                                 Terms of Service.
@@ -70,12 +76,12 @@ register_user();
                                     </div>
                                 </div>
                                 <div class="col text-center">
-                                    <button type="submit" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100">
+                                    <button type="submit" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100" name='register'>
                                         Register
                                     </button>
                                 </div>
                             </form>
-                            <div class="separator mt-5 text-white">
+                            <!-- <div class="separator mt-5 text-white">
                                 Or Sign up with social platforms
                             </div>
                             <div class="row text-center" style="color: #ffffff">
@@ -95,7 +101,7 @@ register_user();
                                     <a href="" class="btn btn-outline-light border-2 rounded-thumbnail"><i
                                             class="bi bi-google fs-5"></i></a>
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
