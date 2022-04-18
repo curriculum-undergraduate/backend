@@ -1,7 +1,12 @@
 <?php 
 require_once 'inc/header.php';
 require_once 'config/function.php';
-login_user();
+// login_user();
+loginUser();
+
+session_start();
+// Logout
+session_destroy();
 ?>
 
 <div>
@@ -25,11 +30,13 @@ login_user();
                                 <span id="signUp" role="button"><a href="register.php" class="text-light"
                                         style="text-decoration: none"><b>Sign Up</b></a></span>
                             </p>
-                            <?php if(isset($_SESSION['MESSAGE'])) { ?>
+
+                            <?php if ($messages != '') { ?>
                                 <div class="alert alert-info">
-                                    <?= display_message(); ?>
+                                    <?= $messages ?>
                                 </div>
                             <?php } ?>
+
                             <!-- form login section -->
                             <form method="post" class="mt-5">
                                 <div class="mb-3">
@@ -67,32 +74,11 @@ login_user();
                                     </div>
                                 </div>
                                 <div class="col text-center">
-                                    <button type="submit" name="btn_login" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100">
+                                    <button type="submit" name="submit" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100">
                                         Login
                                     </button>
                                 </div>
                             </form>
-                            <div class="separator mt-5 text-white">
-                                Or Sign in with social platforms
-                            </div>
-                            <div class="row text-center">
-                                <div class="col mt-3">
-                                    <a href="" class="btn btn-outline-light border-2 rounded-thumbnail"><i
-                                            class="bi bi-facebook fs-5"></i></a>
-                                </div>
-                                <div class="col mt-3">
-                                    <a href="" class="btn btn-outline-light border-2 rounded-thumbnail"><i
-                                            class="bi bi-linkedin fs-5"></i></a>
-                                </div>
-                                <div class="col mt-3">
-                                    <a href="" class="btn btn-outline-light border-2 rounded-thumbnail"><i
-                                            class="bi bi-twitter fs-5"></i></a>
-                                </div>
-                                <div class="col my-3">
-                                    <a href="" class="btn btn-outline-light border-2 rounded-thumbnail"><i
-                                            class="bi bi-google fs-5"></i></a>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>

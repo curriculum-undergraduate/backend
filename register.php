@@ -30,6 +30,7 @@ userRegister();
                                     <?= $messages ?>
                                 </div>
                             <?php } ?>
+                            
                             <!-- form login section -->
                             <form method="POST" class="mt-5">
                                 <div class="mb-3">
@@ -76,7 +77,7 @@ userRegister();
                                     </div>
                                 </div>
                                 <div class="col text-center">
-                                    <button type="submit" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100" name='register'>
+                                    <button type="submit" class="btn btn-outline-light btn-lg rounded-pill mt-4 w-100" name='submit'>
                                         Register
                                     </button>
                                 </div>

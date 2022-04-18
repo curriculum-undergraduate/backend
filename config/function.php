@@ -33,7 +33,7 @@ function userRegister()
 {
     global $conn, $messages;
 
-    if (isset($_POST['register'])) {
+    if (isset($_POST['submit'])) {
 
         // Mengamankan dari XSS
         $username = htmlspecialchars($_POST['username']);
@@ -92,9 +92,52 @@ function userRegister()
 
         }
         else {
-            $error = "Form wajib diisi ya!";
+            $messages = "Form wajib diisi ya!";
         }
 
+
+    }
+
+}
+
+function loginUser()
+{
+
+    global $conn, $messages;
+    // if (isset($_SESSION['email'])) header('Location: index.php');
+
+    if (isset($_POST['submit'])) {
+
+        // menghilangkan backslash
+        $email = stripslashes($_POST['email']);
+        $password = sha1(stripslashes($_POST['password']));
+
+        // Cara sederhana secure from sql_injection
+        $email = mysqli_real_escape_string($conn, $email);
+        $password = mysqli_real_escape_string($conn, $password);
+
+        // Mengecek apakah form yang diinput user kosong atau tidak
+        if (!empty(trim($email)) && !empty(trim($password))) {
+
+            // select data berdasarkan email di database
+            $query = "SELECT * FROM user WHERE user_email = '$email' and user_password = '$password'";
+            $result = mysqli_query($conn, $query);
+            $data = mysqli_fetch_assoc($result);
+
+            // Mengecek credentials akun yang diinput user 
+            $hash = $data['user_password'];
+            if ($password == $hash) {
+                $_SESSION['EMAIL'] = $email;
+                header('Location: index.php');
+            }
+            else {
+                $messages = 'Email atau password salah, silahkan periksa kembali.';
+            }
+
+        }
+        else {
+            $messages = "Form wajib diisi ya!";
+        }
 
     }
 

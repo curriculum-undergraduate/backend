@@ -3,14 +3,14 @@
     require_once 'config/function.php';
     require_once 'config/db.php';
 
-    if(!isset($_SESSION['ID']) && !isset($_SESSION['EMAIL']))
+    if(!isset($_SESSION['EMAIL']))
     {
-        header("location: ./login.php");
+        header("Location: login.php");
     }
 
-    $id = $_SESSION['ID'];
-    $query = "SELECT * FROM user WHERE user_id='$id'";
-    $result = mysqli_query($conn,$query);
+    $email = $_SESSION['EMAIL'];
+    $query = "SELECT * FROM user WHERE user_email='$email'";
+    $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
 ?>
