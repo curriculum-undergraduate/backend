@@ -22,6 +22,12 @@ $results = mysqli_query($conn, $query);
       </label>
       <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="InputUsername"  name="username" placeholder="Username">
     </div>
+    <div class="mb-4">
+      <label class="block text-gray-700 text-sm font-bold mb-2" for="InputEmail">
+        Email
+      </label>
+      <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="InputEmail"  name="email"  placeholder="Email">
+    </div>
     <div class="mb-6">
       <label class="block text-gray-700 text-sm font-bold mb-2" for="InputPassword">
         Password

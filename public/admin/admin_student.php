@@ -54,23 +54,26 @@ $results = mysqli_query($conn, $query);
             <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                        <tr>
-                            <th scope="col" class="px-7 py-3">
+                    <tr>
+                            <th scope="col" class="px-9 py-3">
                                 ID
                             </th>
-                            <th scope="col" class="px-7 py-3">
+                            <th scope="col" class="px-9 py-3">
                                 Email
                             </th>
-                            <th scope="col" class="px-7 py-3">
+                            <th scope="col" class="px-9 py-3">
                                 Username
                             </th>
-                            <th scope="col" class="px-7 py-3">
-                                Fullname
+                            <th scope="col" class="px-9 py-3">
+                                Firstname
                             </th>
-                            <th scope="col" class="px-7 py-3">
+                            <th scope="col" class="px-9 py-3">
+                                Lastname
+                            </th>
+                            <th scope="col" class="px-9 py-3">
                                 Role
                             </th>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-9 py-3">
                                 <span class="sr-only">Edit</span>
                                 <span class="sr-only">Delete</span>
                             </th>
@@ -82,12 +85,14 @@ $results = mysqli_query($conn, $query);
                                     <?php $rows_id = 1; ?>
                                     <?php foreach ($results as $result) { ?>
                                         <?php if ($result['role_id'] == 3 ) : ?>
-                                            <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-black"><?= $rows_id ?></td>
-                                            <td class="px-8 py-4"><?= $result['user_email'] ?></td>
-                                            <td class="px-8 py-4"><?= $result['user_username'] ?></td>
-                                            <td class="px-8 py-4"><?= $result['user_full_name'] ?></td>
-                                            <td class="px-8 py-4"><?= $result['role_id'] ?></td>
-                                            <td class="px-8 py-4"><a href="#">
+                                            <tr>
+                                            <td scope="row" class="px-9 py-4 font-medium text-gray-900 dark:text-grey whitespace-nowrap"><?= $rows_id ?></td>
+                                            <td class="px-9 py-4"><?= $result['user_email'] ?></td>
+                                            <td class="px-9 py-4"><?= $result['user_username'] ?></td>
+                                            <td class="px-9 py-4"><?= $result['user_first_name'] ?></td>
+                                            <td class="px-9 py-4"><?= $result['user_last_name'] ?></td>
+                                            <td class="px-9 py-4"><?= $result['role_id'] ?></td>
+                                            <td class="px-9 py-4"><a href="#">
                                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
                                         </tr>

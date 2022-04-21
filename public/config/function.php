@@ -185,10 +185,12 @@ function add_user_admin()
         $confirm_password = stripslashes($_POST['confirm_password']);
         $role_id = stripslashes($_POST['role_id']);
 
+
         $username = mysqli_real_escape_string($conn, $_POST['username']);
         $email = mysqli_real_escape_string($conn, $_POST['email']);
         $password = mysqli_real_escape_string($conn, $_POST['password']);
         $role_id = mysqli_real_escape_string($conn, $_POST['role_id']);
+
 
         if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
             $error = "<div>Please Fill in the Blanks</div>";
@@ -217,7 +219,7 @@ function add_user_admin()
                     }
                     else {
                         $hash = md5($password);
-                        $sql = "INSERT INTO user (user_id, role_id, user_email, user_password, user_full_name, user_username, user_dob, user_address, user_gender, user_phone, user_profile_picture) VALUES (NULL, $role_id, '$email', '$hash', '', '$username', NULL, NULL, NULL, NULL, NULL)";
+                        $sql = "INSERT INTO user (user_id, role_id, status_id, user_email, user_password, user_username, user_first_name, user_last_name, user_dob, user_address, user_gender, user_phone, user_profile_picture) VALUES (NULL, '$role_id', '1', '$email', '$hash', '$username', NULL, NULL, NULL, NULL, NULL, NULL, NULL)";
                         $data = mysqli_query($conn, $sql);
 
                         if ($data) {
