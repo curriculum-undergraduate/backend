@@ -1,6 +1,7 @@
 <?php
 session_start();
 
+
 require_once '../config/db.php';
 require_once '../inc/header.php';
 require_once '../inc/sidebar.php';
@@ -32,15 +33,15 @@ $results = mysqli_query($conn, $query);
 
             <!-- Topic Title -->
             <div>
-                <p class="text-4xl text-dark-green font-semibold">List All User With Roles</p>
+                <p class="text-4xl text-dark-green font-semibold">List All Mentor</p>
             </div>
 
             <!-- Mentor -->
             <div class="md:flex items-center gap-x-4 w-full bg-white py-4 px-10 rounded-xl">
-            <a href="admin_adduser.php"><svg class="w-6 h-6 md:place-items-center" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg></a>
+                <img class="w-14" src="../Img/icons/default_profile.svg" alt="Profile Image">
                 <div class="">
-                    <p class="text-dark-green text-base font-semibold">Tambahkan User</p>
-                    <p class="text-light-green">dengan Roles yang bisa dipilih</p>
+                    <p class="text-dark-green text-base font-semibold">Admin Name | Admin Code</p>
+                    <p class="text-light-green">Admin Specialization</p>
                 </div>
             </div>
 
@@ -54,19 +55,19 @@ $results = mysqli_query($conn, $query);
                 <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-7 py-3">
                                 ID
                             </th>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-7 py-3">
                                 Email
                             </th>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-7 py-3">
                                 Username
                             </th>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-7 py-3">
                                 Fullname
                             </th>
-                            <th scope="col" class="px-8 py-3">
+                            <th scope="col" class="px-7 py-3">
                                 Role
                             </th>
                             <th scope="col" class="px-8 py-3">
@@ -80,17 +81,18 @@ $results = mysqli_query($conn, $query);
                         <tbody>
                                     <?php $rows_id = 1; ?>
                                     <?php foreach ($results as $result) { ?>
-                                        <tr>
+                                        <?php if ($result['role_id'] == 2 ) : ?>
                                             <td scope="row" class="px-6 py-4 font-medium text-gray-900 dark:text-black"><?= $rows_id ?></td>
                                             <td class="px-8 py-4"><?= $result['user_email'] ?></td>
                                             <td class="px-8 py-4"><?= $result['user_username'] ?></td>
                                             <td class="px-8 py-4"><?= $result['user_full_name'] ?></td>
                                             <td class="px-8 py-4"><?= $result['role_id'] ?></td>
                                             <td class="px-8 py-4"><a href="#">
-                                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline ">Edit</a>
+                                                <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
                                                 <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
                                         </tr>
                                         <?php $rows_id++ ?>
+                                        <?php endif; ?>
                                         <?php } ?>
 
                                         <?php endif; ?>
