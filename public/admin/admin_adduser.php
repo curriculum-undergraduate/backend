@@ -14,6 +14,8 @@ $query = "SELECT * FROM user";
 $results = mysqli_query($conn, $query);
 
 ?>
+<body>
+
 <div class="w-full max-w-xs mx-auto">
   <form class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4" action="" method="POST">
     <div class="mb-4">
@@ -45,8 +47,8 @@ $results = mysqli_query($conn, $query);
             <label for="role_id">Select user Role</label>
                 <select class="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline" name="role_id" id="role_id">
                     <option value="1">Admin</option>
-                    <option value="2">Editor</option>
-                    <option value="3">User only</option>
+                    <option value="2">Mentor</option>
+                    <option value="3">Student</option>
                 </select>
             </div>
     <div class="flex items-center justify-between">
@@ -55,7 +57,5 @@ $results = mysqli_query($conn, $query);
       </button>
     </div>
   </form>
-  <p class="text-center text-gray-500 text-xs">
-    &copy;2020 Acme Corp. All rights reserved.
-  </p>
 </div>
+</body>

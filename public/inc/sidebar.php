@@ -1,5 +1,5 @@
 <body>
-<div class="flex items-center">
+<div class="flex items-center bg-cgray">
         <!-- Left side (Sidebar) -->
         <div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
             <!-- Top nav -->
