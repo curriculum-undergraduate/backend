@@ -1,22 +1,21 @@
 <?php
 
-
 class Database
 {
 
     private static $INSTANCE = null;
     private $mysqli,
-    // $HOST = "localhost",
-    // $USER = "admin",
-    // $PASS = "rahasia",
-    // $DATABASE = "lumintu_db",
-    // $PORT = "3306";
-    
-    $HOST = "172.17.0.2",
-    $USER = "root",
-    $PASS = "salupa",
+    $HOST = "localhost",
+    $USER = "admin",
+    $PASS = "rahasia",
     $DATABASE = "lumintu_db",
     $PORT = "3306";
+    
+    // $HOST = "172.17.0.2",
+    // $USER = "root",
+    // $PASS = "salupa",
+    // $DATABASE = "lumintu_db",
+    // $PORT = "3306";
 
     public function __construct()
     {

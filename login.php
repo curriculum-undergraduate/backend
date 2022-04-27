@@ -32,7 +32,11 @@ if ( isset($_POST['submit']) ) {
 
                     Session::flash('profile', 'Selamat! anda berhasil login');
                     Session::set('email', $_POST['email']);
-                    Redirect::to('profile');
+                    if (!$user->is_admin(Session::get('email'))) {
+                        Redirect::to('profile');
+                    } else {
+                        Redirect::to('admin');
+                    }
 
                 } else {
 
@@ -64,9 +68,9 @@ require_once "templates/header.php";
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:mt-8 lg:flex-1">
             <h2 class="text-4xl font-bold text-white tracking-wider sm:text-4xl">
-                Curriculum Undergaduate
+                GradIT Course
             </h2>
-            <h3 class="text-3xl font-semibold text-white tracking-wider sm:text-3xl mt-3">
+            <h3 class="text-2xl font-semibold text-white tracking-wider mt-3">
                 Welcome Back!
             </h3>
 
@@ -134,7 +138,7 @@ require_once "templates/header.php";
                         </div>
 
                         <div class="text-sm">
-                            <a href="password_reset.php" class="font-medium text-white hover:underline"> Forgot your
+                            <a href="password_reset.php" class="font-medium text-white hover:underline"> Forgot
                                 password? </a>
                         </div>
                     </div>

@@ -78,9 +78,9 @@ require_once "templates/header.php";
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:flex-1">
         <h2 class="text-4xl font-bold  tracking-wider sm:text-4xl">
-                Curriculum Undergaduate
+            GradIT Course
         </h2>
-        <h3 class="text-3xl font-semibold tracking-wider sm:text-3xl mt-3">
+        <h3 class="text-2xl font-semibold tracking-wider mt-3">
             Register Here
         </h3> 
 
