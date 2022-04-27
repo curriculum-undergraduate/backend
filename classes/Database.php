@@ -6,11 +6,12 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    // $HOST = "103.129.221.147",
+    // $HOST = "localhost",
     // $USER = "admin",
     // $PASS = "rahasia",
     // $DATABASE = "lumintu_db",
     // $PORT = "3306";
+    
     $HOST = "172.17.0.2",
     $USER = "root",
     $PASS = "salupa",
@@ -91,18 +92,29 @@ class Database
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
 
-    public function get_info($table, $column, $value) {
+    public function get_info($table, $column = '', $value = '') {
         if ( !is_int($value) ) {
             $value = "'" . $value . "'";
         }
             
+        if ( $column != '' ) {
+            $query = "SELECT * FROM $table WHERE $column = $value";
+            $result = $this->mysqli->query($query);
+    
+            while($row = $result->fetch_assoc()) {
+                return $row;
+            }
+        } else {
+            $query = "SELECT * FROM $table";
+            $result = $this->mysqli->query($query);
 
-        $query = "SELECT * FROM $table WHERE $column = $value";
-        $result = $this->mysqli->query($query);
+            while($row = $result->fetch_assoc()) {
+                $results[] = $row;
+            }
 
-        while($row = $result->fetch_assoc()) {
-            return $row;
+            return $results;
         }
+
     }
 
     public function run_query($query, $message) {

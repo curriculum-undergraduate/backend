@@ -134,7 +134,7 @@ require_once "templates/header.php";
                         </div>
 
                         <div class="text-sm">
-                            <a href="ForgotPassword.php" class="font-medium text-white hover:underline"> Forgot your
+                            <a href="password_reset.php" class="font-medium text-white hover:underline"> Forgot your
                                 password? </a>
                         </div>
                     </div>

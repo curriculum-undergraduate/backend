@@ -68,4 +68,11 @@ class User
         else return false;
 
     }
+
+    public function get_users() {
+        
+        return $this->_db->get_info('user');
+
+    }
+    
 }

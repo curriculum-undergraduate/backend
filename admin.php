@@ -9,9 +9,11 @@ if (!$user->is_loggedIn()) {
 
 
 if (!$user->is_admin(Session::get('email'))) {
-    Session::flash('profile', 'Halaman ini khusus Admin');
-    Redirect::to('profile');
+    Session::flash('login', 'Halaman ini khusus Admin');
+    Redirect::to('login');
 }
+
+$users = $user->get_users();
 
 ?>
 
@@ -85,8 +87,8 @@ if (!$user->is_admin(Session::get('email'))) {
             <div class="flex flex-col gap-y-6">
                 <!-- Header -->
                 <div class="flex items-center space-x-4 px-2">
-                    <img src="../assets/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
-                    <img class="w-[150px] logo-gradit" src="../assets/logo/logo_primary.svg" alt="Logo In Career">
+                    <img src="assets/icons/toggle_icons.svg" alt="toggle_dashboard" class="w-8 cursor-pointer" id="btnToggle">
+                    <img class="w-[150px] logo-gradit" src="assets/logo/logo_primary.svg" alt="Logo In Career">
                 </div>
 
                 <hr class="border-[1px] border-opacity-50 border-[#93BFC1]">
@@ -97,7 +99,7 @@ if (!$user->is_admin(Session::get('email'))) {
                         <li>
                             <a href="./admin_index.php"
                                 class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                                <img class="w-5" src="../assets/icons/home_icon.svg" alt="Dashboard Icon">
+                                <img class="w-5" src="assets/icons/home_icon.svg" alt="Dashboard Icon">
                                 <p class="font-semibold">Dashboard</p>
                             </a>
                         </li>
@@ -105,7 +107,7 @@ if (!$user->is_admin(Session::get('email'))) {
                             <button type="button"
                                 class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white"
                                 aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                                <img class="w-5" src="../assets/icons/consult_icon.svg" alt="Consult Icon">
+                                <img class="w-5" src="assets/icons/consult_icon.svg" alt="Consult Icon">
                                 <p class="font-semibold">List User</p>
                                 <svg sidebar-toggle-item class=" w-6 h-6 px-1  " fill="currentColor" viewBox="0 0 20 20"
                                     xmlns="http://www.w3.org/2000/svg">
@@ -140,14 +142,14 @@ if (!$user->is_admin(Session::get('email'))) {
                     <li>
                         <a href="#"
                             class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../assets/icons/help_icon.svg" alt="Help Icon">
+                            <img class="w-5" src="assets/icons/help_icon.svg" alt="Help Icon">
                             <p class="font-semibold">Help</p>
                         </a>
                     </li>
                     <li>
-                        <a href="../logout.php"
+                        <a href="logout.php"
                             class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                            <img class="w-5" src="../assets/icons/logout_icon.svg" alt="Log out Icon">
+                            <img class="w-5" src="assets/icons/logout_icon.svg" alt="Log out Icon">
                             <p class="font-semibold">Log out</p>
                         </a>
                     </li>
@@ -160,7 +162,7 @@ if (!$user->is_admin(Session::get('email'))) {
         <div class="bg-gray-100 w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
-                <img class="w-10" src="../assets/icons/default_profile.svg" alt="Profile Image">
+                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
                 <p class="text-dark-green font-semibold">Admin Name</p>
             </div>
 
@@ -223,17 +225,21 @@ if (!$user->is_admin(Session::get('email'))) {
                     </thead>
                     <tbody>
                         <tbody>
-                                <tr>
-                                    <td scope="row" class="px-9 py-4 font-medium text-gray-900 dark:text-grey whitespace-nowrap"></td>
-                                    <td class="px-9 py-4"></td>
-                                    <td class="px-9 py-4"></td>
-                                    <td class="px-9 py-4"></td>
-                                    <td class="px-9 py-4"></td>
-                                    <td class="px-9 py-4"></td>
-                                    <td class="px-9 py-4"><a href="#">
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                                        <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
-                                </tr>
+                                <?php $row = 1 ?>
+                                <?php foreach ($users as $_user): ?>
+                                    <tr>
+                                        <td scope="row" class="px-9 py-4 font-medium text-gray-900 dark:text-grey whitespace-nowrap"><?php echo $row ?></td>
+                                        <td class="px-9 py-4"><?php echo $_user['user_email'] ?></td>
+                                        <td class="px-9 py-4"><?php echo $_user['user_username'] ?></td>
+                                        <td class="px-9 py-4"><?php echo $_user['user_first_name'] ?></td>
+                                        <td class="px-9 py-4"><?php echo $_user['user_last_name'] ?></td>
+                                        <td class="px-9 py-4"></td>
+                                        <td class="px-9 py-4"><a href="#">
+                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                                            <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                                    </tr>
+                                    <?php $row++ ?>
+                                <?php endforeach; ?>
                         </tbody>
                 </table>
             </div>

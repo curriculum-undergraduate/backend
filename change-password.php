@@ -58,11 +58,13 @@ require_once "templates/header.php";
 
 ?>
 
+<!-- File Custom CSS -->
+<link href="assets/css/custom-auth.css" rel="stylesheet" />
 </head>
 
 <body>
     <div class="flex items-center justify-center min-h-screen px-10">
-        <div class="px-8 py-8 text-left bg-gray-200 rounded-lg md:w-1/2 lg:w-1/2">
+        <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <h3 class="text-2xl font-bold text-center text-black">Change Password</h3>
 
             <?php if ( !empty($errors) ) { ?>
