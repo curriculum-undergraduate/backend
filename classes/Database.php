@@ -6,9 +6,14 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    $HOST = "103.129.221.147",
-    $USER = "admin",
-    $PASS = "rahasia",
+    // $HOST = "103.129.221.147",
+    // $USER = "admin",
+    // $PASS = "rahasia",
+    // $DATABASE = "lumintu_db",
+    // $PORT = "3306";
+    $HOST = "172.17.0.2",
+    $USER = "root",
+    $PASS = "salupa",
     $DATABASE = "lumintu_db",
     $PORT = "3306";
 
@@ -58,6 +63,32 @@ class Database
         $query = "INSERT INTO $table ($column) VALUES ($values)";
         
         return $this->run_query($query, "Masalah saat memasukan data");
+    }
+
+    public function update($table, $fields, $id)
+    {
+
+        // Get Values
+        $valueArrays = array();
+        $i = 0;
+
+        foreach ($fields as $key => $values) {
+            
+            if ( is_int($values) ) {
+                $valueArrays[$i] = $key . "=" . $this->escape($values);
+            } else {
+                $valueArrays[$i] = $key . "='" . $this->escape($values) . "'";
+            }
+
+            $i++;
+        }
+
+        $values = implode(", ", $valueArrays);
+
+        $query = "UPDATE $table SET $values WHERE user_id = $id";  
+        // die($query);
+
+        return $this->run_query($query, "Masalah saat mengupdate data");
     }
 
     public function get_info($table, $column, $value) {

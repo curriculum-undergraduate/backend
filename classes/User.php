@@ -62,4 +62,10 @@ class User
             return "Info user tidak ditemukan";
 
     }
+
+    public function update_user($fields = array(), $id) {
+        if ($this->_db->update('user', $fields, $id) ) return true;
+        else return false;
+
+    }
 }
