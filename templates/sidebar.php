@@ -55,7 +55,7 @@
     <div>
         <ul class="flex flex-col ">
             <li>
-                <a href="#"
+                <a href="./faq.php"
                     class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                     <img class="w-5" src="assets/icons/help_icon.svg" alt="Help Icon">
                     <p class="font-semibold">Help</p>
