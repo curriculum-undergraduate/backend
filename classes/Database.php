@@ -5,17 +5,17 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    $HOST = "localhost",
-    $USER = "admin",
-    $PASS = "rahasia",
-    $DATABASE = "lumintu_db",
-    $PORT = "3306";
-    
-    // $HOST = "172.17.0.2",
-    // $USER = "root",
-    // $PASS = "salupa",
+    // $HOST = "localhost",
+    // $USER = "admin",
+    // $PASS = "rahasia",
     // $DATABASE = "lumintu_db",
     // $PORT = "3306";
+    
+    $HOST = "172.17.0.2",
+    $USER = "root",
+    $PASS = "salupa",
+    $DATABASE = "lumintu_db",
+    $PORT = "3306";
 
     public function __construct()
     {
@@ -91,7 +91,7 @@ class Database
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
 
-    public function get_info($table, $column = '', $value = '') {
+    public function get_info($table, $column = '', $value = '', $role = '') {
         if ( !is_int($value) ) {
             $value = "'" . $value . "'";
         }
@@ -103,8 +103,54 @@ class Database
             while($row = $result->fetch_assoc()) {
                 return $row;
             }
-        } else {
-            $query = "SELECT * FROM $table";
+        } elseif ($role != '') {
+
+            $query = "SELECT
+                        role.role_id,
+                        role.role_name,
+                        status.status_name,
+                        user.user_username,
+                        user.user_email,
+                        user.user_first_name,
+                        user.user_last_name,
+                        user.user_dob,
+                        user.user_address,
+                        user.user_gender,
+                        user.user_phone,
+                        user.user_profile_picture
+                        
+                        FROM role, user, status
+                        
+                        WHERE user.role_id = role.role_id AND user.status_id = status.status_id
+                        
+                        AND role.role_name = '$role'";
+
+            $result = $this->mysqli->query($query);            
+
+            while($row = $result->fetch_assoc()) {
+                $results[] = $row;
+            }
+
+            return $results;
+
+        } else  {
+            $query = "SELECT
+                        role.role_id,
+                        role.role_name,
+                        status.status_name,
+                        user.user_username,
+                        user.user_email,
+                        user.user_first_name,
+                        user.user_last_name,
+                        user.user_dob,
+                        user.user_address,
+                        user.user_gender,
+                        user.user_phone,
+                        user.user_profile_picture
+                        
+                        FROM role, user, status
+                        
+                        WHERE user.role_id = role.role_id AND user.status_id = status.status_id;";
             $result = $this->mysqli->query($query);
 
             while($row = $result->fetch_assoc()) {

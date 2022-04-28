@@ -74,5 +74,11 @@ class User
         return $this->_db->get_info('user');
 
     }
+
+    public function get_users_role($role) {
+        
+        return $this->_db->get_info('user', '', '', $role);
+
+    }
     
 }
