@@ -30,19 +30,27 @@ if ( isset($_POST['submit']) ) {
 
                 if ( $user->login_user($_POST['email'], $_POST['password'] ) ) {
 
-                    Session::flash('profile', 'Selamat! anda berhasil login');
-                    Session::set('email', $_POST['email']);
-                    if (!$user->is_admin(Session::get('email'))) {
-                        Redirect::to('profile');
+                    if ($user_data['user_status'] == 'verified') {
+                        Session::flash('profile', 'Selamat! anda berhasil login');
+                        Session::set('email', $_POST['email']);
+                        if (!$user->is_admin(Session::get('email'))) {
+                            Redirect::to('profile');
+                        } else {
+                            Redirect::to('admin');
+                        }
                     } else {
-                        Redirect::to('admin');
+                        $email = $_POST['email'];             
+                        Session::flash("reset-code", "It's look like you haven't still verify your email - $email");        
+                        Redirect::to('reset-code');
                     }
-
+                    
+    
                 } else {
-
+    
                     $errors[] = "Login gagal";
-
+    
                 }
+                
             } else {
 
                 $errors[] = "Email belum terdaftar";
@@ -138,7 +146,7 @@ require_once "templates/header.php";
                         </div>
 
                         <div class="text-sm">
-                            <a href="password_reset.php" class="font-medium text-white hover:underline"> Forgot
+                            <a href="forgot-password.php" class="font-medium text-white hover:underline"> Forgot
                                 password? </a>
                         </div>
                     </div>

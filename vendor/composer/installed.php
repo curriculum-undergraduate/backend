@@ -5,7 +5,7 @@
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '85168be37831026cfc2c266cd1efc34709a116a9',
+        'reference' => 'c41ba1e1a2fb9367e5a304422d81e763c1359a19',
         'name' => '__root__',
         'dev' => true,
     ),
@@ -16,7 +16,7 @@
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '85168be37831026cfc2c266cd1efc34709a116a9',
+            'reference' => 'c41ba1e1a2fb9367e5a304422d81e763c1359a19',
             'dev_requirement' => false,
         ),
         'firebase/php-jwt' => array(
@@ -35,6 +35,15 @@
             'install_path' => __DIR__ . '/../graham-campbell/result-type',
             'aliases' => array(),
             'reference' => '0690bde05318336c7221785f2a932467f98b64ca',
+            'dev_requirement' => false,
+        ),
+        'phpmailer/phpmailer' => array(
+            'pretty_version' => 'v6.6.0',
+            'version' => '6.6.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../phpmailer/phpmailer',
+            'aliases' => array(),
+            'reference' => 'e43bac82edc26ca04b36143a48bde1c051cfd5b1',
             'dev_requirement' => false,
         ),
         'phpoption/phpoption' => array(

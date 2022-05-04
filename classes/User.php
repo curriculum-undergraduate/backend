@@ -18,6 +18,24 @@ class User
             return false;
     }
 
+    public function check_token($token_id) {
+
+        $data = $this->_db->get_info('user', 'user_token', $token_id);
+        
+        if ( empty($data) ) return true;
+        else return false;
+
+    }
+
+    public function get_token($token_id) {
+
+        if ($this->check_token($token_id)) 
+            return "Info user tidak ditemukan";            
+        else
+            return $this->_db->get_info('user', 'user_token', $token_id);
+
+    }
+    
     public function login_user($email, $password)
     {
         $data = $this->_db->get_info('user', 'user_email', $email);
@@ -80,5 +98,6 @@ class User
         return $this->_db->get_info('user', '', '', $role);
 
     }
+
     
 }

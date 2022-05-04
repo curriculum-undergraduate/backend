@@ -86,8 +86,7 @@ class Database
         $values = implode(", ", $valueArrays);
 
         $query = "UPDATE $table SET $values WHERE user_id = $id";  
-        // die($query);
-
+        
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
 

@@ -1,6 +1,25 @@
 <?php
 
 require_once "core/init.php";
+require './vendor/autoload.php';
+
+use PHPMailer\PHPMailer\PHPMailer;
+
+$mail = new PHPMailer();
+
+$mail->isSMTP();
+$mail->SMTPDebug = 0;
+$mail->Host = 'send.smtp.mailtrap.io';
+$mail->SMTPAuth = true;
+$mail->Username = 'api';
+$mail->Password = 'bbbef8482d588fcd413720d14e7e0aac';
+$mail->SMTPSecure = 'tls';
+$mail->Port = 587;
+
+$mail->setFrom('no-reply@antheiz.me', 'no-reply');
+// $mail->addReplyTo('mail@antheiz.me', 'Theis A'); 
+
+$mail->isHTML(true);
 
 
 if ( $user->is_loggedIn() ) {
@@ -47,16 +66,32 @@ if ( isset($_POST['submit']) ) {
             // Check Passed
             if ($validation->passed()) {    
 
+                $token = rand(999999, 111111);
+
                 $user->register_user(array(
                     'user_username' => $_POST['username'],
                     'user_email' => $_POST['email'],
-                    'user_password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+                    'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+                    'user_token' => $token,
                 ));
 
                 // email verifikasi dibuat disini
+                $mail->Subject = "Email Verification";
+                $mail->addAddress($_POST['email'], $_POST['username']);
+                // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
+                // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
+                $mail->Body = "Your token id is <b>$token</b>";
 
-                Session::flash('login', 'Selamat! Akun berhasil dibuat');
-                Redirect::to('login');
+                if (!$mail->send()) {
+                    $errors[] = "Message could not be sent.";
+                    // echo 'Message could not be sent.';
+                    // echo 'Mailer Error: ' . $mail->ErrorInfo;
+                }
+                else {
+                    $email = $_POST['email'];
+                    Session::flash("reset-code", "We've sent a verification code to your email - $email");
+                    Redirect::to('reset-code');
+                }
 
             } else {
                 $errors = $validation->errors();
