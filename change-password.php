@@ -37,7 +37,7 @@ if ( isset($_POST['submit']) ) {
         if ($validation->passed()) {                
             if ( password_verify($_POST['password'], $user_data['user_password']) ) {
                 $user->update_user(array(
-                    'user_password' => password_hash($_POST['new_password'], PASSWORD_DEFAULT)
+                    'user_password' => password_hash($_POST['new_password'], PASSWORD_BCRYPT)
                 ), $user_data['user_id'] );
     
                 // email verifikasi dibuat disini

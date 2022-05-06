@@ -5,17 +5,17 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    // $HOST = "localhost",
-    // $USER = "admin",
-    // $PASS = "rahasia",
-    // $DATABASE = "lumintu_db",
-    // $PORT = "3306";
-    
-    $HOST = "172.17.0.2",
-    $USER = "root",
-    $PASS = "salupa",
+    $HOST = "localhost",
+    $USER = "admin",
+    $PASS = "rahasia",
     $DATABASE = "lumintu_db",
     $PORT = "3306";
+    
+    // $HOST = "172.17.0.2",
+    // $USER = "root",
+    // $PASS = "salupa",
+    // $DATABASE = "lumintu_db",
+    // $PORT = "3306";
 
     public function __construct()
     {
@@ -107,7 +107,6 @@ class Database
             $query = "SELECT
                         role.role_id,
                         role.role_name,
-                        status.status_name,
                         user.user_username,
                         user.user_email,
                         user.user_first_name,
@@ -116,13 +115,15 @@ class Database
                         user.user_address,
                         user.user_gender,
                         user.user_phone,
-                        user.user_profile_picture
+                        user.user_profile_picture,
+                        user.user_status
                         
-                        FROM role, user, status
+                        FROM
+                        role,
+                        user
                         
-                        WHERE user.role_id = role.role_id AND user.status_id = status.status_id
-                        
-                        AND role.role_name = '$role'";
+                        WHERE
+                        user.role_id = role.role_id AND role.role_name = '$role'";
 
             $result = $this->mysqli->query($query);            
 
@@ -136,7 +137,6 @@ class Database
             $query = "SELECT
                         role.role_id,
                         role.role_name,
-                        status.status_name,
                         user.user_username,
                         user.user_email,
                         user.user_first_name,
@@ -145,11 +145,15 @@ class Database
                         user.user_address,
                         user.user_gender,
                         user.user_phone,
-                        user.user_profile_picture
+                        user.user_profile_picture,
+                        user.user_status
                         
-                        FROM role, user, status
+                        FROM
+                        role,
+                        user
                         
-                        WHERE user.role_id = role.role_id AND user.status_id = status.status_id;";
+                        WHERE
+                        user.role_id = role.role_id";
             $result = $this->mysqli->query($query);
 
             while($row = $result->fetch_assoc()) {

@@ -89,8 +89,8 @@ if ( isset($_POST['submit']) ) {
                 }
                 else {
                     $email = $_POST['email'];
-                    Session::flash("reset-code", "We've sent a verification code to your email - $email");
-                    Redirect::to('reset-code');
+                    Session::flash("verification-code", "We've sent a verification code to your email - $email");
+                    Redirect::to('verification-code');
                 }
 
             } else {

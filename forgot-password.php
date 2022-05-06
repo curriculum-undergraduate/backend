@@ -42,33 +42,55 @@ if ( isset($_POST['submit']) ) {
             // Check Passed
             if ($validation->passed()) {    
 
-                $token = rand(999999, 111111);
-
                 $email = Session::set('email', $_POST['email']);
                 Session::delete('email');
                 $user_data = $user->get_data($email);
+                unset($user_data['user_email']);
+                unset($user_data['role_id']);
+                unset($user_data['user_password']);
+                unset($user_data['user_username']);
+                unset($user_data['user_first_name']);
+                unset($user_data['user_last_name']);
+                unset($user_data['user_dob']);
+                unset($user_data['user_address']);
+                unset($user_data['user_gender']);
+                unset($user_data['user_phone']);
+                unset($user_data['user_profile_picture']);
+                unset($user_data['user_token']);
 
-                $user->update_user(array(
-                    'user_token' => $token,
-                ), $user_data['user_id'] );
 
-                // email verifikasi dibuat disini
-                $mail->Subject = "Password Reset Code";
-                $mail->addAddress($_POST['email'], "User");
-                // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
-                // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
-                $mail->Body = "Your token id is <b>$token</b>";
+                if ($user_data['user_status'] == 'verified') {
 
-                if (!$mail->send()) {
-                    $errors[] = "Message could not be sent.";
-                    // echo 'Message could not be sent.';
-                    // echo 'Mailer Error: ' . $mail->ErrorInfo;
+                    $token = rand(999999, 111111);
+
+                    $user->update_user(array(
+                        'user_token' => $token,
+                    ), $user_data['user_id'] );
+
+                    // email verifikasi dibuat disini
+                    $mail->Subject = "Password Reset Code";
+                    $mail->addAddress($_POST['email'], "User");
+                    // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
+                    // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
+                    $mail->Body = "Your token id is <b>$token</b>";
+
+                    if (!$mail->send()) {
+                        $errors[] = "Message could not be sent.";
+                        // echo 'Message could not be sent.';
+                        // echo 'Mailer Error: ' . $mail->ErrorInfo;
+                    }
+                    else {
+                        $email = $_POST['email'];
+                        Session::flash("reset-code", "We've sent a token code for reset password to your email - $email");
+                        Redirect::to('reset-code');
+                    }
+
+                } else {
+                    $email = $_POST['email'];             
+                    Session::flash("verification-code", "It's look like you haven't still verify your email - $email");        
+                    Redirect::to('verification-code');
                 }
-                else {
-                    $email = $_POST['email'];
-                    Session::flash("reset-code", "We've sent a verification code to your email - $email");
-                    Redirect::to('reset-code');
-                }
+                
 
             } else {
                 $errors = $validation->errors();

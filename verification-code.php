@@ -2,6 +2,7 @@
 
 require_once 'core/init.php';
 
+
 if ( isset($_POST['submit']) ) {
     if ( Token::check( $_POST['token'] ) ) {
 
@@ -13,9 +14,16 @@ if ( isset($_POST['submit']) ) {
         } else {
             Session::set('token_id', $_POST['code_token']);
             $user_data = $user->get_token( Session::get('token_id') );
+
+            $token = 0;
+            $status = 'verified';
+            $user->update_user(array(
+                'user_token' => $token,
+                'user_status' => $status
+            ), $user_data['user_id'] );
                 
-            Session::flash("password-reset", "Berhasil!, Silahkan buat kata sandi baru.");
-            Redirect::to('password-reset');
+            Session::flash("login", "Selamat akun anda berhasil diverifikasi.!");
+            Redirect::to('login');
             
         }    
     }
@@ -35,7 +43,7 @@ require_once "templates/header.php";
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <div class="text-center">
                 <a href="index.php"><img class="w-[180px] logo-gradit md:ml-48 mb-6" src="assets/logo/logo_primary.svg" alt="Logo In Career"></a>
-                <h3 class="text-2xl font-bold text-gray-600 mb-8">Password Reset Code</h3>
+                <h3 class="text-2xl font-bold text-gray-600 mb-8">Code Verification</h3>
             </div>
             
             <?php if ( !empty($errors) ) { ?>
@@ -55,12 +63,12 @@ require_once "templates/header.php";
 
             <?php } ?>
 
-            <?php if ( Session::exists('reset-code') ) { ?>
+            <?php if ( Session::exists('verification-code') ) { ?>
 
                 <div id="alert-1" class="flex p-4 mb-4 mt-5 bg-blue-100 rounded-lg dark:bg-blue-200" role="alert">
                     <svg class="flex-shrink-0 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
                     <div class="ml-3 text-sm font-medium text-blue-700 dark:text-blue-800">
-                        <?php echo Session::flash('reset-code'); ?>
+                        <?php echo Session::flash('verification-code'); ?>
                     </div>
                     <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-100 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 dark:bg-blue-200 dark:text-blue-600 dark:hover:bg-blue-300" data-dismiss-target="#alert-1" aria-label="Close">
                         <span class="sr-only">Close</span>

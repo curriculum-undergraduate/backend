@@ -29,7 +29,22 @@ if ( isset($_POST['submit']) ) {
             if ($user->check_name($_POST['email'])) {
 
                 if ( $user->login_user($_POST['email'], $_POST['password'] ) ) {
-
+                    $email = Session::set('email', $_POST['email']);
+                    Session::delete('email');
+                    $user_data = $user->get_data($email);
+                    unset($user_data['user_email']);
+                    unset($user_data['user_id']);
+                    unset($user_data['role_id']);
+                    unset($user_data['user_password']);
+                    unset($user_data['user_username']);
+                    unset($user_data['user_first_name']);
+                    unset($user_data['user_last_name']);
+                    unset($user_data['user_dob']);
+                    unset($user_data['user_address']);
+                    unset($user_data['user_gender']);
+                    unset($user_data['user_phone']);
+                    unset($user_data['user_profile_picture']);
+                    unset($user_data['user_token']);
                     if ($user_data['user_status'] == 'verified') {
                         Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
@@ -40,8 +55,8 @@ if ( isset($_POST['submit']) ) {
                         }
                     } else {
                         $email = $_POST['email'];             
-                        Session::flash("reset-code", "It's look like you haven't still verify your email - $email");        
-                        Redirect::to('reset-code');
+                        Session::flash("verification-code", "It's look like you haven't still verify your email - $email");        
+                        Redirect::to('verification-code');
                     }
                     
     
@@ -146,7 +161,7 @@ require_once "templates/header.php";
                         </div>
 
                         <div class="text-sm">
-                            <a href="forgot-password.php" class="font-medium text-white hover:underline"> Forgot
+                            <a href="#" class="font-medium text-white hover:underline"> Forgot
                                 password? </a>
                         </div>
                     </div>

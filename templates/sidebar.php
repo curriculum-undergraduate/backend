@@ -38,8 +38,12 @@
                                     class="flex items-center w-full p-2 text-base font-normal text-light-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Student</a>
                             </li>
                             <li>
-                                <a href="admin.php?role=mentor"
-                                    class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Mentor</a>
+                                <a href="admin.php?role=parents"
+                                    class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Parents</a>
+                            </li>
+                            <li>
+                                <a href="admin.php?role=lecture"
+                                    class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Lecture</a>
                             </li>
                             <li>
                                 <a href="admin.php?role=admin"
