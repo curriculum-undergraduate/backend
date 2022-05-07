@@ -2,6 +2,10 @@
 
 require_once 'core/init.php';
 
+if ($user->is_admin(Session::get('email'))) {
+    Redirect::to('admin');
+}
+
 if ( !$user->is_loggedIn() ) {
     Session::flash('login', 'Anda harus login terlebih dahulu');
     Redirect::to('login');
@@ -200,17 +204,6 @@ if ( isset($_POST['submit']) ) {
                                 <?php echo strtoupper($user_data['user_username']) ?>
                             <?php endif; ?>
                         </h3>
-                        <div class="mt-6">
-                            <a href="#">
-                                <i class="bi bi-facebook text-neutral-800 text-2xl sm:text-3xl"></i>
-                            </a>
-                            <a href="#">
-                                <i class="bi bi-instagram text-neutral-800 text-2xl sm:text-3xl ml-7 mr-7"></i>
-                            </a>
-                            <a href="#">
-                                <i class="bi bi-twitter text-neutral-800 text-2xl sm:text-3xl"></i>
-                            </a>
-                        </div>
                     </div>
                 </div>
                 <div class="sm:col-span-2 bg-white rounded-md pb-12 shadow-sm md:mb-40">
@@ -219,9 +212,6 @@ if ( isset($_POST['submit']) ) {
                             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
                                 <li class="mr-2" role="presentation">
                                     <button class="inline-block p-4 rounded-t-lg border-b-2" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
-                                </li>
-                                <li class="mr-2" role="presentation">
-                                    <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="course-tab" data-tabs-target="#course" type="button" role="tab" aria-controls="course" aria-selected="false">Course</button>
                                 </li>
                                 <li class="mr-2" role="presentation">
                                     <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
@@ -260,7 +250,7 @@ if ( isset($_POST['submit']) ) {
                                             <input type="email" id="emailAddress" name="email_address"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                 placeholder=" mail@example.com"
-                                                value="<?php echo $user_data['user_email'] ?>" required>
+                                                value="<?php echo $user_data['user_email'] ?>" required readonly>
                                         </div>
                                         <div class="mb-6">
                                             <label for="dateOfBirth"
@@ -315,37 +305,7 @@ if ( isset($_POST['submit']) ) {
                                             class="sm:w-32 text-white bg-[#DDB07F] hover:bg-[#bd9161] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full md:w-auto px-5 py-2.5 text-center">Update</button>
                                     </div>
                                 </form>
-                            </div>
-                            <div class="hidden p-4 bg-gray-50 rounded-lg" id="course" role="tabpanel" aria-labelledby="course-tab">
-                                <div class="mt-16 md:mb-20 md:-ml-24">
-                                    <h3 class="text-lg sm:text-xl text-left mt-5 sm:-mt-12 sm:text-left sm:ml-28">
-                                        Pemrograman Web</h3>
-                                    <p class="text-sm text-gray-500 text-left sm:text-left sm:ml-28">Start
-                                        date
-                                        Thursday, 21 April 2022</p>
-                                </div>
-                                <div class="mt-16 md:mb-20 md:-ml-24">
-                                    <h3 class="text-lg sm:text-xl text-left mt-5 sm:-mt-12 sm:text-left sm:ml-28">
-                                        Android Development</h3>
-                                    <p class="text-sm text-gray-500 text-left sm:text-left sm:ml-28">Start
-                                        date
-                                        Thursday, 21 April 2022</p>
-                                </div>
-                                <div class="mt-16 md:mb-20 md:-ml-24">
-                                    <h3 class="text-lg sm:text-xl text-left mt-5 sm:-mt-12 sm:text-left sm:ml-28">
-                                        Project Management</h3>
-                                    <p class="text-sm text-gray-500 text-left sm:text-left sm:ml-28">Start
-                                        date
-                                        Thursday, 21 April 2022</p>
-                                </div>
-                                <div class="mt-16 md:mb-20 md:-ml-24">
-                                    <h3 class="text-lg sm:text-xl text-left mt-5 sm:-mt-12 sm:text-left sm:ml-28">
-                                        UI/UX Design</h3>
-                                    <p class="text-sm text-gray-500 text-left sm:text-left sm:ml-28">Start
-                                        date
-                                        Thursday, 21 April 2022</p>
-                                </div>
-                            </div>
+                            </div>                            
                             <div class="hidden p-4 bg-gray-50 rounded-lg" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                 <div class="mt-5">
                                     <div class="flex flex-col mb-8">

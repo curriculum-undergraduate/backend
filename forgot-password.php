@@ -44,7 +44,7 @@ if ( isset($_POST['submit']) ) {
 
                 $email = Session::set('email', $_POST['email']);
                 Session::delete('email');
-                $user_data = $user->get_data($email);
+                $user_data = $user->get_data('salupacode@gmail.com');
                 unset($user_data['user_email']);
                 unset($user_data['role_id']);
                 unset($user_data['user_password']);
@@ -80,7 +80,6 @@ if ( isset($_POST['submit']) ) {
                         // echo 'Mailer Error: ' . $mail->ErrorInfo;
                     }
                     else {
-                        $email = $_POST['email'];
                         Session::flash("reset-code", "We've sent a token code for reset password to your email - $email");
                         Redirect::to('reset-code');
                     }
@@ -118,7 +117,7 @@ require_once "templates/header.php";
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <div class="text-center">
                 <a href="index.php"><img class="w-[180px] logo-gradit md:ml-48 mb-6" src="assets/logo/logo_primary.svg" alt="Logo In Career"></a>
-                <h3 class="text-2xl font-bold text-gray-600 mb-8">Reset your password</h3>
+                <h3 class="text-2xl font-bold text-gray-600 mb-8">Forgot Password</h3>
             </div>
             
             <?php if ( !empty($errors) ) { ?>

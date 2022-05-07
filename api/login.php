@@ -68,7 +68,12 @@ if ($user->check_name($email)) {
       'message' => 'Login berhasil!'
     ]);
 
-    setcookie('X-GRADIT-SESSION', $access_token, $payload['exp'], '', '', false, true);
+    // Ubah waktu kadaluarsa lebih lama, dalam kasus ini 1 jam
+    $payload['exp'] = time() + (60 * 60);
+    $refresh_token = JWT::encode($payload, $_ENV['REFRESH_TOKEN_SECRET'], 'HS256');
+
+    // Simpan refresh token di http-only cookie
+    setcookie('X-GRADIT-REFRESHTOKEN', $refresh_token, $payload['exp'], '', '', false, true);
 
   } else {
 

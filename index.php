@@ -49,11 +49,6 @@ if ( isset($_POST['submit']) ) {
                         Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
                         if (!$user->is_admin(Session::get('email'))) {
-                            // This is not secure
-                            $user_data = $user->get_data($email);
-                            unset($user_data['user_password']);
-                            $_SESSION['user_data'] = $user_data;
-                            // End
                             Redirect::to('profile');
                         } else {
                             Redirect::to('admin');

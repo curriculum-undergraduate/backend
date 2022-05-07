@@ -3,6 +3,11 @@
 require_once 'core/init.php';
 
 
+if (!Session::exists('verification-code')) {
+    Redirect::to('login');
+}
+
+
 if ( isset($_POST['submit']) ) {
     if ( Token::check( $_POST['token'] ) ) {
 
