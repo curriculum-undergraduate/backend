@@ -201,7 +201,7 @@ if ( isset($_POST['submit']) ) {
                             <?php if ($user_data['user_first_name'] != '') : ?>
                                 <?php echo strtoupper($user_data['user_first_name']) ?> <?php echo strtoupper($user_data['user_last_name']) ?>
                             <?php else : ?>
-                                <?php echo strtoupper($user_data['user_username']) ?>
+                                <?php echo strtoupper($user_data['user_email']) ?>
                             <?php endif; ?>
                         </h3>
                     </div>
