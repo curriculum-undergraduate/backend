@@ -32,7 +32,7 @@ if ( isset($_POST['submit']) ) {
             $user->update_user(array(
                 'user_password' => password_hash($_POST['new_password'], PASSWORD_BCRYPT),
                 'user_token' => $token,
-            ), 130 ); // disini harus automate dari db
+            ), 130 ); //TODO: disini harus automate dari db
 
             // email verifikasi dibuat disini
 

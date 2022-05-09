@@ -42,23 +42,13 @@ try {
     $payload = JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
     // var_dump($payload);        
     $user_data = $user->get_data($payload->{ 'email'});
-    if ($user_data['role_id'] != 3) {
+    unset($user_data['user_password']);
+    unset($user_data['user_profile_picture']);
+    echo json_encode([
+        'success' => true,
+        "user" => $user_data,
 
-        $users = $user->get_users();
-        echo json_encode([
-            'success' => true,
-            "user" => $users,
-            
-        ]);
-    } else {
-        echo json_encode([
-            'success' => false,
-            'data' => null,
-            'message' => 'Akses ditolak'
-        ]);
-        http_response_code(401);
-        exit();
-    }
+    ]);
 
 }
 catch (Exception $e) {

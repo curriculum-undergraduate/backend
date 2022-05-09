@@ -3,7 +3,7 @@
 require_once 'core/init.php';
 
 if ($user->is_admin(Session::get('email'))) {
-    Redirect::to('admin');
+    Redirect::to('dashboard');
 }
 
 if ( !$user->is_loggedIn() ) {
@@ -59,8 +59,6 @@ if ( isset($_POST['submit']) ) {
                 'user_phone' => $_POST['phone_number'],
                 'user_address' => $_POST['alamat_domisili'],
             ), $user_data['user_id'] );
-
-            // email verifikasi dibuat disini
 
             Session::flash('profile', 'Selamat! Akun berhasil diupdate');
             Redirect::to('profile');

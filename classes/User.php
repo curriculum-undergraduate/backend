@@ -87,6 +87,12 @@ class User
 
     }
 
+    public function delete_user($id) {
+        if ($this->_db->delete('user', $id) ) return true;
+        else return false;
+
+    }
+
     public function get_users() {
         
         return $this->_db->get_info('user');

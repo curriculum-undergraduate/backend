@@ -56,7 +56,7 @@ if ( isset($_POST['submit']) ) {
                             // End
                             Redirect::to('profile');
                         } else {
-                            Redirect::to('admin');
+                            Redirect::to('dashboard');
                         }
                     } else {
                         $email = $_POST['email'];             

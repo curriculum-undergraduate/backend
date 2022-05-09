@@ -40,5 +40,13 @@ class User {
             return "Info user tidak ditemukan";
 
     }
+
+    public function get_users() {
+        
+        // die($this->_db->get_users_batch('user'));
+        return $this->_db->get_users_batch();
+
+    }
+    
     
 }

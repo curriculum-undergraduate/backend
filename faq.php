@@ -1,6 +1,28 @@
 <?php require_once "templates/header.php" ?>
 </haad>
 
+<style>
+            .tab {
+            overflow: hidden;
+            }
+            .tab-content {
+            max-height: 0;
+            transition: all 0.5s;
+            }
+            input:checked + .tab-label .test {
+                background-color: #000;
+            }
+            input:checked + .tab-label .test svg {
+                transform: rotate(180deg);
+                stroke: #fff;
+            }
+            input:checked + .tab-label::after {
+            transform: rotate(90deg);
+            }
+            input:checked ~ .tab-content {
+            max-height: 100vh;
+            }
+        </style>
 <body>
 
 <div class="bg-[#f1f5f9]">
@@ -16,59 +38,198 @@
     </div>
 </div>
 
-<div class="sm:flex flex-wrap justify-center items-center text-center gap-8 p-8">
-    <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 bg-white mt-6  shadow-lg rounded-lg">
-        <div class="flex-shrink-0">
-            <div class="flex items-center mx-auto justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                <svg width="20" height="20" fill="currentColor" class="h-6 w-6" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z">
-                    </path>
-                </svg>
-            </div>
-        </div>
-        <h3 class="text-2xl sm:text-xl text-gray-700 font-semibold  py-4">
-            Bagaimana Update Profile
-        </h3>
-        <p class="text-md  text-gray-500  py-4">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. A voluptas asperiores, commodi quaerat obcaecati laboriosam optio minima.
-        </p>
-    </div>
-    <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 px-4 py-4 mt-6 sm:mt-16 md:mt-20 lg:mt-24 bg-white shadow-lg rounded-lg ">
-        <div class="flex-shrink-0">
-            <div class="flex items-center mx-auto justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                <svg width="20" height="20" fill="currentColor" class="h-6 w-6" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z">
-                    </path>
-                </svg>
-            </div>
-        </div>
-        <h3 class="text-2xl sm:text-xl text-gray-700 font-semibold  py-4">
-            Bagaimana Mengganti Password
-        </h3>
-        <p class="text-md text-gray-500  py-4">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vero pariatur laborum omnis voluptas beatae commodi excepturi corrupti.
-        </p>
-    </div>
-    <div class="w-full sm:w-1/2 md:w-1/2 lg:w-1/4 mt-6  px-4 py-4 bg-white shadow-lg rounded-lg">
-        <div class="flex-shrink-0">
-            <div class="flex items-center mx-auto justify-center h-12 w-12 rounded-md bg-indigo-500 text-white">
-                <svg width="20" height="20" fill="currentColor" class="h-6 w-6" viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M491 1536l91-91-235-235-91 91v107h128v128h107zm523-928q0-22-22-22-10 0-17 7l-542 542q-7 7-7 17 0 22 22 22 10 0 17-7l542-542q7-7 7-17zm-54-192l416 416-832 832h-416v-416zm683 96q0 53-37 90l-166 166-416-416 166-165q36-38 90-38 53 0 91 38l235 234q37 39 37 91z">
-                    </path>
-                </svg>
-            </div>
-        </div>
-        <h3 class="text-2xl sm:text-xl text-gray-700 font-semibold py-4">
-            Bantuan Pengerjaan Course
-        </h3>
-        <p class="text-md  text-gray-500 py-4">
-            Let us help you level up your search engine game, explore our solutions for digital marketing for your business.
-        </p>
-    </div>
-</div>
-
-
-
+<main class="w-full p-8 mx-auto">
+            <section class="shadow row">
+                <div class="tabs">
+                    <div class="border-b tab">
+                        <div class="border-l-2 border-transparent relative">
+                            <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck1">
+                            <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck1">
+                                <span class="text-grey-darkest font-thin text-xl">
+                                Bagaimana Update profile ?
+                                </span>
+                                <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                                    <!-- icon by feathericons.com -->
+                                    <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="6 9 12 15 18 9">
+                                        </polyline>
+                                    </svg>
+                                </div>
+                            </header>
+                            <div class="tab-content">
+                                <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                    <ul class="pl-4">
+                                        <li class="pb-2">
+                                        Pada bagian ini anda bisa merubah profile yang anda miliki, merubah username, merubah foto profil dan about me pada akun profile yang tersedia :
+                                        </li>
+                                        <ol class="list-decimal">
+                                        <li class="pb-2">
+                                        Sign in to office.com/signin with your Microsoft 365 for business.
+                                        </li>
+                                        <li class="pb-2">
+                                        Select your profile picture.
+                                        </li>
+                                        <li class="pb-2">
+                                        Select My profile.
+                                        </li>
+                                        <li class="pb-2">
+                                        Select Update profile
+                                        </li>
+                                        <li class="pb-2">
+                                        Update the information you want, such as About me, Projects, and more.
+                                        </li>
+                                        <li class="pb-2">
+                                        Masuk ke gradit.com/profil dengan akun anda 
+                                        </li>
+                                        <li class="pb-2">
+                                        Klik Akun Profil
+                                        </li>
+                                        <li class="pb-2">
+                                        Rubah Nama, Username, Pasword dan juga foto profil anda atau yang anda butuhkan.
+                                        </li>
+                                        <li class="pb-2">
+                                        Save Update Profil 
+                                        </li>
+                                        </ol>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-b tab">
+                        <div class="border-l-2 border-transparent relative">
+                            <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck2">
+                            <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck2">
+                                <span class="text-grey-darkest font-thin text-xl">
+                                Bagaimana Lupa Password ?
+                                </span>
+                                <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                                    <!-- icon by feathericons.com -->
+                                    <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="6 9 12 15 18 9">
+                                        </polyline>
+                                    </svg>
+                                </div>
+                            </header>
+                            <div class="tab-content">
+                                <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                    <ul class="pl-4">
+                                        <li class="pb-2">
+                                        Pada bagian ini anda akan merubah password anda sebelumnya 
+                                        Jika kamu ingin merubah pasword lakukan langkah berikut :
+                                        </li>
+                                        <ol class="list-decimal">
+                                        <li class="pb-2">
+                                        Klik ‘Masuk’ pada pojok kanan halaman.
+                                        </li>
+                                        <li class="pb-2">
+                                        Klik ‘Saya Tidak Bisa Masuk’.
+                                        </li>
+                                        <li class="pb-2">
+                                        Pilih ‘Lupa kata sandi’ dan masukkan alamat e-mail Kamu yang terdaftar di Kampus Merdeka.
+                                        </li>
+                                        <li class="pb-2">
+                                        Cek kotak masuk e-mail Kamu dan klik link yang tercantum untuk memasukkan password baru Kamu.
+                                        </li>
+                                        <li class="pb-2">
+                                        Kemudian silakan lakukan login kembali dengan memasukkan password baru yang telah berhasil kamu masukkan.
+                                        </li>
+                                        </ol>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-b tab">
+                        <div class="border-l-2 border-transparent relative">
+                            <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck3">
+                            <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck3">
+                                <span class="text-grey-darkest font-thin text-xl">
+                                Bagaimana cara mengubah course yang sudah saya kerjakan ?
+                                </span>
+                                <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                                    <!-- icon by feathericons.com -->
+                                    <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="6 9 12 15 18 9">
+                                        </polyline>
+                                    </svg>
+                                </div>
+                            </header>
+                            <div class="tab-content">
+                                <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                    <ul class="pl-4">
+                                        <li class="pb-2">
+                                        Pada bagian ini, yang bisa anda lakukan adalah merubah, memilih dan menyimpan course yang anda akan kerjakan.
+                                        </li>
+                                        <ol class="list-decimal">
+                                        <li class="pb-2">
+                                        Klik pada Fitur Course.
+                                        </li>
+                                        <li class="pb-2">
+                                        Pilih Course yang ingin dirubah. 
+                                        </li>
+                                        <li class="pb-2">
+                                        Klik Asessment yang sudah dikerjakan. 
+                                        </li>
+                                        <li class="pb-2">
+                                        Klik Rubah, Lalu klik simpan ketika sudah selesai. 
+                                        </li>
+                                        <li class="pb-2">
+                                        Kembali ke menu Home. 
+                                        </li>
+                                        </ol>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="border-b tab">
+                        <div class="border-l-2 border-transparent relative">
+                            <input class="w-full absolute z-10 cursor-pointer opacity-0 h-5 top-6" type="checkbox" id="chck3">
+                            <header class="flex justify-between items-center p-5 pl-8 pr-8 cursor-pointer select-none tab-label" for="chck3">
+                                <span class="text-grey-darkest font-thin text-xl">
+                                Bagaimana Konsultasi Bersama Mentor ?
+                                </span>
+                                <div class="rounded-full border border-grey w-7 h-7 flex items-center justify-center test">
+                                    <!-- icon by feathericons.com -->
+                                    <svg aria-hidden="true" class="" data-reactid="266" fill="none" height="24" stroke="#606F7B" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                        <polyline points="6 9 12 15 18 9">
+                                        </polyline>
+                                    </svg>
+                                </div>
+                            </header>
+                            <div class="tab-content">
+                                <div class="pl-8 pr-8 pb-5 text-grey-darkest">
+                                    <ul class="pl-4">
+                                        <li class="pb-2">
+                                        Pada bagian ini anda akan memilih waktu berkonsultasi bersama mentor, mengenai pembelajaran dan course yang anda telah pilih sebelumnya.
+                                        </li>
+                                        <ol class="list-decimal">
+                                        <li class="pb-2">
+                                        Klik Home - Mentor.
+                                        </li>
+                                        <li class="pb-2">
+                                        Daftar mentor - Jadwalkan waktu bimbingan.
+                                        </li>
+                                        <li class="pb-2">
+                                        Pilih waktu bimbingan - lalu klik simpan. 
+                                        </li>
+                                        <li class="pb-2">
+                                        Setelah itu klik simpan. 
+                                        </li>
+                                        <li class="pb-2">
+                                        Lalu kembali ke menu home. 
+                                        </li>
+                                        </ol>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
 <footer class="p-4 bg-white rounded-lg shadow md:px-8 md:py-8">
     <div class="sm:flex sm:items-center sm:justify-between">
         <a href="#" class="flex items-center mb-4 sm:mb-0">

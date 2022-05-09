@@ -51,7 +51,35 @@
                             </li>
                         </ul>
                     </li>
-             <?php } ?>                        
+             <?php } ?>
+             <li>
+                    <a href="http://schedule.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Schedule</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://lessons.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Lessons</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://assignment.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/attendance_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Assignment</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="http://consultation.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/discussion_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold"> Consultation</p>
+                    </a>
+                </li>                        
             </ul>
         </div>
     </div>

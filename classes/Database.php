@@ -5,10 +5,16 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    $HOST = "localhost",
-    $USER = "ll_lms_account",
-    $PASS = "mD6m55r4kWdp1eKs",
-    $DATABASE = "ll_lms_account",
+    // $HOST = "localhost",
+    // $USER = "ll_lms_account",
+    // $PASS = "mD6m55r4kWdp1eKs",
+    // $DATABASE = "ll_lms_account",
+    // $PORT = "3306";
+
+    $HOST = "172.17.0.2",
+    $USER = "root",
+    $PASS = "salupa",
+    $DATABASE = "testestes",
     $PORT = "3306";
 
     public function __construct()
@@ -17,7 +23,7 @@ class Database
         $this->mysqli = new mysqli($this->HOST, $this->USER, $this->PASS, $this->DATABASE, $this->PORT);
 
         if (mysqli_connect_error()) {
-            die("Koneksi gagal terhubung ke Database");
+            header("Location: 500.php");
         }
 
     }
@@ -42,11 +48,12 @@ class Database
         $valueArrays = array();
         $i = 0;
         foreach ($fields as $key => $values) {
-            
-            if ( is_int($values) ) {
+
+            if (is_int($values)) {
                 $valueArrays[$i] = $this->escape($values);
-            } else {
-                $valueArrays[$i] = "'" . $this->escape($values) ."'";
+            }
+            else {
+                $valueArrays[$i] = "'" . $this->escape($values) . "'";
             }
 
             $i++;
@@ -55,7 +62,7 @@ class Database
         $values = implode(", ", $valueArrays);
 
         $query = "INSERT INTO $table ($column) VALUES ($values)";
-        
+
         return $this->run_query($query, "Masalah saat memasukan data");
     }
 
@@ -67,10 +74,11 @@ class Database
         $i = 0;
 
         foreach ($fields as $key => $values) {
-            
-            if ( is_int($values) ) {
+
+            if (is_int($values)) {
                 $valueArrays[$i] = $key . "=" . $this->escape($values);
-            } else {
+            }
+            else {
                 $valueArrays[$i] = $key . "='" . $this->escape($values) . "'";
             }
 
@@ -79,24 +87,34 @@ class Database
 
         $values = implode(", ", $valueArrays);
 
-        $query = "UPDATE $table SET $values WHERE user_id = $id";  
-        
+        $query = "UPDATE $table SET $values WHERE user_id = $id";
+
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
 
-    public function get_info($table, $column = '', $value = '', $role = '') {
-        if ( !is_int($value) ) {
+    public function delete($table, $id)
+    {
+
+        $query = "DELETE FROM $table WHERE user_id = $id";
+
+        return $this->run_query($query, "Masalah saat mengupdate data");
+    }
+
+    public function get_info($table, $column = '', $value = '', $role = '')
+    {
+        if (!is_int($value)) {
             $value = "'" . $value . "'";
         }
-            
-        if ( $column != '' ) {
+
+        if ($column != '') {
             $query = "SELECT * FROM $table WHERE $column = $value";
             $result = $this->mysqli->query($query);
-    
-            while($row = $result->fetch_assoc()) {
+
+            while ($row = $result->fetch_assoc()) {
                 return $row;
             }
-        } elseif ($role != '') {
+        }
+        elseif ($role != '') {
 
             $query = "SELECT
                         role.role_id,
@@ -119,15 +137,16 @@ class Database
                         WHERE
                         user.role_id = role.role_id AND role.role_name = '$role'";
 
-            $result = $this->mysqli->query($query);            
+            $result = $this->mysqli->query($query);
 
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
                 $results[] = $row;
             }
 
             return $results;
 
-        } else  {
+        }
+        else {
             $query = "SELECT
                         role.role_id,
                         role.role_name,
@@ -150,7 +169,7 @@ class Database
                         user.role_id = role.role_id";
             $result = $this->mysqli->query($query);
 
-            while($row = $result->fetch_assoc()) {
+            while ($row = $result->fetch_assoc()) {
                 $results[] = $row;
             }
 
@@ -159,12 +178,29 @@ class Database
 
     }
 
-    public function run_query($query, $message) {
-        if ($this->mysqli->query($query)) return true;
-        else echo($message);
+    public function get_users_batch()
+    {
+        $query = "SELECT user_id, role_id, user.batch_id, user_email, user_username, user_first_name, user_last_name, user_dob, user_address, user_gender, user_phone, user_status, batch_name, batch_start_date, batch_end_date FROM user JOIN batch ON user.batch_id = batch.batch_id WHERE batch.batch_id LIKE '2'";
+        $result = $this->mysqli->query($query);
+
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        return $results;
     }
 
-    public function escape($name) {
+
+    public function run_query($query, $message)
+    {
+        if ($this->mysqli->query($query))
+            return true;
+        else
+            echo($message);
+    }
+
+    public function escape($name)
+    {
         return $this->mysqli->real_escape_string(stripslashes(htmlspecialchars($name)));
     }
 
