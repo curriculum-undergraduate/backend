@@ -41,10 +41,10 @@ class User {
 
     }
 
-    public function get_users() {
+    public function get_users($role_id) {
         
         // die($this->_db->get_users_batch('user'));
-        return $this->_db->get_users_batch();
+        return $this->_db->get_users_batch($role_id);
 
     }
     

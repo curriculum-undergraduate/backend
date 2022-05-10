@@ -44,7 +44,7 @@ try {
     $user_data = $user->get_data($payload->{ 'email'});
     if ($user_data['role_id'] != 3) {
 
-        $users = $user->get_users();
+        $users = $user->get_users($user_data['batch_id']);
         echo json_encode([
             'success' => true,
             "user" => $users,

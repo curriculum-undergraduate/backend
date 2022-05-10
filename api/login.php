@@ -63,7 +63,7 @@ if ($user->check_name($email)) {
       'success' => true,
       'data' => [
         'accessToken' => $access_token,
-        'expiry' => date(DATE_RFC850, $expired_time)
+        'expiry' => date(DATE_ISO8601, $expired_time)
       ],
       'message' => 'Login berhasil!'
     ]);
@@ -73,7 +73,7 @@ if ($user->check_name($email)) {
     $refresh_token = JWT::encode($payload, $_ENV['REFRESH_TOKEN_SECRET'], 'HS256');
 
     // Simpan refresh token di http-only cookie
-    setcookie('X-GRADIT-REFRESHTOKEN', $refresh_token, $payload['exp'], '', '', false, true);
+    setcookie('X-LUMINTU-REFRESHTOKEN', $refresh_token, $payload['exp'], '', '', false, true);
 
   } else {
 

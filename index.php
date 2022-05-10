@@ -51,7 +51,7 @@ if ( isset($_POST['submit']) ) {
                         if (!$user->is_admin(Session::get('email'))) {
                             Redirect::to('profile');
                         } else {
-                            Redirect::to('admin');
+                            Redirect::to('dashboard');
                         }
                     } else {
                         $email = $_POST['email'];             

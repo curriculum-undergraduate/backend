@@ -54,7 +54,7 @@ if ( isset($_POST['submit']) ) {
                             unset($user_data['user_password']);
                             $_SESSION['user_data'] = $user_data;
                             // End
-                            Redirect::to('profile');
+                            Redirect::to('users');
                         } else {
                             Redirect::to('dashboard');
                         }

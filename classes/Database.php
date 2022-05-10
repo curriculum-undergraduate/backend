@@ -5,17 +5,17 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    $HOST = "localhost",
-    $USER = "ll_lms_account",
-    $PASS = "mD6m55r4kWdp1eKs",
-    $DATABASE = "ll_lms_account",
-    $PORT = "3306";
-
-    // $HOST = "172.17.0.2",
-    // $USER = "root",
-    // $PASS = "salupa",
-    // $DATABASE = "testestes",
+    // $HOST = "localhost",
+    // $USER = "ll_lms_account",
+    // $PASS = "mD6m55r4kWdp1eKs",
+    // $DATABASE = "ll_lms_account",
     // $PORT = "3306";
+
+    $HOST = "172.17.0.2",
+    $USER = "root",
+    $PASS = "salupa",
+    $DATABASE = "lumintu_db",
+    $PORT = "3306";
 
     public function __construct()
     {
@@ -178,9 +178,10 @@ class Database
 
     }
 
-    public function get_users_batch()
+    public function get_users_batch($role_id)
     {
-        $query = "SELECT user_id, role_id, user.batch_id, user_email, user_username, user_first_name, user_last_name, user_dob, user_address, user_gender, user_phone, user_status, batch_name, batch_start_date, batch_end_date FROM user JOIN batch ON user.batch_id = batch.batch_id WHERE batch.batch_id LIKE '2'";
+        $query = "SELECT user_id, role_id, user.batch_id, user_email, user_username, user_first_name, user_last_name, user_dob, user_address, user_gender, user_phone, user_status, batch_name, batch_start_date, batch_end_date FROM user JOIN batch ON user.batch_id = batch.batch_id WHERE batch.batch_id LIKE $role_id";
+        // die($query);
         $result = $this->mysqli->query($query);
 
         while ($row = $result->fetch_assoc()) {

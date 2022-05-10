@@ -25,9 +25,7 @@
 - Install Library 
 
   ```
-    $ composer require vlucas/phpdotenv
-    $ composer require firebase/php-jwt
-    $ composer require phpmailer/phpmailer
+    $ composer install
   ```
 
 - Import SQL File [_ll_lms_account.sql_]
