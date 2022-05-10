@@ -44,7 +44,7 @@ if ( isset($_POST['submit']) ) {
 
                 $email = Session::set('email', $_POST['email']);
                 Session::delete('email');
-                $user_data = $user->get_data('salupacode@gmail.com');
+                $user_data = $user->get_data($email);
                 unset($user_data['user_email']);
                 unset($user_data['role_id']);
                 unset($user_data['user_password']);

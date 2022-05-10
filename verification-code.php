@@ -3,9 +3,9 @@
 require_once 'core/init.php';
 
 
-if (!Session::exists('verification-code')) {
-    Redirect::to('login');
-}
+// if (!Session::exists('verification-code')) {
+//     Redirect::to('login');
+// }
 
 
 if ( isset($_POST['submit']) ) {
@@ -19,6 +19,9 @@ if ( isset($_POST['submit']) ) {
         } else {
             Session::set('token_id', $_POST['code_token']);
             $user_data = $user->get_token( Session::get('token_id') );
+            // var_dump($user_data);
+            // die();
+            // TODO: Masih problem
 
             $token = 0;
             $status = 'verified';
