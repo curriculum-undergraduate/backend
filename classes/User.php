@@ -52,7 +52,6 @@ class User
     public function check_name($email) {
 
         $data = $this->_db->get_info('user', 'user_email', $email);
-        
         if ( empty($data) ) return false;
         else return true;
 
