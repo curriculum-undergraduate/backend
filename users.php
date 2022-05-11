@@ -102,7 +102,11 @@ if ( isset($_POST['submit']) ) {
                 // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
                 // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
                 $passwd = $_POST['password'];
-                $mail->Body = "Your token id is <b>$token</b> and Your password: <b>$passwd</b>";
+                $email_template = 'templates/mail_pass.html';
+                $mail->Body = file_get_contents($email_template);
+                $mail->addEmbeddedImage('assets/logo/logo_primary.png', 'image_cid'); 
+                $mail->Body = str_replace("{token}", $token,  $mail->Body);
+                $mail->Body = str_replace("{passwd}", $passwd,  $mail->Body);
 
                 if (!$mail->send()) {
                     $errors[] = "Message could not be sent.";
