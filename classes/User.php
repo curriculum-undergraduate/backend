@@ -58,11 +58,29 @@ class User
 
     }
 
+    public function check_username($username) {
+
+        $data = $this->_db->get_info('user', 'user_username', $username);
+
+        if ( empty($data) ) return false;
+        else return true;
+
+    }
+
     public function is_admin($email) {
 
         $data = $this->_db->get_info('user', 'user_email', $email);
         
         if ( $data['role_id'] == 1 ) return true;
+        else return false;
+
+    }
+
+    public function is_mentor($email) {
+
+        $data = $this->_db->get_info('user', 'user_email', $email);
+        
+        if ( $data['role_id'] == 2 ) return true;
         else return false;
 
     }

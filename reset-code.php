@@ -10,10 +10,8 @@ if ( isset($_POST['submit']) ) {
 
             $errors[] = "Token yang dimasukan tidak valid.";
     
-        } else {
+        } else {        
             Session::set('token_id', $_POST['code_token']);
-            $user_data = $user->get_token( Session::get('token_id') );
-                
             Session::flash("password-reset", "Berhasil!, Silahkan buat kata sandi baru.");
             Redirect::to('password-reset');
             
@@ -22,6 +20,7 @@ if ( isset($_POST['submit']) ) {
 
 }
 
+$title_page = "Token Reset Password";
 
 require_once "templates/header.php";
 
@@ -31,7 +30,7 @@ require_once "templates/header.php";
 <link href="assets/css/custom-auth.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background-image: url('assets/img/background.jpg')">
     <div class="flex items-center justify-center min-h-screen px-10">
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <div class="text-center">

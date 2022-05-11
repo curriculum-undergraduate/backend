@@ -23,7 +23,7 @@ $mail->isHTML(true);
 
 
 if ( $user->is_loggedIn() ) {
-    Redirect::to('profile');
+    Redirect::to('account-setting');
 }
 
 $errors = array();
@@ -61,6 +61,9 @@ if ( isset($_POST['submit']) ) {
 
             $errors[] = "Email sudah terdaftar";
     
+        } else if ($user->check_username($_POST['username'])) {
+
+            $errors[] = "Username sudah terdaftar";
         } else {
 
             // Check Passed
@@ -78,9 +81,10 @@ if ( isset($_POST['submit']) ) {
                 // email verifikasi dibuat disini
                 $mail->Subject = "Email Verification";
                 $mail->addAddress($_POST['email'], $_POST['username']);
-                // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
-                // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
-                $mail->Body = "Your token id is <b>$token</b>";
+                $email_template = 'templates/sendmail_individu.html';
+                $mail->Body = file_get_contents($email_template);
+                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
+                $mail->Body = str_replace("{token}", $token,  $mail->Body);
 
                 if (!$mail->send()) {
                     $errors[] = "Message could not be sent.";
@@ -101,6 +105,8 @@ if ( isset($_POST['submit']) ) {
 
 }
 
+$title_page = "Register";
+
 require_once "templates/header.php";
 
 ?>
@@ -109,7 +115,7 @@ require_once "templates/header.php";
 <link href="assets/css/custom-auth.css" rel="stylesheet" />
   </head>
 
-<body>
+<body style="background-image: url('assets/img/background.jpg')">
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:flex-1">
         <h2 class="text-4xl font-bold  tracking-wider sm:text-4xl">
@@ -151,10 +157,13 @@ require_once "templates/header.php";
                     <input type="email" placeholder="name@gmail.com" name="email" id="email"
                         class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black required:" required>
                 </div>
-                <div class="mt-4">
+                <div class="mt-4" x-data="{ show: true }">
                     <label class="block" for="password">Password<label>
-                    <input type="password" placeholder="Password" name="password" id="password"
+                    <div class="relative">
+                    <input type="password" placeholder="Password" name="password" id="password" :type="show ? 'password' : 'text'"  oninput="strengthChecker()"
                         class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black required:" required>
+                        <div id="strength-bar"></div>
+                </div>
                 </div>
                 <div class="mt-4">
                     <label class="block" for="password_verify">Repeat Password<label>

@@ -42,8 +42,8 @@ if ( isset($_POST['submit']) ) {
     
                 // email verifikasi dibuat disini
     
-                Session::flash('profile', 'Selamat! Password berhasil diupdate');
-                Redirect::to('profile');
+                Session::flash('account-settings', 'Selamat! Password berhasil diupdate');
+                Redirect::to('account-settings');
             } else {
                 $errors[] = "Password lama anda salah";
             }
@@ -62,7 +62,7 @@ require_once "templates/header.php";
 <link href="assets/css/custom-auth.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background-image: url('assets/img/background.jpg')">
     <div class="flex items-center justify-center min-h-screen px-10">
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <h3 class="text-2xl font-bold text-center text-black">Change Password</h3>

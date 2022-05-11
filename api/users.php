@@ -36,11 +36,9 @@ $user = new User();
 // Mengambil token
 list(, $token) = explode(' ', $headers['Authorization']);
 
-
 try {
     // Men-decode token. Dalam library ini juga sudah sekaligus memverfikasinya
     $payload = JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
-    // var_dump($payload);        
     $user_data = $user->get_data($payload->{ 'email'});
     if ($user_data['role_id'] != 3) {
 
@@ -59,6 +57,12 @@ try {
         http_response_code(401);
         exit();
     }
+    $users = $user->get_users($user_data['batch_id']);
+    echo json_encode([
+        'success' => true,
+        "user" => $users,
+        
+    ]);
 
 }
 catch (Exception $e) {

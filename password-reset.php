@@ -2,7 +2,11 @@
 
 require_once 'core/init.php';
 
-$user_data = $user->get_data( Session::get('email') );
+$user_data = $user->get_token( Session::get('token_id') );
+// TODO: Usahakan hanya menampilkan column Token
+if (Session::get('token_id') != $user_data['user_token']) {
+    Redirect::to('reset-code');
+}
 
 $errors = array();
 
@@ -32,9 +36,7 @@ if ( isset($_POST['submit']) ) {
             $user->update_user(array(
                 'user_password' => password_hash($_POST['new_password'], PASSWORD_BCRYPT),
                 'user_token' => $token,
-            ), 130 ); //TODO: disini harus automate dari db
-
-            // email verifikasi dibuat disini
+            ), $user_data['user_id'] ); 
 
             Session::flash('login', 'Selamat! Password berhasil diupdate');
             Redirect::to('login');
@@ -45,6 +47,8 @@ if ( isset($_POST['submit']) ) {
     }
 }
 
+$title_page = "Create New Password";
+
 require_once "templates/header.php";
 
 ?>
@@ -53,7 +57,7 @@ require_once "templates/header.php";
 <link href="assets/css/custom-auth.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background-image: url('assets/img/background.jpg')">
     <div class="flex items-center justify-center min-h-screen px-10">
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <div class="text-center">

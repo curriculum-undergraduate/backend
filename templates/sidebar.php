@@ -12,7 +12,7 @@
         <div>
             <ul class="flex flex-col gap-y-1">
                 <li>
-                    <a href="admin.php"
+                    <a href="users.php"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/home_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Dashboard</p>
@@ -34,19 +34,19 @@
                         </button>
                         <ul id="dropdown-example" class="hidden py-2 space-y-2">
                             <li>
-                                <a href="admin.php?role=student"
+                                <a href="users.php?role=student"
                                     class="flex items-center w-full p-2 text-base font-normal text-light-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Student</a>
                             </li>
                             <li>
-                                <a href="admin.php?role=parents"
+                                <a href="users.php?role=parents"
                                     class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Parents</a>
                             </li>
                             <li>
-                                <a href="admin.php?role=lecture"
+                                <a href="users.php?role=lecture"
                                     class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Lecture</a>
                             </li>
                             <li>
-                                <a href="admin.php?role=admin"
+                                <a href="users.php?role=admin"
                                     class="flex items-center w-full p-2 text-base font-normal text-gray-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Admin</a>
                             </li>
                         </ul>
@@ -87,7 +87,7 @@
     <div>
         <ul class="flex flex-col ">
             <li>
-                <a href="./faq.php"
+                <a href="faq.php"
                     class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                     <img class="w-5" src="assets/icons/help_icon.svg" alt="Help Icon">
                     <p class="font-semibold">Help</p>

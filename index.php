@@ -3,7 +3,7 @@
 require_once "core/init.php";
 
 if ( $user->is_loggedIn() ) {
-    Redirect::to('profile');
+    Redirect::to('account-settings');
 }
 
 $errors = array();
@@ -46,10 +46,10 @@ if ( isset($_POST['submit']) ) {
                     unset($user_data['user_profile_picture']);
                     unset($user_data['user_token']);
                     if ($user_data['user_status'] == 'verified') {
-                        Session::flash('profile', 'Selamat! anda berhasil login');
+                        // Session::flash('account-settings', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
                         if (!$user->is_admin(Session::get('email'))) {
-                            Redirect::to('profile');
+                            Redirect::to('account-settings');
                         } else {
                             Redirect::to('dashboard');
                         }
@@ -79,6 +79,8 @@ if ( isset($_POST['submit']) ) {
 
 } // endof submit form
 
+$title_page = "Login";
+
 require_once "templates/header.php";
 
 ?>
@@ -87,7 +89,7 @@ require_once "templates/header.php";
 <link href="assets/css/custom-auth.css" rel="stylesheet" />
   </head>
 
-<body>
+<body style="background-image: url('assets/img/background.jpg')">
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:mt-8 lg:flex-1">
             <h2 class="text-4xl font-bold text-white tracking-wider sm:text-4xl">

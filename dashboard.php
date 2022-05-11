@@ -8,9 +8,9 @@ if (!$user->is_loggedIn()) {
 }
 
 
-if (!$user->is_admin(Session::get('email'))) {
-    Session::flash('profile', 'Halaman ini khusus Admin');
-    Redirect::to('profile');
+if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('email')) ) {
+    Session::flash('account-settings', 'Halaman ini khusus Admin');
+    Redirect::to('account-settings');
 }
 
 $user_data = $user->get_data( Session::get('email') );
@@ -23,6 +23,7 @@ $user_data = $user->get_data( Session::get('email') );
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="assets/icons/logo.ico" type="image/x-icon">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">

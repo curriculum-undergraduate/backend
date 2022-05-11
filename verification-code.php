@@ -38,6 +38,8 @@ if ( isset($_POST['submit']) ) {
 
 }
 
+$title_page = "Verification Code";
+
 require_once "templates/header.php";
 
 ?>
@@ -46,7 +48,7 @@ require_once "templates/header.php";
 <link href="assets/css/custom-auth.css" rel="stylesheet" />
 </head>
 
-<body>
+<body style="background-image: url('assets/img/background.jpg')">
     <div class="flex items-center justify-center min-h-screen px-10">
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <div class="text-center">
