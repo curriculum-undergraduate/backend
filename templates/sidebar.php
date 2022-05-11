@@ -20,20 +20,14 @@
                 </li>
                 <?php if ($user->is_admin(Session::get('email'))) { ?>
                  <li>
-                        <button type="button"
-                            class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white"
-                            aria-controls="dropdown-example" data-collapse-toggle="dropdown-example">
-                            <img class="w-5" src="assets/icons/consult_icon.svg" alt="Consult Icon">
-                            <p class="font-semibold">List User</p>
-                            <svg sidebar-toggle-item class=" w-6 h-6 px-1  " fill="currentColor" viewBox="0 0 20 20"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd"
-                                    d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                    clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                        <ul id="dropdown-example" class="hidden py-2 space-y-2">
-                            <li>
+                            <a id="dropdownRightButton" data-dropdown-toggle="dropdownRight" data-dropdown-placement="right" type="button" class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                                <img class="w-5" src="assets/icons/consult_icon.svg" alt="Consult Icon">
+                                <p class="font-semibold mr-[50px]">List User</p>
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg> 
+                            </a>
+                           <div id="dropdownRight" class="z-10 hidden bg-white divide-y divide-gray-100 rounded shadow w-44">
+                                    <ul class="py-1 text-sm text-white-700 font-semibold" aria-labelledby="dropdownRightButton">
+                                        <li>
                                 <a href="admin.php?role=student"
                                     class="flex items-center w-full p-2 text-base font-normal text-light-900 transition duration-75 rounded-lg hover:bg-cream text-dark-green hover:text-white pl-11">Student</a>
                             </li>
