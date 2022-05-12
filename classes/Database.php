@@ -191,6 +191,18 @@ class Database
         return $results;
     }
 
+    public function get_batch()
+    {
+        $query = "SELECT * FROM batch";
+        $result = $this->mysqli->query($query);
+
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+
 
     public function run_query($query, $message)
     {

@@ -196,7 +196,7 @@ require_once "templates/header.php";
             </form>
         </div>
         <div class="hidden lg:flex lg:w-1/2 my-auto p-36">
-            <img src="assets/img/register.png" class="animate-bounce-slow lg:mt-10 lg:h-full lg:w-full">
+            <img src="assets/img/register.png" class="animate-bounce lg:mt-10 lg:h-full lg:w-full">
         </div>
     </div>
 

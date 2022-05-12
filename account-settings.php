@@ -60,7 +60,7 @@ if ( isset($_POST['submit']) ) {
                 'user_address' => $_POST['alamat_domisili'],
             ), $user_data['user_id'] );
 
-            Redirect::to('profile');
+            Redirect::to('account-settings');
 
         } else {
             $errors = $validation->errors();
