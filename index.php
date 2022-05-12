@@ -46,9 +46,14 @@ if ( isset($_POST['submit']) ) {
                     unset($user_data['user_profile_picture']);
                     unset($user_data['user_token']);
                     if ($user_data['user_status'] == 'verified') {
-                        // Session::flash('account-settings', 'Selamat! anda berhasil login');
+                        // Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
-                        if (!$user->is_admin(Session::get('email'))) {
+                        if (!$user->is_admin(Session::get('email')) || !$user->is_mentor(Session::get('email'))) {
+                            // This is not secure
+                            $user_data = $user->get_data($email);
+                            unset($user_data['user_password']);
+                            $_SESSION['user_data'] = $user_data;
+                            // End
                             Redirect::to('account-settings');
                         } else {
                             Redirect::to('dashboard');
@@ -92,7 +97,7 @@ require_once "templates/header.php";
 <body style="background-image: url('assets/img/background.jpg')">
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:mt-8 lg:flex-1">
-            <h2 class="text-4xl font-bold text-white tracking-wider sm:text-4xl">
+            <h2 class="text-4xl font-bold text-white tracking-wider lg:pt-5 pt-24">
                 GradIT Course
             </h2>
             <h3 class="text-2xl font-semibold text-white tracking-wider mt-3">
@@ -180,7 +185,7 @@ require_once "templates/header.php";
         </div>
         <div class="hidden lg:flex lg:w-1/2 my-auto p-36">
             <img src="assets/img/login.png"
-                class="animate-bounce-slow lg:mt-10 lg:h-full lg:w-80 lg:object-scale-down lg:object-top">
+                class="animate-bounce lg:mt-10 lg:h-full lg:w-80 lg:object-scale-down lg:object-top">
         </div>
     </div>
 
