@@ -194,7 +194,12 @@ if ( isset($_POST['submit']) ) {
                     <div class="text-center py-10">
                         <img src="https://www.shareicon.net/data/512x512/2016/07/26/802043_man_512x512.png" alt=""
                             class="w-40 rounded-full mx-auto">
-                        <p class="text-gray-500 mt-11">Student</p>
+                        <p class="text-gray-500 mt-11">
+                            <?php if ($user_data['role_id'] == 2) : ?>
+                                Mentor</p>
+                            <?php else : ?>
+                                Student</p>
+                            <?php endif; ?>                            
                         <h3 class="text-xl">
                             <?php if ($user_data['user_first_name'] != '') : ?>
                                 <?php echo strtoupper($user_data['user_first_name']) ?> <?php echo strtoupper($user_data['user_last_name']) ?>

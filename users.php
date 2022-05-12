@@ -144,6 +144,8 @@ if ( isset($_POST['submit']) ) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <title>Users | Lumintu Classsroom</title>
+
     <!-- Flowbite CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
 
@@ -319,86 +321,88 @@ if ( isset($_POST['submit']) ) {
 
                             <tbody class="bg-white">
                                 <?php $row = 1; ?>
-                                <?php foreach ( $users as $_user ) : ?>
-                                <tr>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="text-sm leading-5 text-gray-500">
-                                            <?php echo $row ?>
-                                        </div>
-                                    </td>
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="flex items-center">
-                                            <!-- <div class="flex-shrink-0 w-10 h-10">
-                                                    <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu"
-                                                        alt="admin dashboard ui">
-                                                </div> -->
-
-                                            <div class="ml-4">
-                                                <div class="text-sm font-medium leading-5 text-gray-900">
-                                                    <a href="#" class="underline">
-                                                        <?php echo $_user['user_username'] ?>
-                                                    </a>
+                                    <?php foreach ( $users as $_user ) : ?>
+                                    <?php if ($_user['role_id'] != 1) : ?>
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <div class="text-sm leading-5 text-gray-500">
+                                                    <?php echo $row ?>
                                                 </div>
-                                            </div>
-                                        </div>
-                                    </td>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <div class="flex items-center">
+                                                    <!-- <div class="flex-shrink-0 w-10 h-10">
+                                                            <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu"
+                                                                alt="admin dashboard ui">
+                                                        </div> -->
 
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="text-sm leading-5 text-gray-500">
-                                            <?php echo $_user['user_first_name'] ?>
-                                            <?php echo $_user['user_last_name'] ?>
-                                        </div>
-                                    </td>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium leading-5 text-gray-900">
+                                                            <a href="#" class="underline">
+                                                                <?php echo $_user['user_username'] ?>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
 
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="text-sm leading-5 text-gray-500">
-                                            <?php echo $_user['user_email'] ?>
-                                        </div>
-                                    </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <div class="text-sm leading-5 text-gray-500">
+                                                    <?php echo $_user['user_first_name'] ?>
+                                                    <?php echo $_user['user_last_name'] ?>
+                                                </div>
+                                            </td>
 
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="text-sm leading-5 text-gray-500">
-                                            <?php echo $_user['role_name'] ?>
-                                        </div>
-                                    </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <div class="text-sm leading-5 text-gray-500">
+                                                    <?php echo $_user['user_email'] ?>
+                                                </div>
+                                            </td>
 
-                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <?php if ($_user['user_status'] == 'verified'): ?>
-                                            <span
-                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                <?php echo $_user['user_status'] ?>
-                                            </span>
-                                        <?php else: ?>
-                                            <span
-                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                <?php echo $_user['user_status'] ?>
-                                            </span>
-                                        <?php endif; ?>
-                                    </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <div class="text-sm leading-5 text-gray-500">
+                                                    <?php echo $_user['role_name'] ?>
+                                                </div>
+                                            </td>
 
-                                    <?php if ($user->is_admin(Session::get('email'))) : ?>
-                                        <td>
-                                            <button type="button" data-modal-toggle="update-modal"
-                                                class=" py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                </svg>
-                                            </button>
-                                            <button type="button" data-modal-toggle="delete-modal"
-                                                class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
-                                                    fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                        d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                </svg>
-                                            </button>
-                                        </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <?php if ($_user['user_status'] == 'verified'): ?>
+                                                    <span
+                                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                        <?php echo $_user['user_status'] ?>
+                                                    </span>
+                                                <?php else: ?>
+                                                    <span
+                                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                        <?php echo $_user['user_status'] ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </td>
+
+                                            <?php if ($user->is_admin(Session::get('email'))) : ?>
+                                                <td>
+                                                    <button type="button" data-modal-toggle="update-modal"
+                                                        class=" py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                        </svg>
+                                                    </button>
+                                                    <button type="button" data-modal-toggle="delete-modal"
+                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
+                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                                        </svg>
+                                                    </button>
+                                                </td>
+                                            <?php endif; ?>
+
+                                        </tr>
+                                        <?php $row++; ?>
                                     <?php endif; ?>
-
-                                </tr>
-                                <?php $row++; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>

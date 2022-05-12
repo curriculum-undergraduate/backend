@@ -1,47 +1,101 @@
-let parameters = {
-  count: false,
-  letters: false,
-  numbers: false,
-  special: false,
-};
-let strengthBar = document.getElementById("strength-bar");
+let passwordInput = document.querySelector(
+  '#passwordInput input[type="password"]'
+);
+let passwordStrength = document.getElementById("passwordStrength");
+let poor = document.querySelector("#passwordStrength #poor");
+let weak = document.querySelector("#passwordStrength #weak");
+let strong = document.querySelector("#passwordStrength #strong");
+let passwordInfo = document.getElementById("passwordInfo");
 
-function strengthChecker() {
-  let password = document.getElementById("password").value;
+let poorRegExp = /[a-z]/;
+let weakRegExp = /(?=.*?[0-9])/;
+let strongRegExp = /(?=.*?[#?!@$%^&*-])/;
+let whitespaceRegExp = /^$|\s+/;
 
-  parameters.letters = /[A-Za-z]+/.test(password) ? true : false;
-  parameters.numbers = /[0-9]+/.test(password) ? true : false;
-  parameters.special = /[!\"$%&/()=?@~`\\.\';:+=^*_-]+/.test(password)
-    ? true
-    : false;
-  parameters.count = password.length > 7 ? true : false;
+passwordInput.oninput = function () {
+  let passwordValue = passwordInput.value;
+  let passwordLength = passwordValue.length;
 
-  let barLength = Object.values(parameters).filter((value) => value);
+  let poorPassword = passwordValue.match(poorRegExp);
+  let weakPassword = passwordValue.match(weakRegExp);
+  let strongPassword = passwordValue.match(strongRegExp);
+  let whitespace = passwordValue.match(whitespaceRegExp);
 
-  console.log(Object.values(parameters), barLength);
+  if (passwordValue != "") {
+    passwordStrength.style.display = "block";
+    passwordStrength.style.display = "flex";
+    passwordInfo.style.display = "block";
 
-  strengthBar.innerHTML = "";
-  for (let i in barLength) {
-    let span = document.createElement("span");
-    span.classList.add("strength");
-    strengthBar.appendChild(span);
-  }
-
-  let spanRef = document.getElementsByClassName("strength");
-  for (let i = 0; i < spanRef.length; i++) {
-    switch (spanRef.length - 1) {
-      case 0:
-        spanRef[i].style.background = "#ff3e36";
-        break;
-      case 1:
-        spanRef[i].style.background = "#ff691f";
-        break;
-      case 2:
-        spanRef[i].style.background = "#ffda36";
-        break;
-      case 3:
-        spanRef[i].style.background = "#0be881";
-        break;
+    if (whitespace) {
+      passwordInfo.textContent = "whitespaces are not allowed";
+    } else {
+      poorPasswordStrength(
+        passwordLength,
+        poorPassword,
+        weakPassword,
+        strongPassword
+      );
+      weakPasswordStrength(
+        passwordLength,
+        poorPassword,
+        weakPassword,
+        strongPassword
+      );
+      strongPasswordStrength(
+        passwordLength,
+        poorPassword,
+        weakPassword,
+        strongPassword
+      );
     }
+  } else {
+    passwordStrength.style.display = "none";
+    passwordInfo.style.display = "none";
+  }
+};
+
+function poorPasswordStrength(
+  passwordLength,
+  poorPassword,
+  weakPassword,
+  strongPassword
+) {
+  if (passwordLength <= 3 && (poorPassword || weakPassword || strongPassword)) {
+    poor.classList.add("active");
+    passwordInfo.style.display = "block";
+    passwordInfo.textContent = "Your password is too Poor";
+    passwordInfo.style.color = "red";
+  }
+}
+
+function weakPasswordStrength(
+  passwordLength,
+  poorPassword,
+  weakPassword,
+  strongPassword
+) {
+  if (passwordLength >= 4 && poorPassword && (weakPassword || strongPassword)) {
+    weak.classList.add("active");
+    passwordInfo.textContent = "Your password is Weak";
+    passwordInfo.style.color = "orange";
+  } else {
+    weak.classList.remove("active");
+  }
+}
+
+function strongPasswordStrength(
+  passwordLength,
+  poorPassword,
+  weakPassword,
+  strongPassword
+) {
+  if (passwordLength >= 6 && poorPassword && weakPassword && strongPassword) {
+    poor.classList.add("active");
+    weak.classList.add("active");
+    strong.classList.add("active");
+    passwordInfo.textContent = "Your password is strong";
+    passwordInfo.style.color = "#98FB98";
+  } else {
+    strong.classList.remove("active");
   }
 }
