@@ -28,7 +28,7 @@ if (!$user->is_loggedIn()) {
 }
 
 
-if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('email')) ) {
+if (!$user->is_admin(Session::get('email'))) {
     // Session::flash('profile', 'Halaman ini khusus Admin');
     Redirect::to('403');
 }
@@ -99,15 +99,10 @@ if ( isset($_POST['submit']) ) {
                 // email verifikasi dibuat disini
                 $mail->Subject = "Email Verification";
                 $mail->addAddress($_POST['email'], $_POST['username']);
-                $email_template = 'templates/sendmail_admin.html';
-                $mail->Body = file_get_contents($email_template);
-                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
-                $password = $_POST['password'];
-
-                $key = array('{token}', '{password}');
-                $value = array($token, $password);
-                $mail->Body = str_replace($key, $value,  $mail->Body);
-                // $mail->Body = str_replace("{token}", $token,  $mail->Body);
+                // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
+                // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
+                $passwd = $_POST['password'];
+                $mail->Body = "Your token id is <b>$token</b> and Your password: <b>$passwd</b>";
 
                 if (!$mail->send()) {
                     $errors[] = "Message could not be sent.";
@@ -116,8 +111,8 @@ if ( isset($_POST['submit']) ) {
                 }
                 else {
                     $email = $_POST['email'];
-                    Session::flash("users", "We've sent a verification code to your email - $email");
-                    Redirect::to('users');
+                    Session::flash("admin", "We've sent a verification code to your email - $email");
+                    Redirect::to('admin');
                 }
 
             } else {
@@ -137,14 +132,14 @@ if ( isset($_POST['submit']) ) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="shortcut icon" href="assets/icons/logo.ico" type="image/x-icon">
+    <title>Batch</title>
+    <link rel="icon" href="/assets/img/logo_lumintu1.ico?v=2" />
+    <link rel="icon" type="image/x-icon" href="./assets/img/logo_lumintu1.png">
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <title>Users | Lumintu Classsroom</title>
 
     <!-- Flowbite CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
@@ -251,7 +246,7 @@ if ( isset($_POST['submit']) ) {
                     </li>
                 </ol>
             </div>
-                        
+            
             <?php if ( !empty($errors) ) { ?>
 
                 <?php foreach ($errors as $error) : ?>
@@ -269,22 +264,45 @@ if ( isset($_POST['submit']) ) {
 
             <?php } ?>
 
-            <?php if ($user->is_admin(Session::get('email'))) : ?>
-                <!-- Topic Title -->
-                <div class="flex items-center gap-x-4 justify-between">
-                    <p class="text-xl text-dark-green font-semibold">List All User With Roles</p>
+            <!-- Topic Title -->
+            <div class="flex items-center gap-x-4 justify-between">
+                <p class="text-xl text-dark-green font-semibold">List All Batch</p>
 
-                    <button type="button" data-modal-toggle="adduser-modal"
-                        class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
-                        <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Add User
-                    </button>
+                <button type="button" data-modal-toggle="adduser-modal"
+                    class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
+                    <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Add Batch
+                </button>
+            </div>
+
+            <!--Button Filter  -->
+            <div class="w-auto">
+             <button id="dropdownDividerButton" data-dropdown-toggle="dropdownDivider"class="text-[#bd9161] 
+             bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center mr-2"
+                    type="button"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" 
+                    xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" 
+                    stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+            </button>
+                    <div id="dropdownDivider" class="z-10 hidden bg-white divide-y divide-gray-100 rounded 
+                    shadow w-44 dark:bg-gray-700 dark:divide-gray-600" data-popper-reference-hidden="" 
+                    data-popper-escaped="" data-popper-placement="top" style="position: absolute; 
+                    inset: auto auto 0px 0px; margin: 0px; transform: translate3d(392px, 708px, 0px);">
+                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDividerButton">
+                    <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Verifed</a>
+                        </li>
+                        <li>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Unverifed</a>
+                        </li>
+                    </ul>
                 </div>
-            <?php endif;?>
+             </div>
+                    
+            <!-- End of Button Filter -->
 
             <div class="flex flex-col mt-8 mb-16">
                 <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
@@ -312,106 +330,91 @@ if ( isset($_POST['submit']) ) {
                                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                         Status</th>
                                     <th
-                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Batch</th>
-                                    <?php if ($user->is_admin(Session::get('email'))) : ?>
-                                    <th
                                         class="px-6 py-3 text-left text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                         Action</th>
-                                    <?php endif; ?>
                                 </tr>
                             </thead>
 
                             <tbody class="bg-white">
                                 <?php $row = 1; ?>
-                                    <?php foreach ( $users as $_user ) : ?>
-                                    <?php if ($_user['role_id'] != 1) : ?>
-                                        <tr>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $row ?>
+                                <?php foreach ( $users as $_user ) : ?>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="text-sm leading-5 text-gray-500">
+                                            <?php echo $row ?>
+                                        </div>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="flex items-center">
+                                            <!-- <div class="flex-shrink-0 w-10 h-10">
+                                                    <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu"
+                                                        alt="admin dashboard ui">
+                                                </div> -->
+
+                                            <div class="ml-4">
+                                                <div class="text-sm font-medium leading-5 text-gray-900">
+                                                    <a href="#" class="underline">
+                                                        <?php echo $_user['user_username'] ?>
+                                                    </a>
                                                 </div>
-                                            </td>
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="flex items-center">
-                                                    <!-- <div class="flex-shrink-0 w-10 h-10">
-                                                            <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu"
-                                                                alt="admin dashboard ui">
-                                                        </div> -->
+                                            </div>
+                                        </div>
+                                    </td>
 
-                                                    <div class="ml-4">
-                                                        <div class="text-sm font-medium leading-5 text-gray-900">
-                                                            <a href="#" class="underline">
-                                                                <?php echo $_user['user_username'] ?>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="text-sm leading-5 text-gray-500">
+                                            <?php echo $_user['user_first_name'] ?>
+                                            <?php echo $_user['user_last_name'] ?>
+                                        </div>
+                                    </td>
 
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $_user['user_first_name'] ?>
-                                                    <?php echo $_user['user_last_name'] ?>
-                                                </div>
-                                            </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="text-sm leading-5 text-gray-500">
+                                            <?php echo $_user['user_email'] ?>
+                                        </div>
+                                    </td>
 
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $_user['user_email'] ?>
-                                                </div>
-                                            </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="text-sm leading-5 text-gray-500">
+                                            <?php echo $_user['role_name'] ?>
+                                        </div>
+                                    </td>
 
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $_user['role_name'] ?>
-                                                </div>
-                                            </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <?php if ($_user['user_status'] == 'verified'): ?>
+                                            <span
+                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                <?php echo $_user['user_status'] ?>
+                                            </span>
+                                        <?php else: ?>
+                                            <span
+                                                class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
+                                                <?php echo $_user['user_status'] ?>
+                                            </span>
+                                        <?php endif; ?>
+                                    </td>
 
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <?php if ($_user['user_status'] == 'verified'): ?>
-                                                    <span
-                                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                        <?php echo $_user['user_status'] ?>
-                                                    </span>
-                                                <?php else: ?>
-                                                    <span
-                                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                        <?php echo $_user['user_status'] ?>
-                                                    </span>
-                                                <?php endif; ?>
-                                            </td>
+                                    <td>
+                                        <button type="button" data-modal-toggle="update-modal"
+                                            class=" py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" data-modal-toggle="delete-modal"
+                                            class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
+                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                                            </svg>
+                                        </button>
+                                    </td>
 
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    Dummy
-                                                </div>
-                                            </td>
-
-                                            <?php if ($user->is_admin(Session::get('email'))) : ?>
-                                                <td>
-                                                    <button type="button" data-modal-toggle="update-modal"
-                                                        class=" py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
-                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                        </svg>
-                                                    </button>
-                                                    <button type="button" data-modal-toggle="delete-modal"
-                                                        class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
-                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                                                        </svg>
-                                                    </button>
-                                                </td>
-                                            <?php endif; ?>
-
-                                        </tr>
-                                        <?php $row++; ?>
-                                    <?php endif; ?>
+                                </tr>
+                                <?php $row++; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
