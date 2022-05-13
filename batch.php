@@ -33,11 +33,7 @@ if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('e
     Redirect::to('403');
 }
 
-if ( $_GET['role'] ) {
-    $users = $user->get_users_role( $_GET['role'] );
-} else {
-    $users = $user->get_users();
-}
+$batch = $user->get_batch();
 
 $user_data = $user->get_data( Session::get('email') );
 
@@ -54,76 +50,36 @@ if ( isset($_POST['submit']) ) {
 
         // Check Method
         $validation = $validation->check(array(
-            'username' => array(
-                        'required' => true,
-                        'max' => 50,
-                        ),
-            'email' => array(
-                        'required' => true,
-                        'min' => 6,
-                        ),
-            'role' => array(
+            'batch_name' => array(
                         'required' => true,
                         ),
-            'password' => array(
+            'start_date' => array(
                         'required' => true,
-                        'min' => 8,
                         ),
-            // 'password_verify' => array(
+            'end_date' => array(
+                        'required' => true,
+                        ),
+            // 'status' => array(
             //             'required' => true,
-            //             'match' => 'password',
             //             ),
         ));
 
-        // Menguji email apakah sudah atau belum terdaftar di Database
-        if ($user->check_name($_POST['email'])) {
+        // Check Passed
+        if ($validation->passed()) {    
 
-            $errors[] = "Email sudah terdaftar";
-    
+            $user->add_batch(array(
+                'batch_name' => $_POST['batch_name'],
+                'batch_start_date' => $_POST['start_date'],
+                'batch_end_date' => $_POST['end_date'],
+                // 'status' => $_POST['status'],
+            ));
+
+            Session::flash("batch", "Batch Berhasil ditambahkan");
+            Redirect::to('batch');
+
         } else {
-
-            // Check Passed
-            if ($validation->passed()) {    
-
-                $token = rand(999999, 111111);
-                $role = $_POST['role'];
-
-                $user->register_user(array(
-                    'user_username' => $_POST['username'],
-                    'user_email' => $_POST['email'],
-                    'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
-                    'role_id' => (int)$role,
-                    'user_token' => $token,
-                ));
-
-                // email verifikasi dibuat disini
-                $mail->Subject = "Email Verification";
-                $mail->addAddress($_POST['email'], $_POST['username']);
-                $email_template = 'templates/sendmail_admin.html';
-                $mail->Body = file_get_contents($email_template);
-                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
-                $password = $_POST['password'];
-
-                $key = array('{token}', '{password}');
-                $value = array($token, $password);
-                $mail->Body = str_replace($key, $value,  $mail->Body);
-                // $mail->Body = str_replace("{token}", $token,  $mail->Body);
-
-                if (!$mail->send()) {
-                    $errors[] = "Message could not be sent.";
-                    // echo 'Message could not be sent.';
-                    // echo 'Mailer Error: ' . $mail->ErrorInfo;
-                }
-                else {
-                    $email = $_POST['email'];
-                    Session::flash("users", "We've sent a verification code to your email - $email");
-                    Redirect::to('users');
-                }
-
-            } else {
-                $errors = $validation->errors();
-            }
-        }    
+            $errors = $validation->errors();
+        }   
     }
 
 }
@@ -144,7 +100,7 @@ if ( isset($_POST['submit']) ) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <title>Users | Lumintu Classsroom</title>
+    <title>Batch | Lumintu Classsroom</title>
 
     <!-- Flowbite CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
@@ -214,10 +170,22 @@ if ( isset($_POST['submit']) ) {
         <div class="bg-gray-100 w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
-                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold">
+                <p class="text-dark-green font-semibold text-sm">
                     <?php echo $user_data['user_email'] ?>
                 </p>
+                <div x-data="{ open: false }" @mouseleave="open = false" class="relative">
+                    <button @mouseover="open = true">
+                        <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div x-show="open" class="absolute right-0 w-48 bg-white rounded-md">
+                        <a href="account-settings.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                            Account Settings
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Breadcrumb -->
@@ -281,7 +249,7 @@ if ( isset($_POST['submit']) ) {
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        Add User
+                        Add Batch
                     </button>
                 </div>
             <?php endif;?>
@@ -298,22 +266,17 @@ if ( isset($_POST['submit']) ) {
                                         #</th>
                                     <th
                                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Username</th>
+                                        Batch Name</th>
                                     <th
                                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Fullname</th>
+                                        Start date</th>
                                     <th
                                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Email</th>
-                                    <th
+                                        End date</th>
+                                        <!-- TODO: Membuat status untuk Tiap Batch -->
+                                    <!-- <th
                                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Role</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Status</th>
-                                    <th
-                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                        Batch</th>
+                                        Status</th> -->
                                     <?php if ($user->is_admin(Session::get('email'))) : ?>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
@@ -324,8 +287,7 @@ if ( isset($_POST['submit']) ) {
 
                             <tbody class="bg-white">
                                 <?php $row = 1; ?>
-                                    <?php foreach ( $users as $_user ) : ?>
-                                    <?php if ($_user['role_id'] != 1) : ?>
+                                    <?php foreach ( $batch as $_batch ) : ?>
                                         <tr>
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="text-sm leading-5 text-gray-500">
@@ -334,15 +296,10 @@ if ( isset($_POST['submit']) ) {
                                             </td>
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="flex items-center">
-                                                    <!-- <div class="flex-shrink-0 w-10 h-10">
-                                                            <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu"
-                                                                alt="admin dashboard ui">
-                                                        </div> -->
-
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium leading-5 text-gray-900">
                                                             <a href="#" class="underline">
-                                                                <?php echo $_user['user_username'] ?>
+                                                                <?php echo $_batch['batch_name'] ?>
                                                             </a>
                                                         </div>
                                                     </div>
@@ -351,42 +308,22 @@ if ( isset($_POST['submit']) ) {
 
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $_user['user_first_name'] ?>
-                                                    <?php echo $_user['user_last_name'] ?>
+                                                    <?php echo $_batch['batch_start_date'] ?>
                                                 </div>
                                             </td>
 
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $_user['user_email'] ?>
+                                                    <?php echo $_batch['batch_end_date'] ?>
                                                 </div>
                                             </td>
 
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    <?php echo $_user['role_name'] ?>
-                                                </div>
-                                            </td>
-
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <?php if ($_user['user_status'] == 'verified'): ?>
-                                                    <span
-                                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                        <?php echo $_user['user_status'] ?>
-                                                    </span>
-                                                <?php else: ?>
-                                                    <span
-                                                        class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                        <?php echo $_user['user_status'] ?>
-                                                    </span>
-                                                <?php endif; ?>
-                                            </td>
-
-                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                <div class="text-sm leading-5 text-gray-500">
-                                                    Dummy
-                                                </div>
-                                            </td>
+                                            <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <span 
+                                                    class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
+                                                    
+                                                </span>
+                                            </td> -->
 
                                             <?php if ($user->is_admin(Session::get('email'))) : ?>
                                                 <td>
@@ -411,7 +348,6 @@ if ( isset($_POST['submit']) ) {
 
                                         </tr>
                                         <?php $row++; ?>
-                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
@@ -531,42 +467,38 @@ if ( isset($_POST['submit']) ) {
                     </svg>
                 </button>
                 <div class="py-6 px-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900">Add User</h3>
+                    <h3 class="mb-4 text-xl font-medium text-gray-900">Add Batch</h3>
                     <form class="space-y-6" action="#" method="POST">
                     <div>
                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                     </div>
                         <div>
-                            <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
-                            <input type="text" name="username" id="username" placeholder="username"
+                            <label for="batch_name" class="block mb-2 text-sm font-medium text-gray-900">Batch name</label>
+                            <input type="text" name="batch_name" id="batch_name" placeholder="batch_name"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 required>
                         </div>
                         <div>
-                            <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                            <input type="email" name="email" id="email" placeholder="your email"
+                            <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
+                            <input type="date" name="start_date" id="start_date" placeholder="start_date"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 required>
-                        </div>
-                        <div>    
-                            <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>                            
-                            <input type="password" name="password" id="password" placeholder="password generate..."
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                            <div class="flex flex-row justify-between mt-2">
-                                <button type="button" class="text-[#bd9161]" onclick="genPassword()">Generate</button>
-                                <button type="button" id="button" class="text-[#bd9161]" onclick="copyPassword()">Copy</button>
-                            </div>                    
                         </div>
                         <div>
-                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
-                            <select id="countries" name="role"
+                            <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>
+                            <input type="date" name="end_date" id="end_date" placeholder="end_date"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                                required>
+                        </div>
+                        <!-- TODO: Status Batch -->
+                        <!-- <div>
+                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
+                            <select id="countries" name="status"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="1">Admin</option>
-                                <option value="2">Lecture</option>
-                                <option value="3">Student</option>
+                                <option value="active">Active</option>
+                                <option value="unactive">Non Active</option>
                             </select>
-                        </div>
+                        </div> -->
                         <button type="submit" name="submit"
                             class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
                     </form>
@@ -576,6 +508,7 @@ if ( isset($_POST['submit']) ) {
     </div>
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');

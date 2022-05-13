@@ -17,7 +17,7 @@
         <p class="text-2xl font-semibold md:text-3xl">Error system. Please contact administrator.</p>
         <p class="mt-4 mb-8 dark:text-coolGray-400">But dont worry, you can find plenty of other things on our homepage.
         </p>
-        <a rel="noopener noreferrer" href="profile.php"
+        <a rel="noopener noreferrer" href="account-settings.php"
           class="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-coolGray-900">Back to homepage</a>
       </div>
     </div>

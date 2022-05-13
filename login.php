@@ -48,7 +48,7 @@ if ( isset($_POST['submit']) ) {
                     if ($user_data['user_status'] == 'verified') {
                         // Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
-                        if (!$user->is_admin(Session::get('email')) || !$user->is_mentor(Session::get('email'))) {
+                        if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('email'))) {
                             // This is not secure
                             $user_data = $user->get_data($email);
                             unset($user_data['user_password']);

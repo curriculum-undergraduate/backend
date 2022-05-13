@@ -41,26 +41,32 @@ try {
     // Men-decode token. Dalam library ini juga sudah sekaligus memverfikasinya
     $payload = JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));    
     $user_data = $user->get_data($payload->{ 'email'});
-    if ($user_data['role_id'] != 3) {
+    // if ($user_data['role_id'] != 3) {
 
-        $batch = $user->get_batch();
-        echo json_encode([
-            'success' => true,
-            "batch" => $batch,
+    //     $batch = $user->get_batch();
+    //     echo json_encode([
+    //         'success' => true,
+    //         "batch" => $batch,
             
-        ]);
+    //     ]);
 
-    } else {
+    // } else {
 
-        echo json_encode([
-            'success' => false,
-            'data' => null,
-            'message' => 'Akses ditolak'
-        ]);
-        http_response_code(401);
-        exit();
+    //     echo json_encode([
+    //         'success' => false,
+    //         'data' => null,
+    //         'message' => 'Akses ditolak'
+    //     ]);
+    //     http_response_code(401);
+    //     exit();
         
-    }
+    // }
+    $batch = $user->get_batch();
+    echo json_encode([
+        'success' => true,
+        "batch" => $batch,
+        
+    ]);
     
 
 }

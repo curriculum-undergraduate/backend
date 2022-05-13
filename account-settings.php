@@ -17,6 +17,11 @@ $errors = array();
 
 // if ( Input::get('submit') ) {
 if ( isset($_POST['submit']) ) {
+
+    // print_r($_POST);
+    // print_r($_FILES);
+    // die();
+
     if ( Token::check( $_POST['token'] ) ) {
 
         // Call Validation Object
@@ -155,9 +160,20 @@ if ( isset($_POST['submit']) ) {
                 <p class="text-dark-green font-semibold text-sm">
                     <?php echo $user_data['user_email'] ?>
                 </p>
-                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
-            </div>
+                <div x-data="{ open: false }" @mouseleave="open = false" class="relative">
+                    <button @mouseover="open = true">
+                        <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
+                    </button>
 
+                    <!-- Dropdown menu -->
+                    <div x-show="open" class="absolute right-0 w-48 bg-white rounded-md">
+                        <a href="account-settings.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                            Account Settings
+                        </a>
+                    </div>
+                </div>
+            </div>
 
             <?php if ( Session::exists('profile') ) { ?>
             <div id="alert-3" class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200" role="alert">
@@ -225,7 +241,7 @@ if ( isset($_POST['submit']) ) {
                         </div>
                         <div id="myTabContent">
                             <div class="hidden p-4 bg-gray-50 rounded-lg" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-                                <form action="" method="post">
+                                <form action="" method="post" enctype="multipart/form-data">
                                     <div>
                                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                                     </div>
@@ -247,7 +263,7 @@ if ( isset($_POST['submit']) ) {
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                 placeholder="Last name"
                                                 value="<?php echo $user_data['user_last_name'] ?>" required>
-                                        </div>
+                                        </div>                                        
                                         <div class="mb-6">
                                             <label for="emailAddress"
                                                 class="block mb-2 text-sm font-medium text-gray-900">Email
@@ -296,6 +312,11 @@ if ( isset($_POST['submit']) ) {
                                                 value="<?php echo $user_data['user_phone'] ?>" required>
                                         </div>
                                     </div>
+                                    <!-- TODO: Membuat fitur Upload Profil Picture -->
+                                    <!-- <div class="mb-6">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="profile_picture">Profile Picture</label>
+                                        <input type="file" id="profile_picture" name="profile_picture" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help">
+                                    </div> -->
                                     <div class="mb-6">
                                         <label for="alamatDomisili"
                                             class="block mb-2 text-sm font-medium text-gray-900">Alamat
@@ -326,6 +347,7 @@ if ( isset($_POST['submit']) ) {
         </div>
 
         <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
         <script>
             let btnToggle = document.getElementById('btnToggle');
             let sidebar = document.querySelector('.sidebar');

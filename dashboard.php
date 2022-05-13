@@ -100,10 +100,22 @@ $user_data = $user->get_data( Session::get('email') );
         <div class="bg-gray-100 w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
             <div class="flex items-center gap-x-4 justify-end">
-                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold">
+                <p class="text-dark-green font-semibold text-sm">
                     <?php echo $user_data['user_email'] ?>
                 </p>
+                <div x-data="{ open: false }" @mouseleave="open = false" class="relative">
+                    <button @mouseover="open = true">
+                        <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div x-show="open" class="absolute right-0 w-48 bg-white rounded-md">
+                        <a href="account-settings.php"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-400 hover:text-white">
+                            Account Settings
+                        </a>
+                    </div>
+                </div>
             </div>
 
             <!-- Breadcrumb -->
@@ -117,7 +129,8 @@ $user_data = $user->get_data( Session::get('email') );
 
             <!-- card user -->
             <div class="sm:flex flex-wrap text-center items-center gap-8">
-                    <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div
+                    class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <a href="users.php">
                         <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
                     </a>
@@ -129,7 +142,8 @@ $user_data = $user->get_data( Session::get('email') );
                 </div>
 
                 <!-- card batch -->
-                <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div
+                    class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <a href="batch.php">
                         <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
                     </a>
@@ -139,39 +153,19 @@ $user_data = $user->get_data( Session::get('email') );
                         </a>
                     </div>
                 </div>
-            </div> 
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
-    <script>
-        let btnToggle = document.getElementById('btnToggle');
-        let sidebar = document.querySelector('.sidebar');
-        btnToggle.onclick = function () {
-            sidebar.classList.toggle('in-active');
-        }
+            </div>
 
-        // For Generate Password
-        var password=document.getElementById("password");
+            <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+            <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+            <script>
 
-        function genPassword() {
-            var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var passwordLength = 12;
-            var password = "";
-            for (var i = 0; i <= passwordLength; i++) {
-                var randomNumber = Math.floor(Math.random() * chars.length);
-                password += chars.substring(randomNumber, randomNumber +1);
-            }
-            document.getElementById("password").value = password;
-        }
+                let btnToggle = document.getElementById('btnToggle');
+                let sidebar = document.querySelector('.sidebar');
+                btnToggle.onclick = function () {
+                    sidebar.classList.toggle('in-active');
+                }
 
-        function copyPassword() {
-            var copyText = document.getElementById("password");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            document.execCommand("copy");  
-        }
-
-
-
-    </script>
+            </script>
 </body>
 
 </html>

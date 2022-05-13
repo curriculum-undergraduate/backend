@@ -123,5 +123,19 @@ class User
 
     }
 
+    public function get_batch() {
+
+        return $this->_db->get_batch();
+
+    }
+
+    public function add_batch($fields = array())
+    {
+        if ($this->_db->insert('batch', $fields))
+            return true;
+        else
+            return false;
+    }
+
     
 }
