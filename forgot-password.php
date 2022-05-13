@@ -68,11 +68,12 @@ if ( isset($_POST['submit']) ) {
                     ), $user_data['user_id'] );
 
                     // email verifikasi dibuat disini
-                    $mail->Subject = "Password Reset Code";
-                    $mail->addAddress($_POST['email'], "User");
-                    // $mail->addEmbeddedImage('feyman.jpg', 'image_cid'); 
-                    // $mail->Body = '<img src="cid:image_cid"> Mail body in HTML'; 
-                    $mail->Body = "Your token id is <b>$token</b>";
+                    $mail->Subject = "Email Verification";
+                    $mail->addAddress($_POST['email'], $_POST['username']);
+                    $email_template = 'templates/sendmail_individu.html';
+                    $mail->Body = file_get_contents($email_template);
+                    $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
+                    $mail->Body = str_replace("{token}", $token,  $mail->Body);
 
                     if (!$mail->send()) {
                         $errors[] = "Message could not be sent.";

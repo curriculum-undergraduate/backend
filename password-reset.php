@@ -103,9 +103,20 @@ require_once "templates/header.php";
                 </div>
                 <div class="mt-4">
                     <div class="mt-4">
-                        <label class="block text-black" for="new_password">New Password<label>
-                                <input type="password" id="new_password" name="new_password"
-                                    class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black" required>
+                        <label class="block text-black" for="new_password">Password<label>
+                        <div id="passwordInput">
+                            <input type="password" name="new_password" id="new_password"
+                                class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black " required>
+                        </div>
+                        
+                        <b>
+                            <div id="passwordStrength">
+                                <span id="poor"></span>
+                                <span id="weak"></span>
+                                <span id="strong"></span>
+                            </div>
+                            <div id="passwordInfo"></div>
+                        </b>
                     </div>
                     <div class="mt-4">
                         <label class="block text-black" for="confirm_new_password">Confirm New Password<label>
