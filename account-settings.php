@@ -84,11 +84,13 @@ if ( isset($_POST['submit']) ) {
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
+    <title>Account | Lumintu Classsroom</title>
+
     <!-- Flowbite CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
 
-    <!-- Icon Getbootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <!-- DaisyUI -->
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@2.14.3/dist/full.css" rel="stylesheet" type="text/css" />
 
     <!-- CDN TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -112,7 +114,7 @@ if ( isset($_POST['submit']) ) {
     <style>
         .in-active {
             width: 80px !important;
-            padding: 20px 15px !important;
+            padding: 20px 10px !important;
             transition: .5s ease-in-out;
         }
 
@@ -149,11 +151,23 @@ if ( isset($_POST['submit']) ) {
         <!-- Right side -->
         <div class="bg-gray-100 w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
+
             <div class="flex items-center gap-x-4 justify-end">
                 <p class="text-dark-green font-semibold text-sm">
                     <?php echo $user_data['user_email'] ?>
                 </p>
+                <div x-data="{ open: false }" @mouseleave="open = false" class="relative">
+                <button @mouseover="open = true">
                 <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
+                </button>
+
+                <!-- Dropdown menu -->
+                <div x-show="open" class="absolute right-0 w-48 bg-white rounded-md">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-300 text-gray-700 hover:bg-gray-400 hover:text-white">
+                    Account Settings
+                </a>
+            </div>
+            </div>
             </div>
 
 
@@ -324,12 +338,13 @@ if ( isset($_POST['submit']) ) {
         </div>
 
         <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+        <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
         <script>
-            let btnToggle = document.getElementById('btnToggle');
-            let sidebar = document.querySelector('.sidebar');
-            btnToggle.onclick = function () {
-                sidebar.classList.toggle('in-active');
-            }
+        let btnToggle = document.getElementById('btnToggle');
+        let sidebar = document.querySelector('.sidebar');
+        btnToggle.onclick = function () {
+            sidebar.classList.toggle('in-active');
+        }
         </script>
 </body>
 

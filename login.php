@@ -185,7 +185,7 @@ require_once "templates/header.php";
         </div>
         <div class="hidden lg:flex lg:w-1/2 my-auto p-36">
             <img src="assets/img/login.png"
-                class="animate-bounce lg:mt-10 lg:h-full lg:w-80 lg:object-scale-down lg:object-top">
+                class="animate-[bounce_3s_infinite] lg:mt-10 lg:h-full lg:w-80 lg:object-scale-down lg:object-top">
         </div>
     </div>
 

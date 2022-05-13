@@ -132,9 +132,11 @@ if ( isset($_POST['submit']) ) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Users</title>
     <link rel="icon" href="/assets/img/logo_lumintu1.ico?v=2" />
     <link rel="icon" type="image/x-icon" href="./assets/img/logo_lumintu1.png">
+    <link rel="shortcut icon" href="assets/icons/logo.ico" type="image/x-icon">
+    <title>Users</title>
+
 
     <!-- Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -352,7 +354,7 @@ if ( isset($_POST['submit']) ) {
 
                                             <div class="ml-4">
                                                 <div class="text-sm font-medium leading-5 text-gray-900">
-                                                    <a href="#" class="underline">
+                                                    <a href="delete.php?id=<?= $_user["user_id"]; ?>" class="underline">
                                                         <?php echo $_user['user_username'] ?>
                                                     </a>
                                                 </div>
@@ -445,7 +447,7 @@ if ( isset($_POST['submit']) ) {
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500">Apakah kamu yakin untuk menghapus user ini?</h3>
                     
-                    <a href="delete.php" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    <a href="delete.php?id=<?= $_user["user_id"]; ?>" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Ya, Saya yakin
                     </a>
                     <button data-modal-toggle="delete-modal" type="button"

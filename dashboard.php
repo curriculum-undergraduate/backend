@@ -99,11 +99,22 @@ $user_data = $user->get_data( Session::get('email') );
         <!-- Right side -->
         <div class="bg-gray-100 w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
             <!-- Header / Profile -->
-            <div class="flex items-center gap-x-4 justify-end">
-                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold">
+                        <div class="flex items-center gap-x-4 justify-end">
+                <p class="text-dark-green font-semibold text-sm">
                     <?php echo $user_data['user_email'] ?>
                 </p>
+                <div x-data="{ open: false }" @mouseleave="open = false" class="relative">
+                <button @mouseover="open = true">
+                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
+                </button>
+
+                <!-- Dropdown menu -->
+                <div x-show="open" class="absolute right-0 w-48 bg-white rounded-md">
+                <a href="#" class="block px-4 py-2 text-sm text-gray-300 text-gray-700 hover:bg-gray-400 hover:text-white">
+                    Account Settings
+                </a>
+            </div>
+            </div>
             </div>
 
             <!-- Breadcrumb -->
@@ -117,7 +128,7 @@ $user_data = $user->get_data( Session::get('email') );
 
             <!-- card user -->
             <div class="sm:flex flex-wrap text-center items-center gap-8">
-                    <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-sm bg-white mt-6 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 ">
                     <a href="users.php">
                         <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
                     </a>
@@ -129,7 +140,7 @@ $user_data = $user->get_data( Session::get('email') );
                 </div>
 
                 <!-- card batch -->
-                <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
+                <div class="max-w-sm bg-white mt-6 rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <a href="batch.php">
                         <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
                     </a>
@@ -141,6 +152,7 @@ $user_data = $user->get_data( Session::get('email') );
                 </div>
             </div> 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');

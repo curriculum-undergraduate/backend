@@ -118,7 +118,7 @@ require_once "templates/header.php";
 <body style="background-image: url('assets/img/background.jpg')">
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:flex-1">
-            <h2 class="text-4xl font-bold  tracking-wider sm:text-4xl">
+            <h2 class="text-4xl font-bold tracking-wider sm:text-4xl pt-6">
                 GradIT Course
             </h2>
             <h3 class="text-2xl font-semibold tracking-wider mt-3">
@@ -196,7 +196,7 @@ require_once "templates/header.php";
             </form>
         </div>
         <div class="hidden lg:flex lg:w-1/2 my-auto p-36">
-            <img src="assets/img/register.png" class="animate-bounce lg:mt-10 lg:h-full lg:w-full">
+            <img src="assets/img/register.png" class="animate-[bounce_3s_infinite] lg:mt-10 lg:h-full lg:w-full">
         </div>
     </div>
 
