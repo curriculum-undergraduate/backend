@@ -11,9 +11,9 @@ class Database
     // $DATABASE = "ll_lms_account",
     // $PORT = "3306";
 
-    $HOST = "172.17.0.2",
+    $HOST = "localhost",
     $USER = "root",
-    $PASS = "salupa",
+    $PASS = "",
     $DATABASE = "lumintu_db",
     $PORT = "3306";
 
@@ -128,7 +128,8 @@ class Database
                         user.user_gender,
                         user.user_phone,
                         user.user_profile_picture,
-                        user.user_status
+                        user.user_status,
+                        user_id
                         
                         FROM
                         role,
@@ -159,7 +160,9 @@ class Database
                         user.user_gender,
                         user.user_phone,
                         user.user_profile_picture,
-                        user.user_status
+                        user.user_status,
+                        user_id
+
                         
                         FROM
                         role,

@@ -124,9 +124,26 @@ if ( isset($_POST['submit']) ) {
                 $errors = $validation->errors();
             }
         }    
+    } 
+}
+
+if ( $_GET['hapus'] ) {
+    $user->delete_user();
+    } else {
+        echo "error";
     }
 
-}
+if ( $_GET['edit'] ) {
+    $user->update_user(array(
+    'user_username' => $_POST['username'],
+    'user_email' => $_POST['email'],
+    'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+    'role_id' => (int)$role,
+    'user_token' => $token,
+));
+    } else {
+        echo "error";
+    }
 
 
 ?>
@@ -272,7 +289,7 @@ if ( isset($_POST['submit']) ) {
             <?php if ($user->is_admin(Session::get('email'))) : ?>
                 <!-- Topic Title -->
                 <div class="flex items-center gap-x-4 justify-between">
-                    <p class="text-xl text-dark-green font-semibold">List All User With Roles</p>
+                    <p class="text-xl text-dark-green font-semibold">List All User With Roles</p>x
 
                     <button type="button" data-modal-toggle="adduser-modal"
                         class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
@@ -384,7 +401,7 @@ if ( isset($_POST['submit']) ) {
 
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="text-sm leading-5 text-gray-500">
-                                                    Dummy
+                                                Batch 1
                                                 </div>
                                             </td>
 
@@ -405,6 +422,8 @@ if ( isset($_POST['submit']) ) {
                                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                                                 d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                                                         </svg>
+                                                         <a href='?hapus=<?php echo $_user['user_id'];?>' onClick=\"return confirm('Yakin akan menghapus data?');\"> 
+                                                         <input type='button' value='Hapus'>
                                                     </button>
                                                 </td>
                                             <?php endif; ?>
@@ -416,13 +435,19 @@ if ( isset($_POST['submit']) ) {
                             </tbody>
                         </table>
                     </div>
+                    
                 </div>
+                <br>
+                <?php require_once 'templates/pagination.php' ?>
             </div>
+            
         </div>
     </div>
 
+ 
+
     <!-- Modals untuk Delete -->
-    <div id="delete-modal" tabindex="-1"
+    <!-- <div id="delete-modal" tabindex="-1"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <div class="relative bg-white rounded-lg shadow ">
@@ -443,7 +468,7 @@ if ( isset($_POST['submit']) ) {
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500">Apakah kamu yakin untuk menghapus user ini?</h3>
                     
-                    <a href="delete.php" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    <a href=".php?id=" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Ya, Saya yakin
                     </a>
                     <button data-modal-toggle="delete-modal" type="button"
@@ -462,6 +487,7 @@ if ( isset($_POST['submit']) ) {
             <!-- Modal content -->
             <div class="relative bg-white rounded-lg shadow">
                 <button type="button"
+                    href = '?edit=<?php echo $_user['user_id'];?>'
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                     data-modal-toggle="update-modal">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -477,7 +503,7 @@ if ( isset($_POST['submit']) ) {
                             <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Username</label>
                             <input type="text" name="username" id="username"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                placeholder="username" value="" required>
+                                placeholder="username" value="<?php echo $_user['user_username'] ?>" required>
                         </div>
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
@@ -603,8 +629,6 @@ if ( isset($_POST['submit']) ) {
             navigator.clipboard.writeText(copyText.value);
             document.execCommand("copy");  
         }
-
-
 
     </script>
 </body>
