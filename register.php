@@ -57,34 +57,44 @@ if ( isset($_POST['submit']) ) {
         ));
 
         // Menguji email apakah sudah atau belum terdaftar di Database
-        if ($user->check_name($_POST['email'])) {
+        if ($user->check_email($_POST['email'])) {
 
             $errors[] = "Email sudah terdaftar";
     
         } else if ($user->check_username($_POST['username'])) {
 
             $errors[] = "Username sudah terdaftar";
+
         } else {
 
             // Check Passed
             if ($validation->passed()) {    
 
-                $token = rand(999999, 111111);
+                // $token = rand(999999, 111111);
+                $token = base64_encode(random_bytes(32));
 
                 $user->register_user(array(
                     'user_username' => $_POST['username'],
                     'user_email' => $_POST['email'],
                     'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+                ));
+
+                $user->send_mail(array(
+                    'user_email' => $_POST['email'],
                     'user_token' => $token,
+                    'date_created' => time()
                 ));
 
                 // email verifikasi dibuat disini
                 $mail->Subject = "Email Verification";
                 $mail->addAddress($_POST['email'], $_POST['username']);
-                $email_template = 'templates/sendmail_individu.html';
+                $email_template = 'templates/sendmail.html';
                 $mail->Body = file_get_contents($email_template);
                 $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
-                $mail->Body = str_replace("{token}", $token,  $mail->Body);
+                // Dibuat disini untuk link Verifikasi yg Kirim ke Email
+                $message = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . $token);
+
+                $mail->Body = str_replace("{message}", $message,  $mail->Body);
 
                 if (!$mail->send()) {
                     $errors[] = "Message could not be sent.";
@@ -93,8 +103,8 @@ if ( isset($_POST['submit']) ) {
                 }
                 else {
                     $email = $_POST['email'];
-                    Session::flash("verification-code", "We've sent a verification code to your email - $email");
-                    Redirect::to('verification-code');
+                    Session::flash("login", "Congratulations! Your account has been created. Please activate your account in your email - $email");
+                    Redirect::to('login');
                 }
 
             } else {

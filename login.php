@@ -8,6 +8,40 @@ if ( $user->is_loggedIn() ) {
 
 $errors = array();
 
+// Process Check Email Verifikasi
+if ($user->check_email($_GET['email'])) {
+
+    if ($user->check_token($_GET['token'])) {
+        $user_token = $user->get_data_token($_GET['token']);
+        if  (time() - $user_token['date_created'] < (60*60*24)) {
+
+            $status = 'verified';
+            $user->update_user(array(
+                'user_status' => $status
+            ), $user_token['user_email'] );
+
+            $user->delete_user('user_token', $user_token['user_email']);
+
+            Session::flash("login", $user_token['user_email'] . " Has been activated! Please login.");
+
+        } else {
+            // TODO: delete data from user_token table and update table user
+            $user->delete_user('user', $user_token['user_email']);
+            $user->delete_user('user_token', $user_token['user_email']);
+            Session::flash("login", "Account activation failed! Token expired.");
+        }
+    } else {
+        Session::flash("login", "Account activation failed! Wrong token.");
+    }
+    
+} else {
+
+   if ($_GET){
+        Session::flash("login", "Account activation failed! Wrong email.");
+   }
+
+}
+
 // if ( Input::get('submit') ) {
 if ( isset($_POST['submit']) ) {
 
@@ -26,7 +60,7 @@ if ( isset($_POST['submit']) ) {
         if ($validation->passed()) {    
 
             // Menguji email apakah sudah atau belum terdaftar di Database
-            if ($user->check_name($_POST['email'])) {
+            if ($user->check_email($_POST['email'])) {
 
                 if ( $user->login_user($_POST['email'], $_POST['password'] ) ) {
                     $email = Session::set('email', $_POST['email']);

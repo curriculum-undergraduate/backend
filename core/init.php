@@ -8,3 +8,4 @@ spl_autoload_register(function($class){
 });
 
 $user = new User();
+$batch = new Batch();

@@ -5,17 +5,23 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,
-    $HOST = "localhost",
-    $USER = "ll_lms_account",
-    $PASS = "mD6m55r4kWdp1eKs",
-    $DATABASE = "ll_lms_account",
-    $PORT = "3306";
+//    $HOST = "localhost",
+//    $USER = "ll_lms_account",
+//    $PASS = "mD6m55r4kWdp1eKs",
+//    $DATABASE = "ll_lms_account",
+//    $PORT = "3306";
 
     // $HOST = "172.17.0.2",
     // $USER = "root",
     // $PASS = "salupa",
     // $DATABASE = "lumintu_db",
     // $PORT = "3306";
+    
+     $HOST = "172.17.0.2",
+     $USER = "root",
+     $PASS = "salupa",
+     $DATABASE = "lumintu_db",
+     $PORT = "3306";
 
     public function __construct()
     {
@@ -66,7 +72,7 @@ class Database
         return $this->run_query($query, "Masalah saat memasukan data");
     }
 
-    public function update($table, $fields, $id)
+    public function update($table, $fields, $email)
     {
 
         // Get Values
@@ -87,15 +93,14 @@ class Database
 
         $values = implode(", ", $valueArrays);
 
-        $query = "UPDATE $table SET $values WHERE user_id = $id";
+        $query = "UPDATE $table SET $values WHERE user_email = '$email'";
 
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
 
-    public function delete($table, $id)
+    public function delete($table, $email)
     {
-
-        $query = "DELETE FROM $table WHERE user_id = $id";
+        $query = "DELETE FROM $table WHERE user_email = '$email'";
 
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
