@@ -37,58 +37,61 @@ if ( isset($_POST['submit']) ) {
         ));
 
         // Menguji email apakah sudah atau belum terdaftar di Database
-        if ($user->check_name($_POST['email'])) {
+        if ($user->check_email($_POST['email'])) {
 
             // Check Passed
             if ($validation->passed()) {    
 
-                $email = Session::set('email', $_POST['email']);
-                Session::delete('email');
-                $user_data = $user->get_data($email);
-                unset($user_data['user_email']);
-                unset($user_data['role_id']);
-                unset($user_data['user_password']);
-                unset($user_data['user_username']);
-                unset($user_data['user_first_name']);
-                unset($user_data['user_last_name']);
-                unset($user_data['user_dob']);
-                unset($user_data['user_address']);
-                unset($user_data['user_gender']);
-                unset($user_data['user_phone']);
-                unset($user_data['user_profile_picture']);
-                unset($user_data['user_token']);
+                // $email = Session::set('email', $_POST['email']);
+                // Session::delete('email');
+                // $user_data = $user->get_data($email);
+                // unset($user_data['user_email']);
+                // unset($user_data['role_id']);
+                // unset($user_data['user_password']);
+                // unset($user_data['user_username']);
+                // unset($user_data['user_first_name']);
+                // unset($user_data['user_last_name']);
+                // unset($user_data['user_dob']);
+                // unset($user_data['user_address']);
+                // unset($user_data['user_gender']);
+                // unset($user_data['user_phone']);
+                // unset($user_data['user_profile_picture']);
+                // unset($user_data['user_token']);
 
 
-                if ($user_data['user_status'] == 'verified') {
+                $token = base64_encode(random_bytes(32));
 
-                    $token = rand(999999, 111111);
+                // $user->update_user(array(
+                //     'user_token' => $token,
+                // ), $user_data['user_id'] );
 
-                    $user->update_user(array(
-                        'user_token' => $token,
-                    ), $user_data['user_id'] );
+                $user->send_mail(array(
+                    'user_email' => $_POST['email'],
+                    'user_token' => $token,
+                    'date_created' => time()
+                ));
 
-                    // email verifikasi dibuat disini
-                    $mail->Subject = "Email Verification";
-                    $mail->addAddress($_POST['email'], $_POST['username']);
-                    $email_template = 'templates/sendmail_individu.html';
-                    $mail->Body = file_get_contents($email_template);
-                    $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
-                    $mail->Body = str_replace("{token}", $token,  $mail->Body);
+                // email verifikasi dibuat disini
+                $mail->Subject = "Reset your Password";
+                $mail->addAddress($_POST['email'], $_POST['username']);
+                $email_template = 'templates/sendmail-forgotpass.html';
+                $mail->Body = file_get_contents($email_template);
+                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
+                // Dibuat disini untuk link Verifikasi yg Kirim ke Email
+                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/password-reset.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
 
-                    if (!$mail->send()) {
-                        $errors[] = "Message could not be sent.";
-                        // echo 'Message could not be sent.';
-                        // echo 'Mailer Error: ' . $mail->ErrorInfo;
-                    }
-                    else {
-                        Session::flash("reset-code", "We've sent a token code for reset password to your email - $email");
-                        Redirect::to('reset-code');
-                    }
+                $mail->Body = str_replace("{link}", $link,  $mail->Body);
 
-                } else {
-                    $email = $_POST['email'];             
-                    Session::flash("verification-code", "It's look like you haven't still verify your email - $email");        
-                    Redirect::to('verification-code');
+                if (!$mail->send()) {
+                    $errors[] = "Message could not be sent.";
+                    // echo 'Message could not be sent.';
+                    // echo 'Mailer Error: ' . $mail->ErrorInfo;
+                }
+                
+                else {
+                    $email = $_POST['email'];
+                    Session::flash("login", "Link sudah dikirim untuk reset password - $email");
+                    Redirect::to('login');
                 }
                 
 
@@ -137,21 +140,6 @@ require_once "templates/header.php";
                         </button>
                     </div>
                 <?php endforeach; ?>
-
-            <?php } ?>
-
-            <?php if ( Session::exists('reset-code') ) { ?>
-
-                <div id="alert-1" class="flex p-4 mb-4 mt-5 bg-blue-100 rounded-lg dark:bg-blue-200" role="alert">
-                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
-                    <div class="ml-3 text-sm font-medium text-blue-700 dark:text-blue-800">
-                        <?php echo Session::flash('reset-code'); ?>
-                    </div>
-                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-100 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 dark:bg-blue-200 dark:text-blue-600 dark:hover:bg-blue-300" data-dismiss-target="#alert-1" aria-label="Close">
-                        <span class="sr-only">Close</span>
-                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                    </button>
-                </div>
 
             <?php } ?>
 

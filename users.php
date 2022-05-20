@@ -76,7 +76,7 @@ if ( isset($_POST['submit']) ) {
         ));
 
         // Menguji email apakah sudah atau belum terdaftar di Database
-        if ($user->check_name($_POST['email'])) {
+        if ($user->check_email($_POST['email'])) {
 
             $errors[] = "Email sudah terdaftar";
     
@@ -85,7 +85,8 @@ if ( isset($_POST['submit']) ) {
             // Check Passed
             if ($validation->passed()) {    
 
-                $token = rand(999999, 111111);
+                // $token = rand(999999, 111111);
+                $token = base64_encode(random_bytes(32));
                 $role = $_POST['role'];
 
                 $user->register_user(array(
@@ -93,21 +94,28 @@ if ( isset($_POST['submit']) ) {
                     'user_email' => $_POST['email'],
                     'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
                     'role_id' => (int)$role,
+                ));
+
+                $user->send_mail(array(
+                    'user_email' => $_POST['email'],
                     'user_token' => $token,
+                    'date_created' => time()
                 ));
 
                 // email verifikasi dibuat disini
                 $mail->Subject = "Email Verification";
                 $mail->addAddress($_POST['email'], $_POST['username']);
-                $email_template = 'templates/sendmail_admin.html';
+                $email_template = 'templates/sendmail-admin.html';
                 $mail->Body = file_get_contents($email_template);
-                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
+                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid');  
                 $password = $_POST['password'];
 
-                $key = array('{token}', '{password}');
-                $value = array($token, $password);
+                // Dibuat disini untuk link Verifikasi yg Kirim ke Email
+                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
+
+                $key = array('{link}', '{password}');
+                $value = array($link, $password);
                 $mail->Body = str_replace($key, $value,  $mail->Body);
-                // $mail->Body = str_replace("{token}", $token,  $mail->Body);
 
                 if (!$mail->send()) {
                     $errors[] = "Message could not be sent.";
@@ -115,9 +123,7 @@ if ( isset($_POST['submit']) ) {
                     // echo 'Mailer Error: ' . $mail->ErrorInfo;
                 }
                 else {
-                    $email = $_POST['email'];
-                    Session::flash("users", "We've sent a verification code to your email - $email");
-                    Redirect::to('users');
+                    Redirect::to("users");
                 }
 
             } else {
@@ -560,7 +566,7 @@ if ( isset($_POST['submit']) ) {
                 </button>
                 <div class="py-6 px-6 lg:px-8">
                     <h3 class="mb-4 text-xl font-medium text-gray-900">Add User</h3>
-                    <form class="space-y-6" action="#" method="POST">
+                    <form class="space-y-6" method="POST">
                     <div>
                         <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                     </div>

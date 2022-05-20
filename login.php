@@ -25,7 +25,6 @@ if ($user->check_email($_GET['email'])) {
             Session::flash("login", $user_token['user_email'] . " Has been activated! Please login.");
 
         } else {
-            // TODO: delete data from user_token table and update table user
             $user->delete_user('user', $user_token['user_email']);
             $user->delete_user('user_token', $user_token['user_email']);
             Session::flash("login", "Account activation failed! Token expired.");
@@ -94,8 +93,7 @@ if ( isset($_POST['submit']) ) {
                         }
                     } else {
                         $email = $_POST['email'];             
-                        Session::flash("verification-code", "It's look like you haven't still verify your email - $email");        
-                        Redirect::to('verification-code');
+                        Session::flash("login", "It's look like you haven't still verify your email - $email");     
                     }
                     
     

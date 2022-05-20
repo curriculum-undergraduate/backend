@@ -92,15 +92,15 @@ if ( isset($_POST['submit']) ) {
                 $mail->Body = file_get_contents($email_template);
                 $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
                 // Dibuat disini untuk link Verifikasi yg Kirim ke Email
-                $message = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . $token);
+                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
 
-                $mail->Body = str_replace("{message}", $message,  $mail->Body);
+                $mail->Body = str_replace("{link}", $link,  $mail->Body);
 
                 if (!$mail->send()) {
                     $errors[] = "Message could not be sent.";
                     // echo 'Message could not be sent.';
                     // echo 'Mailer Error: ' . $mail->ErrorInfo;
-                }
+                }               
                 else {
                     $email = $_POST['email'];
                     Session::flash("login", "Congratulations! Your account has been created. Please activate your account in your email - $email");

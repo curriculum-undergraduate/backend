@@ -39,7 +39,7 @@ class User
     public function check_token($token_id) {
 
         $data = $this->_db->get_info('user_token', 'user_token', $token_id);
-        var_dump($data);
+        // var_dump($data);
         
         if ( empty($data) ) return false;
         else return true;
