@@ -7,7 +7,6 @@ if (!$user->is_loggedIn()) {
     Redirect::to('login');
 }
 
-
 if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('email')) ) {
     Session::flash('account-settings', 'Halaman ini khusus Admin');
     Redirect::to('account-settings');
@@ -40,138 +39,24 @@ $user_data = $user->get_data( Session::get('email') );
 
     <!-- CDN TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        montserrat: ["Montserrat"],
-                    },
-                    colors: {
-                        "dark-green": "#1E3F41",
-                        "light-green": "#659093",
-                        "cream": "#DDB07F",
-                        "cgray": "#F5F5F5",
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        .in-active {
-            width: 80px !important;
-            padding: 20px 15px !important;
-            transition: .5s ease-in-out;
-        }
-
-        .in-active ul li p {
-            display: none !important;
-        }
-
-        .in-active ul li a {
-            padding: 15px !important;
-        }
-
-        .in-active h2,
-        .in-active h4,
-        .in-active .logo-gradit {
-            display: none !important;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        .sidebar {
-            transition: .5s ease-in-out;
-        }
-    </style>
-
 </head>
 
 <body>
-    <div class="flex items-center">
+<div class="bg-slate-100 w-full h-screen">
+<?php require_once 'templates/navbar.php' ?>
 
-        <?php require_once 'templates/sidebar.php' ?>
-
-
-        <!-- Right side -->
-        <div class="bg-gray-100 w-full h-screen px-10 py-6 flex flex-col gap-y-6 overflow-y-scroll">
-            <!-- Header / Profile -->
-            <div class="flex items-center gap-x-4 justify-end">
-                <img class="w-10" src="assets/icons/default_profile.svg" alt="Profile Image">
-                <p class="text-dark-green font-semibold">
-                    <?php echo $user_data['user_email'] ?>
-                </p>
-            </div>
-
-            <!-- Breadcrumb -->
-            <div>
-                <ul class="flex items-center gap-x-4">
-                    <li>
-                        <a class="text-light-green" href="#">Dashboard</a>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- card user -->
-            <div class="sm:flex flex-wrap text-center items-center gap-8">
-                    <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="users.php">
-                        <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
-                    </a>
-                    <div class="p-5">
-                        <a href="users.php">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">USER</h5>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- card batch -->
-                <div class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="batch.php">
-                        <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
-                    </a>
-                    <div class="p-5">
-                        <a href="batch.php">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">BATCH</h5>
-                        </a>
-                    </div>
-                </div>
-            </div> 
-    <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
-    <script>
-        let btnToggle = document.getElementById('btnToggle');
-        let sidebar = document.querySelector('.sidebar');
-        btnToggle.onclick = function () {
-            sidebar.classList.toggle('in-active');
-        }
-
-        // For Generate Password
-        var password=document.getElementById("password");
-
-        function genPassword() {
-            var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var passwordLength = 12;
-            var password = "";
-            for (var i = 0; i <= passwordLength; i++) {
-                var randomNumber = Math.floor(Math.random() * chars.length);
-                password += chars.substring(randomNumber, randomNumber +1);
-            }
-            document.getElementById("password").value = password;
-        }
-
-        function copyPassword() {
-            var copyText = document.getElementById("password");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            document.execCommand("copy");  
-        }
+<h1 class="text-5xl font-bold text-amber-900 tracking-wider lg:pt-5 pt-16 pl-16">Welcome,</h1>
+<h4 class="text-3xl font-semibold text-amber-900 tracking-wider lg:pt-4 pt-2 pl-16"><?php echo $user_data['user_username'] ?></h4>
 
 
 
-    </script>
+
+<?php require_once 'templates/card.php' ?>
+
+
+
+<?php require_once 'templates/footer.php' ?>    
+</div>
 </body>
 
 </html>

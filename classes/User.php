@@ -123,5 +123,11 @@ class User
 
     }
 
+    public function get_batch_name() {
+        
+        return $this->_db->get_users_batch_name();
+
+    }
+
     
 }

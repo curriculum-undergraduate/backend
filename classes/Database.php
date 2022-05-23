@@ -191,6 +191,42 @@ class Database
         return $results;
     }
 
+    public function get_users_batch_name()
+    {
+        $query = "SELECT 
+        user_id, 
+        role_id, 
+        user_email, 
+        user_username, 
+        user_first_name, 
+        user_last_name, 
+        user_dob, 
+        user_address, 
+        user_gender, 
+        user_phone, 
+        user_status, 
+        batch_name, 
+        batch_start_date, 
+        batch_end_date 
+        
+        FROM
+        user
+        LEFT JOIN 
+        batch 
+        ON 
+        user.user_id = batch.batch_id
+        LIKE
+        $batch_name;";
+        // die($query);
+        $result = $this->mysqli->query($query);
+
+        while ($row = $result->fetch_assoc()) {
+            $results[] = $row;
+        }
+
+        return $results;
+    }
+
     public function get_batch()
     {
         $query = "SELECT * FROM batch";
