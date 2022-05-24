@@ -29,8 +29,8 @@ class Batch
         else return false;
     }
 
-    public function delete_batch($id) {
-        if ($this->_db->delete('batch', $id) ) return true;
+    public function delete_batch($value) {
+        if ($this->_db->delete('batch', 'batch_id', $value) ) return true;
         else return false;
     }
 

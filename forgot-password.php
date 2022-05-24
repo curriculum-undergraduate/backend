@@ -65,13 +65,14 @@ if ( isset($_POST['submit']) ) {
                 //     'user_token' => $token,
                 // ), $user_data['user_id'] );
 
-                $user->send_mail(array(
+                $user->verifikasi_account(array(
                     'user_email' => $_POST['email'],
                     'user_token' => $token,
                     'date_created' => time()
                 ));
 
                 // email verifikasi dibuat disini
+                // TODO: Mengganti template Pesan sama sepeerti email Verifikasi
                 $mail->Subject = "Reset your Password";
                 $mail->addAddress($_POST['email'], $_POST['username']);
                 $email_template = 'templates/sendmail-forgotpass.html';

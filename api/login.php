@@ -44,6 +44,7 @@ $user = new User();
 if ($user->check_name($email)) {
 
   if ($user->login_user($email, $password)) {
+    // TODO: Memasukan Token ke Session saat Login
 
     // Menghitung waktu kadaluarsa token. Dalam kasus ini akan terjadi setelah 15 menit
     $expired_time = time() + (15 * 60);

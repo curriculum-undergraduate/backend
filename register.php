@@ -3,6 +3,7 @@
 require_once "core/init.php";
 require './vendor/autoload.php';
 
+// Konfigurasi untuk Mengirim Email
 use PHPMailer\PHPMailer\PHPMailer;
 
 $mail = new PHPMailer();
@@ -17,26 +18,31 @@ $mail->SMTPSecure = 'tls';
 $mail->Port = 587;
 
 $mail->setFrom('no-reply@antheiz.me', 'no-reply');
-// $mail->addReplyTo('mail@antheiz.me', 'Theis A'); 
 
 $mail->isHTML(true);
+// End Konfigurasi untuk Mengirim Email
 
 
+/* Jika user telah login dan user mencoba buka halaman login/register, 
+user akan di alihkan kembali halaman account-settings */
 if ( $user->is_loggedIn() ) {
-    Redirect::to('account-setting');
+    Redirect::to('account-settings');
 }
 
+// Menangani Error
 $errors = array();
 
-// if ( Input::get('submit') ) {
+
+// Mengecek Method yang di Request
 if ( isset($_POST['submit']) ) {
-    if ( Token::check( $_POST['token'] ) ) {
+    
+    // Mengecek token csrf yang di request
+    if ( Token::check( $_POST['token'] ) ) { 
 
-        // Call Validation Object
-
+        // Memanggil fungsi validation object
         $validation = new Validation();
 
-        // Check Method
+        // Lakukan pengecekan form yang di input user
         $validation = $validation->check(array(
             'username' => array(
                         'required' => true,
@@ -56,58 +62,66 @@ if ( isset($_POST['submit']) ) {
                         ),
         ));
 
-        // Menguji email apakah sudah atau belum terdaftar di Database
-        if ($user->check_email($_POST['email'])) {
 
-            $errors[] = "Email sudah terdaftar";
+        if ($user->check_email($_POST['email'])) { // Mengecek email apakah sudah terdaftar atau belum di Database
+
+            $info[] = "Akun email sudah terdaftar";
     
-        } else if ($user->check_username($_POST['username'])) {
+        } else if ($user->check_username($_POST['username'])) { // Mengecek username apakah sudah terdaftar atau belum di Database
 
-            $errors[] = "Username sudah terdaftar";
+            $info[] = "Username sudah terdaftar";
 
-        } else {
+        } else { 
 
-            // Check Passed
-            if ($validation->passed()) {    
+            if ($validation->passed()) { // Jika validasi berhasil, baris dibawah ini akan dieksekusi
 
-                // $token = rand(999999, 111111);
-                $token = base64_encode(random_bytes(32));
+                $token = base64_encode(random_bytes(32)); // Generate random base64, untuk token reset password / email verifikasi user
 
+                // Memanggil fungsi register_user, untuk menambahkan input dari user ke Database
                 $user->register_user(array(
                     'user_username' => $_POST['username'],
                     'user_email' => $_POST['email'],
-                    'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
+                    'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT), // Hash password yang di input user
                 ));
 
-                $user->send_mail(array(
+                /* Memanggil fungsi send_mail() dan Menyimpan data sementara user, 
+                untuk kegunaan mengirim Token reset password dan Email Verifikasi ke akun Email user */
+                $user->verifikasi_account(array(
                     'user_email' => $_POST['email'],
                     'user_token' => $token,
                     'date_created' => time()
                 ));
 
-                // email verifikasi dibuat disini
-                $mail->Subject = "Email Verification";
-                $mail->addAddress($_POST['email'], $_POST['username']);
-                $email_template = 'templates/sendmail.html';
-                $mail->Body = file_get_contents($email_template);
-                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
-                // Dibuat disini untuk link Verifikasi yg Kirim ke Email
-                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
+                // Baris berikut untuk melakukan proses pengiriman Email ke kaun Email user 
+                $mail->Subject = "Welcome to Lumintu Logic"; // subject untuk pesan email yang dikirim.
+                $mail->addAddress($_POST['email'], $_POST['username']); // email tujuan pesan dikirim.
+                $email_template = 'templates/sendmail.html'; // template pengiriman pesan email
+                $mail->Body = file_get_contents($email_template); 
+                $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid');  // gambar yang di butuhkan untuk dimasukan ke pesan email
+                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token)); // link yang akan dikirim ke user
+                $username = $_POST['username']; 
 
-                $mail->Body = str_replace("{link}", $link,  $mail->Body);
+                $key = array('{link}', '{username}');
+                $value = array($link, strtoupper($username));
+                $mail->Body = str_replace($key, $value,  $mail->Body); // Memasukan pesan ke dalam mail->body dari pesan email
+
 
                 if (!$mail->send()) {
-                    $errors[] = "Message could not be sent.";
-                    // echo 'Message could not be sent.';
+                    // Jika email tidak terkirim blok ini akan dieksekusi
+
+                    $errors[] = "Pesan tidak dapat dikirim, coba lagi beberapa saat.";
                     // echo 'Mailer Error: ' . $mail->ErrorInfo;
                 }               
                 else {
+                    // Jika email berhasil terkirim blok ini akan dieksekusi
+
                     $email = $_POST['email'];
-                    Session::flash("login", "Congratulations! Your account has been created. Please activate your account in your email - $email");
+                    Session::flash("login", "Selamat akun berhasil dibuat, Silahkan periksa email anda - <b>$email</b>");
                     Redirect::to('login');
                 }
 
             } else {
+                // Jika validasi form inputan user gagal, baris ini akan dijalankan
                 $errors = $validation->errors();
             }
         }    
@@ -115,14 +129,13 @@ if ( isset($_POST['submit']) ) {
 
 }
 
-$title_page = "Register";
+$title_page = "Register"; // title halaman register
 
-require_once "templates/header.php";
+include_once "templates/header.php"; // templating: include file templates/header.php ke file register.php
 
 ?>
 
-<!-- File Custom CSS -->
-<link href="assets/css/custom-auth.css" rel="stylesheet" />
+    <link href="assets/css/custom-auth.css" rel="stylesheet" /> <!-- File Custom CSS -->
   </head>
 
 <body style="background-image: url('assets/img/background.jpg')">
@@ -132,16 +145,35 @@ require_once "templates/header.php";
                 GradIT Course
             </h2>
             <h3 class="text-2xl font-semibold tracking-wider mt-3">
-                Register Here
+                Daftar
             </h3> 
 
+            <!-- Jika terdapat error, pesan error akan ditampilkan pada alert -->
             <?php if ( !empty($errors) ) { ?>
 
                 <?php foreach ($errors as $error) : ?>
+                    <div id="alert-2" class="flex p-4 mb-4 mt-5 bg-red-100 rounded-lg dark:bg-red-200" role="alert">
+                        <svg class="flex-shrink-0 w-5 h-5 text-red-700 dark:text-red-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                        <div class="ml-3 text-sm font-medium text-red-700 dark:text-red-800">
+                            <?php echo $error; ?>
+                        </div>
+                        <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-red-100 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400 p-1.5 hover:bg-red-200 inline-flex h-8 w-8 dark:bg-red-200 dark:text-red-600 dark:hover:bg-red-300" data-dismiss-target="#alert-2" aria-label="Close">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                        </button>
+                    </div>
+                <?php endforeach; ?>
+
+            <?php } ?>
+
+            <!-- Jika terdapat info, pesan info akan ditampilkan pada alert -->
+            <?php if ( !empty($info) ) { ?>
+
+                <?php foreach ($info as $info) : ?>
                     <div id="alert-1" class="flex p-4 mb-4 mt-5 bg-blue-100 rounded-lg dark:bg-blue-200" role="alert">
                         <svg class="flex-shrink-0 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
                         <div class="ml-3 text-sm font-medium text-blue-700 dark:text-blue-800">
-                            <?php echo $error; ?>
+                            <?php echo $info; ?>
                         </div>
                         <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-100 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 dark:bg-blue-200 dark:text-blue-600 dark:hover:bg-blue-300" data-dismiss-target="#alert-1" aria-label="Close">
                             <span class="sr-only">Close</span>
@@ -154,27 +186,32 @@ require_once "templates/header.php";
 
             <form method="post" id="register-form">
                 <div>
+                    <!-- 
+                        Generate random token yang akan dikirim bersamaan dengan form saat user melakukan submit.
+                        Token berguna untuk mengamankan dari CSRF
+                     -->
                     <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
                 </div>
                 <div class="mt-5">
                     <div>
-                        <label class="block" for="username">Username<label>
-                        <input type="text" placeholder="Username" name="username" id="username"
+                        <label class="block" for="username">Nama pengguna<label>
+                        <input type="text" placeholder="Nama pengguna" name="username" id="username"
                             class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black required:" required>
                     </div>
                     <div class="mt-4">
                         <label class="block" for="email">Email<label>
-                        <input type="email" placeholder="name@gmail.com" name="email" id="email"
+                        <input type="email" placeholder="Alamat email" name="email" id="email"
                             class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black required:" required>
                     </div>
 
                     <div class="mt-4">
-                        <label class="block" for="password">Password<label>
+                        <label class="block" for="password">Kata sandi<label>
                         <div id="passwordInput">
-                            <input type="password" placeholder="Password" name="password" id="password"
+                            <input type="password" placeholder="Kata sandi minimal adalah 8 Karakter" name="password" id="password"
                                 class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black required:" required>
                         </div>
                         
+                        <!-- Password Strength -->
                         <b>
                             <div id="passwordStrength">
                                 <span id="poor"></span>
@@ -186,20 +223,20 @@ require_once "templates/header.php";
                     </div>
 
                     <div class="mt-4">
-                        <label class="block" for="password_verify">Repeat Password<label>
-                        <input type="password" placeholder="Verify Password" name="password_verify" id="password_verify"
+                        <label class="block" for="password_verify">Ulangi kata sandi<label>
+                        <input type="password" placeholder="Kata sandi minimal adalah 8 Karakter" name="password_verify" id="password_verify"
                             class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black required:" required>
                     </div>
                     <br>
+                    <!-- TODO: Perlu tanya SA -->
                     <!-- <span class="text-white">Dengan mendaftar, kamu setuju dengan syarat dan ketentuan kami </span> -->
                     <div class="flex mt-3">
-                        <button class="w-full px-6 py-2 mt-4 text-white bg-[#b6833b] rounded-full hover:bg-[#c5985f]" name="submit"  onclick="CheckLength('InputPassword')">Create
-                            Account</button>
+                        <button class="w-full px-6 py-2 mt-4 text-white bg-[#b6833b] rounded-full hover:bg-[#c5985f]" name="submit"  onclick="CheckLength('InputPassword')">Daftar</button>
                     </div>
                     <div class="mt-6 text-white">
-                        Already have an account?
-                        <a class="text-white font-bold hover:underline" href="login.php">
-                            Sign In
+                        Sudah punya akun?
+                        <a class="text-white font-bold underline" href="login.php">
+                            Masuk sekarang
                         </a>
                     </div>
                 </div>
@@ -211,5 +248,4 @@ require_once "templates/header.php";
     </div>
 
 
-
-<?php require_once "templates/footer.php" ?>
+<?php include_once "templates/footer.php" ?> <!--templating: include file templates/header.php ke file register.php-->

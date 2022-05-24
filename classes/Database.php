@@ -4,32 +4,28 @@ class Database
 {
 
     private static $INSTANCE = null;
-    private $mysqli,
-//    $HOST = "localhost",
+    private $mysqli,    
+    //    $HOST = "localhost",
 //    $USER = "ll_lms_account",
 //    $PASS = "mD6m55r4kWdp1eKs",
 //    $DATABASE = "ll_lms_account",
 //    $PORT = "3306";
 
-    // $HOST = "172.17.0.2",
-    // $USER = "root",
-    // $PASS = "salupa",
-    // $DATABASE = "lumintu_db",
-    // $PORT = "3306";
-    
-     $HOST = "172.17.0.2",
-     $USER = "root",
-     $PASS = "salupa",
-     $DATABASE = "lumintu_db",
-     $PORT = "3306";
+    $HOST = "172.17.0.2",
+    $USER = "root",
+    $PASS = "salupa",
+    $DATABASE = "lumintu_db",
+    $PORT = "3306";
 
     public function __construct()
     {
 
+        // Melakukan koneksi ke Database
         $this->mysqli = new mysqli($this->HOST, $this->USER, $this->PASS, $this->DATABASE, $this->PORT);
 
+        // Jika connection ke Database error, baris berikut akan dieksekusi.
         if (mysqli_connect_error()) {
-            header("Location: 500.php");
+            Redirect::to("500");
         }
 
     }
@@ -44,20 +40,24 @@ class Database
         return self::$INSTANCE;
     }
 
+    // Fungsi untuk menambah data ke Database
     public function insert($table, $fields = array())
     {
 
-        // Get Column
+        // Ambil column dari $fields dan tambahkan karakter , (koma)
         $column = implode(", ", array_keys($fields));
 
-        // Get Values
+        // Ambil value
         $valueArrays = array();
         $i = 0;
         foreach ($fields as $key => $values) {
 
+            // Jika tipe dari $values = int, maka akan di insert tanpa '' (petik dua)
             if (is_int($values)) {
                 $valueArrays[$i] = $this->escape($values);
             }
+
+            // Jika tipe dari $values != int, maka akan di insert menggunakan '' (petik dua)
             else {
                 $valueArrays[$i] = "'" . $this->escape($values) . "'";
             }
@@ -65,14 +65,18 @@ class Database
             $i++;
         }
 
+        // Ditambahkan tanda koma untuk setiap values yang akan di input.
         $values = implode(", ", $valueArrays);
 
+        // Query untuk menambahkan data ke Database
         $query = "INSERT INTO $table ($column) VALUES ($values)";
 
+        // Jika tidak ada error, maka data akan berhasil disimpan.
         return $this->run_query($query, "Masalah saat memasukan data");
     }
 
-    public function update($table, $fields, $email)
+    // Fungsi untuk mengubah data di Database
+    public function update($table, $fields, $column, $value)
     {
 
         // Get Values
@@ -93,57 +97,107 @@ class Database
 
         $values = implode(", ", $valueArrays);
 
-        $query = "UPDATE $table SET $values WHERE user_email = '$email'";
+        if (is_int($value)) {
+            $query = "UPDATE $table SET $values WHERE $column = $value";
+        }
+        else {
+            $query = "UPDATE $table SET $values WHERE $column = '$value'";
+        }
 
         return $this->run_query($query, "Masalah saat mengupdate data");
     }
 
-    public function delete($table, $email)
+    // Fungsi untuk melakukan delete data
+    public function delete($table, $column, $value)
     {
-        $query = "DELETE FROM $table WHERE user_email = '$email'";
+        if (is_int($value)) {
+            // Jika $value bertipe int 
+            $query = "DELETE FROM $table WHERE $column = $value";
+        }
+        else {
+            // Jika $value bukan bertipe int
+            $query = "DELETE FROM $table WHERE $column = '$value'";
+        }
 
+        // Jika tidak ada error, maka data akan berhasil disimpan.
         return $this->run_query($query, "Masalah saat mengupdate data");
+    }    
+
+    // Fungsi untuk melakukan query ke database
+    public function run_query($query, $message)
+    {
+        if ($this->mysqli->query($query))
+            // Jika query yang dilakukan benar
+            return true;
+        else
+            // Jika query yang dilakukan salah
+            echo($message);
     }
 
-    public function get_info($table, $column = '', $value = '', $role = '')
+    // Fungsi untuk memisahkan karakter sql, untuk mengamankan Query SQL Injection
+    public function escape($name)
     {
+        return $this->mysqli->real_escape_string(stripslashes(htmlspecialchars($name)));
+    }
+
+
+
+    // Fungsi untuk menampilkan data berdasarkan $table, $column, $value, dan $role
+    public function get_info($fields, $table = ' ', $column = ' ', $value = ' ', $role = ' ')
+    {
+        // Jika $value tidak bertipe int, maka akan ditambahkan '' (petik dua)
         if (!is_int($value)) {
             $value = "'" . $value . "'";
         }
 
+        // Jika $column pada fungsi diisi saat fungsi dipanggil, maka kondisi akan dijalankan.
         if ($column != '') {
-            $query = "SELECT * FROM $table WHERE $column = $value";
+
+            // Get Values
+            $valueArrays = array();
+            $i = 0;
+            foreach ($fields as $key => $values) {
+                $valueArrays[$i] = $key;
+                $i++;
+            }
+            $row = implode(", ", $valueArrays);          
+
+            // Memilih semua data column yang memiliki value secara dinamis
+            $query = "SELECT $row FROM $table WHERE $column = $value";
+
             $result = $this->mysqli->query($query);
 
+            // Menampilkan data dalam tipe array_associatipe
             while ($row = $result->fetch_assoc()) {
                 return $row;
             }
-        }
-        elseif ($role != '') {
 
-            $query = "SELECT
-                        role.role_id,
-                        role.role_name,
-                        user.user_username,
-                        user.user_email,
-                        user.user_first_name,
-                        user.user_last_name,
-                        user.user_dob,
-                        user.user_address,
-                        user.user_gender,
-                        user.user_phone,
-                        user.user_profile_picture,
-                        user.user_status
-                        
-                        FROM
-                        role,
-                        user
-                        
-                        WHERE
-                        user.role_id = role.role_id AND role.role_name = '$role'";
+            
+        }
+
+        else if ($table != '') {
+
+            // Memilih semua data column yang memiliki value secara dinamis
+            $query = "SELECT * FROM $table";
 
             $result = $this->mysqli->query($query);
 
+            // Menampilkan data dalam tipe array_associatipe
+            while ($row = $result->fetch_assoc()) {
+                $results[] = $row;
+            }
+
+            return $results;
+        }
+
+        // Jika $role pada fungsi diisi saat fungsi dipanggil, maka kondisi akan dijalankan.
+        else if ($role != '') {
+
+            $query = "SELECT * FROM user JOIN role ON user.role_id = role.role_id WHERE role.role_name LIKE '$role' ";
+
+            $result = $this->mysqli->query($query);
+
+            // Menampilkan data dalam tipe array_associatipe
             while ($row = $result->fetch_assoc()) {
                 $results[] = $row;
             }
@@ -151,29 +205,13 @@ class Database
             return $results;
 
         }
-        else {
-            $query = "SELECT
-                        role.role_id,
-                        role.role_name,
-                        user.user_username,
-                        user.user_email,
-                        user.user_first_name,
-                        user.user_last_name,
-                        user.user_dob,
-                        user.user_address,
-                        user.user_gender,
-                        user.user_phone,
-                        user.user_profile_picture,
-                        user.user_status
-                        
-                        FROM
-                        role,
-                        user
-                        
-                        WHERE
-                        user.role_id = role.role_id";
+
+        // Jika tidak ada parameter pada fungsi saat fungsi dipanggil, maka kondisi akan dijalankan.
+        else {                        
+            $query = "SELECT * FROM user JOIN batch ON user.batch_id = batch.batch_id JOIN role ON user.role_id = role.role_id";
             $result = $this->mysqli->query($query);
 
+            // Menampilkan data dalam tipe array_associatipe
             while ($row = $result->fetch_assoc()) {
                 $results[] = $row;
             }
@@ -206,20 +244,6 @@ class Database
         }
 
         return $results;
-    }
-
-
-    public function run_query($query, $message)
-    {
-        if ($this->mysqli->query($query))
-            return true;
-        else
-            echo($message);
-    }
-
-    public function escape($name)
-    {
-        return $this->mysqli->real_escape_string(stripslashes(htmlspecialchars($name)));
     }
 
 }

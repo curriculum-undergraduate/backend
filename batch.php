@@ -237,6 +237,21 @@ $batch_data = $batch->get_batch();
 
             <?php } ?>
 
+            <?php if ( Session::exists('batch') ) { ?>
+
+                <div id="alert-1" class="flex p-4 mb-4 mt-5 bg-blue-100 rounded-lg dark:bg-blue-200" role="alert">
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                    <div class="ml-3 text-sm font-medium text-blue-700 dark:text-blue-800">
+                        <?php echo Session::flash('batch'); ?>
+                    </div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-100 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 dark:bg-blue-200 dark:text-blue-600 dark:hover:bg-blue-300" data-dismiss-target="#alert-1" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+
+            <?php } ?>
+
             <?php if ($user->is_admin(Session::get('email'))) : ?>
                 <!-- Topic Title -->
                 <div class="flex items-center gap-x-4 justify-between">
@@ -335,7 +350,7 @@ $batch_data = $batch->get_batch();
                                                                 d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                         </svg>
                                                     </button>
-                                                    <button type="button" data-modal-toggle="delete-modal"
+                                                    <button type="button" data-modal-toggle="delete-modal<?php echo $_batch['batch_id'] ?>"
                                                         class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -358,13 +373,14 @@ $batch_data = $batch->get_batch();
     </div>
 
     <!-- Modals untuk Delete -->
-    <div id="delete-modal" tabindex="-1"
+    <?php foreach ( $batch_data as $_batch ) : ?>
+    <div id="delete-modal<?php echo $_batch['batch_id'] ?>" tabindex="-1"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <div class="relative bg-white rounded-lg shadow ">
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                    data-modal-toggle="delete-modal">
+                    data-modal-toggle="delete-modal<?php echo $_batch['batch_id'] ?>">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -379,7 +395,7 @@ $batch_data = $batch->get_batch();
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500">Apakah kamu yakin untuk menghapus user ini?</h3>
                     
-                    <a href="#" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    <a href="batch-delete.php?batch_id=<?php echo $_batch['batch_id'] ?>" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Ya, Saya yakin
                     </a>
                     <button data-modal-toggle="delete-modal" type="button"
@@ -389,6 +405,7 @@ $batch_data = $batch->get_batch();
             </div>
         </div>
     </div>
+    <?php endforeach; ?>
 
     <!-- Modals untuk Update -->
     <div id="update-modal" tabindex="-1" aria-hidden="true"

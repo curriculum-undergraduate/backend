@@ -18,7 +18,7 @@ class User
             return false;
     }
 
-    public function send_mail($fields = array())
+    public function verifikasi_account($fields = array())
     {
         if ($this->_db->insert('user_token', $fields))
             return true;
@@ -36,28 +36,13 @@ class User
     //     else return false;
 
     // }
-    public function check_token($token_id) {
-
-        $data = $this->_db->get_info('user_token', 'user_token', $token_id);
-        // var_dump($data);
-        
-        if ( empty($data) ) return false;
-        else return true;
-
-    }
-
-    public function get_token($token_id) {
-
-        if ($this->check_token($token_id)) 
-            return "Info user tidak ditemukan";            
-        else
-            return $this->_db->get_info('user', 'user_token', $token_id);
-
-    }
     
     public function login_user($email, $password)
     {
-        $data = $this->_db->get_info('user', 'user_email', $email);
+        $fields = array('user_email' => 'user_email', 'user_password' => 'user_password', 'role_id' => 'role_id');
+        $column = $fields['user_email'];
+
+        $data = $this->_db->get_info($fields, 'user', $column, $email);
 
         if (password_verify($password, $data['user_password'])) {
             return true;
@@ -68,28 +53,25 @@ class User
 
     }
 
-
-    public function check_email($email) {
-
-        $data = $this->_db->get_info('user', 'user_email', $email);
-        
-        if ( empty($data) ) return false;
-        else return true;
+    public function update_user($fields = array(), $value) {
+        if ($this->_db->update('user', $fields, 'user_email', $value) ) return true;
+        else return false;
 
     }
 
-    public function check_username($username) {
-
-        $data = $this->_db->get_info('user', 'user_username', $username);
-
-        if ( empty($data) ) return false;
-        else return true;
-
+    public function delete_user($table, $column, $value) {
+        if ($this->_db->delete($table, $column, $value) ) return true;
+        else return false;
     }
+
+
+    // Berikut ini fungsi yang berkaitan dengan status sesi user
 
     public function is_admin($email) {
 
-        $data = $this->_db->get_info('user', 'user_email', $email);
+        $fields = array('user_email' => 'user_email', 'role_id' => 'role_id');
+        $column = $fields['user_email'];
+        $data = $this->_db->get_info($fields, 'user', $column, $email);
         
         if ( $data['role_id'] == 1 ) return true;
         else return false;
@@ -98,52 +80,109 @@ class User
 
     public function is_mentor($email) {
 
-        $data = $this->_db->get_info('user', 'user_email', $email);
+        $fields = array('user_email' => 'user_email', 'role_id' => 'role_id');
+        $column = $fields['user_email'];
+        $data = $this->_db->get_info($fields, 'user', $column, $email);
         
         if ( $data['role_id'] == 2 ) return true;
         else return false;
 
     }
 
+    
     public function is_loggedIn() {
         if ( Session::exists('email') ) return true;
         else return false;
+    }    
+
+
+    // Berikut ini fungsi yang berkaitan dengan get info user
+
+    public function get_users() {
+        return $this->_db->get_info('', '', '', '', '');
+
+    }
+
+    public function get_users_role($role) {
+        
+        return $this->_db->get_info('', '', '', '', $role);
+
+    }
+
+    // TODO:
+    /* 
+        1. Test fitur update user dan batch
+        2. Test fitur email verifikasi
+        3. Dan lain  lain.
+        4. Selamat malam...
+    */
+
+    public function get_roles() {
+        
+        return $this->_db->get_info('', 'role', '', '', '');
+
     }
 
     public function get_data($email) {
         
-        if ($this->check_email($email)) 
-            return $this->_db->get_info('user', 'user_email', $email);
+        $fields = array('user_email' => 'user_email', 'user_password' => 'user_password', 'user_status' => 'user_status');
+        $column = $fields['user_email'];
+
+        if ($this->check_email($email))      
+            return $this->_db->get_info($fields, 'user', $column, $email);
         else
             return "Info user tidak ditemukan";
     }
 
     public function get_data_token($token) {
         
-        return $this->_db->get_info('user_token', 'user_token', $token);
+        $fields = array('user_token' => 'user_token');
+        $column = $fields['user_token'];
+        return $this->_db->get_info($fields, 'user_token', $column, $token);
     }
 
-    public function update_user($fields = array(), $email) {
-        if ($this->_db->update('user', $fields, $email) ) return true;
-        else return false;
+    public function get_token($token_id) {
+
+        if ($this->check_token($token_id)) 
+            return "Info user tidak ditemukan";            
+        else
+            $fields = array('user_email' => 'user_email');
+            $column = $fields['user_email'];
+            return $this->_db->get_info($fields, 'user_token', $column, $token_id);
 
     }
 
-    public function delete_user($table, $email) {
-        if ($this->_db->delete($table, $email) ) return true;
-        else return false;
 
-    }
+    // Berikut ini fungsi yang berkaitan dengan Check data
 
-    public function get_users() {
+    public function check_email($email) {
+        $fields = array('user_email' => 'user_email');
+        $column = $fields['user_email'];
+        $data = $this->_db->get_info($fields, 'user', $column, $email);
         
-        return $this->_db->get_info('user');
+        if ( empty($data) ) return false;
+        else return true;
 
     }
 
-    public function get_users_role($role) {
+    public function check_username($username) {
+        $fields = array('user_username' => 'user_username');
+        $column = $fields['user_username'];
+        $data = $this->_db->get_info($fields, 'user', $column, $username);
+
+        if ( empty($data) ) return false;
+        else return true;
+
+    }
+
+    public function check_token($token_id) {
+
+        $fields = array('user_token' => 'user_token');
+        $column = $fields['user_token'];
+        $data = $this->_db->get_info($fields, 'user_token', $token_id);
         
-        return $this->_db->get_info('user', '', '', $role);
+        if ( empty($data) ) return false;
+        else return true;
 
     }
 

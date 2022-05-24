@@ -2,6 +2,21 @@
 
 require_once "core/init.php";
 
+// TODO: Perlu diskusi dengan Ilham bahas ini
+// For JwT 
+// require './vendor/autoload.php';
+
+// use Firebase\JWT\JWT;
+// use Dotenv\Dotenv;
+
+// Load dotenv
+// $dotenv = Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
+// End For JwT
+
+
+
+
 if ( $user->is_loggedIn() ) {
     Redirect::to('account-settings');
 }
@@ -9,42 +24,41 @@ if ( $user->is_loggedIn() ) {
 $errors = array();
 
 // Process Check Email Verifikasi
-if ($user->check_email($_GET['email'])) {
-
-    if ($user->check_token($_GET['token'])) {
-        $user_token = $user->get_data_token($_GET['token']);
-        if  (time() - $user_token['date_created'] < (60*60*24)) {
-
-            $status = 'verified';
-            $user->update_user(array(
-                'user_status' => $status
-            ), $user_token['user_email'] );
-
-            $user->delete_user('user_token', $user_token['user_email']);
-
-            Session::flash("login", $user_token['user_email'] . " Has been activated! Please login.");
-
-        } else {
-            $user->delete_user('user', $user_token['user_email']);
-            $user->delete_user('user_token', $user_token['user_email']);
-            Session::flash("login", "Account activation failed! Token expired.");
-        }
-    } else {
-        Session::flash("login", "Account activation failed! Wrong token.");
-    }
+if ($_GET['email']) {
+    if ($user->check_email($_GET['email'])) {
+        if ($user->check_token($_GET['token'])) {
+            $user_token = $user->get_data_token($_GET['token']);
+            if  (time() - $user_token['date_created'] < (60*60*24)) {
     
-} else {
-
-   if ($_GET){
-        Session::flash("login", "Account activation failed! Wrong email.");
-   }
-
+                $status = 'verified';
+                $user->update_user(array(
+                    'user_status' => $status
+                ), $user_token['user_email'] );
+    
+                $user->delete_user('user_token', 'user_email', $user_token['user_email']);
+    
+                Session::flash("login", $user_token['user_email'] . " Has been activated! Please login.");
+    
+            } else {
+                $user->delete_user('user', 'user_email', $user_token['user_email']);
+                $user->delete_user('user_token', 'user_email', $user_token['user_email']);
+                Session::flash("login", "Account activation failed! Token expired.");
+            }
+        } else {
+            Session::flash("login", "Account activation failed! Wrong token.");
+        }
+        
+    } else {
+    
+       Session::flash("login", "Account activation failed! Wrong email.");
+    
+    }
 }
 
-// if ( Input::get('submit') ) {
 if ( isset($_POST['submit']) ) {
 
     if ( Token::check( $_POST['token'] ) ) {
+        
         // Call Validation Object
 
         $validation = new Validation();
@@ -54,10 +68,10 @@ if ( isset($_POST['submit']) ) {
             'email' => array('required' => true),
             'password' => array('required' => true)
         ));
+        
 
         // Check Passed
         if ($validation->passed()) {    
-
             // Menguji email apakah sudah atau belum terdaftar di Database
             if ($user->check_email($_POST['email'])) {
 
@@ -65,26 +79,44 @@ if ( isset($_POST['submit']) ) {
                     $email = Session::set('email', $_POST['email']);
                     Session::delete('email');
                     $user_data = $user->get_data($email);
-                    unset($user_data['user_email']);
-                    unset($user_data['user_id']);
-                    unset($user_data['role_id']);
-                    unset($user_data['user_password']);
-                    unset($user_data['user_username']);
-                    unset($user_data['user_first_name']);
-                    unset($user_data['user_last_name']);
-                    unset($user_data['user_dob']);
-                    unset($user_data['user_address']);
-                    unset($user_data['user_gender']);
-                    unset($user_data['user_phone']);
-                    unset($user_data['user_profile_picture']);
-                    unset($user_data['user_token']);
+                    // var_dump($user_data);die;
+                    // unset($user_data['user_email']);
+                    // unset($user_data['user_id']);
+                    // unset($user_data['role_id']);
+                    // unset($user_data['user_password']);
+                    // unset($user_data['user_username']);
+                    // unset($user_data['user_first_name']);
+                    // unset($user_data['user_last_name']);
+                    // unset($user_data['user_dob']);
+                    // unset($user_data['user_address']);
+                    // unset($user_data['user_gender']);
+                    // unset($user_data['user_phone']);
+                    // unset($user_data['user_profile_picture']);
                     if ($user_data['user_status'] == 'verified') {
-                        // Session::flash('profile', 'Selamat! anda berhasil login');
+                        Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
+
+                        // FOR JWT
+                        // Menghitung waktu kadaluarsa token. Dalam kasus ini akan terjadi setelah 15 menit
+                        // $expired_time = time() + (15 * 60);
+
+                        // Buat payload dan access token
+                        // $payload = [
+                        // 'email' => $email,
+                        // Di library ini wajib menambah key exp untuk mengatur masa berlaku token
+                        // 'exp' => $expired_time
+                        // ];
+
+                        // Men-generate access token
+                        // $access_token = JWT::encode($payload, $_ENV['ACCESS_TOKEN_SECRET'], 'HS256');
+                        // ENDFOR JWT
+
+                        // TODO: Session dibuat disini
+                        // $_SESSION['access-token-jwt'] = $access_token;
+
                         if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('email'))) {
                             // This is not secure
                             $user_data = $user->get_data($email);
-                            unset($user_data['user_password']);
                             $_SESSION['user_data'] = $user_data;
                             // End
                             Redirect::to('account-settings');
