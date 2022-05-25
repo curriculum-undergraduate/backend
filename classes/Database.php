@@ -220,4 +220,65 @@ class Database
         return $this->mysqli->real_escape_string(stripslashes(htmlspecialchars($name)));
     }
 
+    public function pagination($pagination)
+    {
+        $start = 0;  $per_page = 4;
+        $page_counter = 0;
+        $next = $page_counter + 1;
+        $previous = $page_counter - 1;
+        
+        if(isset($_GET['start'])){
+         $start = $_GET['start'];
+         $page_counter =  $_GET['start'];
+         $start = $start *  $per_page;
+         $next = $page_counter + 1;
+         $previous = $page_counter - 1;
+        }
+        // query to get messages from messages table
+        $q = "SELECT
+        role.role_id,
+        role.role_name,
+        user.user_username,
+        user.user_email,
+        user.user_first_name,
+        user.user_last_name,
+        user.user_dob,
+        user.user_address,
+        user.user_gender,
+        user.user_phone,
+        user.user_profile_picture,
+        user.user_status,
+        user_id
+
+        
+        FROM
+        role,
+        user
+        
+        WHERE
+        user.role_id = role.role_id 
+        LIMIT 
+        $start, $per_page";
+        $query = $db->prepare($q);
+        $query->execute();
+    
+        if($query->rowCount() > 0){
+            $result = $this->mysqli->query($query);
+
+            while ($row = $result->fetch_assoc()) {
+                $results[] = $row;
+            }
+
+            return $results;
+        }
+
+        // count total number of rows in user table
+        $count_query = $this->_db->get_info('user');
+        $query = $db->prepare($count_query);
+        $query->execute();
+        $count = $query->rowCount();
+        // calculate the pagination number by dividing total number of rows with per page.
+        $paginations = ceil($count / $per_page);
+    }
+
 }

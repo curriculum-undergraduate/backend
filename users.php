@@ -133,18 +133,6 @@ if ( $_GET['hapus'] ) {
         echo "error";
     }
 
-if ( $_GET['edit'] ) {
-    $user->update_user(array(
-    'user_username' => $_POST['username'],
-    'user_email' => $_POST['email'],
-    'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
-    'role_id' => (int)$role,
-    'user_token' => $token,
-));
-    } else {
-        echo "error";
-    }
-
 
 ?>
 
@@ -438,7 +426,31 @@ if ( $_GET['edit'] ) {
                     
                 </div>
                 <br>
-                <?php require_once 'templates/pagination.php' ?>
+                <nav aria-label="Page navigation example">
+                <ul class="inline-flex -space-x-px">
+                <li>
+                <a href="#" class="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Previous</a>
+                </li>
+                <li>
+                <a href="?start='0'" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">1</a>
+                </li>
+                <li>
+                <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">2</a>
+                </li>
+                <li>
+                <a href="#" aria-current="page" class="py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white">3</a>
+                </li>
+                <li>
+                <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">4</a>
+                </li>
+                <li>
+                <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">5</a>
+                </li>
+                <li>
+                <a href="#" class="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Next</a>
+                </li>
+                </ul>
+                </nav>
             </div>
             
         </div>
@@ -479,13 +491,13 @@ if ( $_GET['edit'] ) {
         </div>
     </div>
 
-    <!-- Modals untuk Update -->
+    Modals untuk Update
     <div id="update-modal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
 
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
+            <!-- <div class="relative bg-white rounded-lg shadow">
                 <button type="button"
                     href = '?edit=<?php echo $_user['user_id'];?>'
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
@@ -538,15 +550,15 @@ if ( $_GET['edit'] ) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Modals untuk Adduser -->
-    <div id="adduser-modal" tabindex="-1" aria-hidden="true"
+    <!-- <div id="adduser-modal" tabindex="-1" aria-hidden="true"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
+        <div class="relative p-4 w-full max-w-md h-full md:h-auto"> -->
 
             <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
+            <!-- <div class="relative bg-white rounded-lg shadow">
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
                     data-modal-toggle="adduser-modal">
@@ -599,7 +611,7 @@ if ( $_GET['edit'] ) {
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script>

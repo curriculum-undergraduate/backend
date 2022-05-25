@@ -122,6 +122,26 @@ class User
         return $this->_db->get_info('user', '', '', $role);
 
     }
+    
+    // public function Pagination($allData, $totalPages) {
+
+    //     if(!isset($_GET['page']) || intval($_GET['page']) == 0 || intval($_GET['page']) == 1 || intval($_GET['page']) < 0) {
+    //         $pageNumber = 1;
+    //         $leftLimit = 0;
+    //         $rightLimit = $this->productsPerPage; // 0-5
+    //     } elseif (intval($_GET['page']) > $totalPages || intval($_GET['page']) == $totalPages) {
+    //         $pageNumber = $totalPages; // 2
+    //         $leftLimit = $this->productsPerPage * ($pageNumber - 1); // 5 * (2-1) = 6
+    //         $rightLimit = $allData; // 8
+    //     } else {
+    //         $pageNumber = intval($_GET['page']);
+    //         $leftLimit = $this->productsPerPage * ($pageNumber-1); // 5* (2-1) = 6
+    //         $rightLimit = $this->productsPerPage; // 5 -> (6,7,8,9,10)
+    //     }
+
+    //     $this->pageData['productsOnPage'] = $this->_db->get_info($leftLimit, $rightLimit);
+
+    // }
 
     
 }
