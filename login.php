@@ -119,7 +119,7 @@ if ( isset($_POST['submit']) ) {
                             $user_data = $user->get_data($email);
                             $_SESSION['user_data'] = $user_data;
                             // End
-                            Redirect::to('account-settings');
+                            Redirect::to('home');
                         } else {
                             Redirect::to('dashboard');
                         }
@@ -159,6 +159,15 @@ require_once "templates/header.php";
   </head>
 
 <body style="background-image: url('assets/img/background.jpg')">
+    <div class="overlay">
+        <div class="loading">
+            <div id="loader">
+                <div id="shadow"></div>
+                <div id="box"></div>
+            </div>
+            <h4>Loading...</h4>
+        </div>
+    </div>
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:mt-8 lg:flex-1">
             <h2 class="text-4xl font-bold text-white tracking-wider lg:pt-5 pt-24">

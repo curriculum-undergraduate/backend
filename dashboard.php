@@ -30,7 +30,7 @@ $user_data = $user->get_data( Session::get('email') );
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <title>Dashboard | Lumintu Classsroom</title>
+    <title>Dashboard</title>
 
     <!-- Flowbite CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />

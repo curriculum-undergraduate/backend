@@ -19,7 +19,7 @@
                         <p class="font-semibold">Dashboard</p>
                     </a>
                     <?php else: ?>
-                    <a href="https://assignment.lumintulogic.com"
+                    <a href="home.php"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/home_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Dashboard</p>

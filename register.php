@@ -139,6 +139,15 @@ include_once "templates/header.php"; // templating: include file templates/heade
   </head>
 
 <body style="background-image: url('assets/img/background.jpg')">
+    <div class="overlay">
+        <div class="loading">
+            <div id="loader">
+                <div id="shadow"></div>
+                <div id="box"></div>
+            </div>
+            <h4>Loading...</h4>
+        </div>
+    </div>
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:flex-1">
             <h2 class="text-4xl font-bold  tracking-wider sm:text-4xl">
@@ -246,6 +255,5 @@ include_once "templates/header.php"; // templating: include file templates/heade
             <img src="assets/img/register.png" class="animate-bounce lg:mt-10 lg:h-full lg:w-full">
         </div>
     </div>
-
 
 <?php include_once "templates/footer.php" ?> <!--templating: include file templates/header.php ke file register.php-->

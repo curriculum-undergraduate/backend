@@ -1,3 +1,8 @@
+window.onload = function () {
+  $(".overlay").delay(1000).fadeOut("slow");
+};
+
+
 let passwordInput = document.querySelector(
   '#passwordInput input[type="password"]'
 );
@@ -99,3 +104,4 @@ function strongPasswordStrength(
     strong.classList.remove("active");
   }
 }
+
