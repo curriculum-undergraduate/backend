@@ -5,17 +5,17 @@ class Database
 
     private static $INSTANCE = null;
     private $mysqli,    
-    $HOST = "localhost",
-    $USER = "ll_lms_account",
-    $PASS = "mD6m55r4kWdp1eKs",
-    $DATABASE = "ll_lms_account",
-    $PORT = "3306";
-
-    // $HOST = "172.17.0.2",
-    // $USER = "root",
-    // $PASS = "salupa",
-    // $DATABASE = "lumintu_db",
+    // $HOST = "localhost",
+    // $USER = "ll_lms_account",
+    // $PASS = "mD6m55r4kWdp1eKs",
+    // $DATABASE = "ll_lms_account",
     // $PORT = "3306";
+
+    $HOST = "172.17.0.2",
+    $USER = "root",
+    $PASS = "salupa",
+    $DATABASE = "lumintu_db",
+    $PORT = "3306";
 
     public function __construct()
     {

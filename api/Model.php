@@ -58,6 +58,18 @@ class User {
         return $this->_db->get_batch();
 
     }
+
+    public function get_batchs($batch_id) {
+             
+        $fields = array('batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date');
+        $column = $fields['batch_id'];
+
+        return $this->_db->get_info($fields, 'batch', $column, $batch_id);
+        // if ($this->check_email($email))      
+            
+        // else
+        //     return "Info user tidak ditemukan";
+    }
     
     
 }

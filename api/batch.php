@@ -40,7 +40,7 @@ list(, $token) = explode(' ', $headers['Authorization']);
 try {
     // Men-decode token. Dalam library ini juga sudah sekaligus memverfikasinya
     $payload = JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));    
-    $user_data = $user->get_data($payload->{ 'email'});
+    // $user_data = $user->get_data($payload->{ 'email'});
     // if ($user_data['role_id'] != 3) {
 
     //     $batch = $user->get_batch();
@@ -51,7 +51,6 @@ try {
     //     ]);
 
     // } else {
-
     //     echo json_encode([
     //         'success' => false,
     //         'data' => null,
@@ -61,7 +60,11 @@ try {
     //     exit();
         
     // }
-    $batch = $user->get_batch();
+    if ($_GET) {
+        $batch = $user->get_batchs($_GET['batch_id']);
+    } else {
+        $batch = $user->get_batch();
+    }
     echo json_encode([
         'success' => true,
         "batch" => $batch,

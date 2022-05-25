@@ -2,16 +2,16 @@
 
 require_once "core/init.php";
 
-// TODO: Perlu diskusi dengan Ilham bahas ini
-// For JwT 
-// require './vendor/autoload.php';
 
-// use Firebase\JWT\JWT;
-// use Dotenv\Dotenv;
+// For JwT 
+require './vendor/autoload.php';
+
+use Firebase\JWT\JWT;
+use Dotenv\Dotenv;
 
 // Load dotenv
-// $dotenv = Dotenv::createImmutable(__DIR__);
-// $dotenv->load();
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 // End For JwT
 
 
@@ -79,40 +79,26 @@ if ( isset($_POST['submit']) ) {
                     $email = Session::set('email', $_POST['email']);
                     Session::delete('email');
                     $user_data = $user->get_data($email);
-                    // var_dump($user_data);die;
-                    // unset($user_data['user_email']);
-                    // unset($user_data['user_id']);
-                    // unset($user_data['role_id']);
-                    // unset($user_data['user_password']);
-                    // unset($user_data['user_username']);
-                    // unset($user_data['user_first_name']);
-                    // unset($user_data['user_last_name']);
-                    // unset($user_data['user_dob']);
-                    // unset($user_data['user_address']);
-                    // unset($user_data['user_gender']);
-                    // unset($user_data['user_phone']);
-                    // unset($user_data['user_profile_picture']);
                     if ($user_data['user_status'] == 'verified') {
                         Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
 
                         // FOR JWT
                         // Menghitung waktu kadaluarsa token. Dalam kasus ini akan terjadi setelah 15 menit
-                        // $expired_time = time() + (15 * 60);
+                        $expired_time = time() + (15 * 60);
 
                         // Buat payload dan access token
-                        // $payload = [
-                        // 'email' => $email,
-                        // Di library ini wajib menambah key exp untuk mengatur masa berlaku token
-                        // 'exp' => $expired_time
-                        // ];
+                        $payload = [
+                            'email' => $email,
+                            'exp' => $expired_time
+                        ];
 
                         // Men-generate access token
-                        // $access_token = JWT::encode($payload, $_ENV['ACCESS_TOKEN_SECRET'], 'HS256');
+                        $access_token = JWT::encode($payload, $_ENV['ACCESS_TOKEN_SECRET'], 'HS256');
+                        
+                        setcookie('X-LUMINTU-TOKEN', $access_token, $payload['exp'], '', '', false, true);
                         // ENDFOR JWT
 
-                        // TODO: Session dibuat disini
-                        // $_SESSION['access-token-jwt'] = $access_token;
 
                         if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('email'))) {
                             // This is not secure
@@ -174,7 +160,7 @@ require_once "templates/header.php";
                 GradIT Course
             </h2>
             <h3 class="text-2xl font-semibold text-white tracking-wider mt-3">
-                Welcome Back!
+                Masuk
             </h3>
 
             <?php if ( !empty($errors) ) { ?>
@@ -216,14 +202,14 @@ require_once "templates/header.php";
                 <div class="mt-5">
                     <div class="mt-4">
                         <label class="block text-white" for="email">Email<label>
-                                    <input type="email" placeholder="name@gmail.com" name="email"
+                                    <input type="email" placeholder="alamat email" name="email"
                                         class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black"
                                         required>
                     </div>
 
                     <div class="mt-4">
-                        <label class="block text-white">Password<label>
-                                <input type="password" placeholder="Password" name="password"
+                        <label class="block text-white">Kata sandi<label>
+                                <input type="password" placeholder="kata sandi" name="password"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black"
                                     required>
                     </div>
@@ -242,16 +228,15 @@ require_once "templates/header.php";
                         </div>
 
                         <div class="text-sm">
-                            <a href="forgot-password.php" class="font-medium text-white hover:underline"> Forgot
-                                password? </a>
+                            <a href="forgot-password.php" class="font-medium text-white hover:underline"> Lupa kata sandi ? </a>
                         </div>
                     </div>
 
 
                     <div class="mt-6 text-white place-items-end">
-                        Don't have an account?
-                        <a class="text-white font-bold hover:underline" href="register.php">
-                            Sign Up
+                        Belum punya akun?
+                        <a class="text-white font-bold underline" href="register.php">
+                            Daftar
                         </a>
                     </div>
                 </div>

@@ -33,9 +33,16 @@
                         <p class="font-semibold">Schedule</p>
                     </a>
                 </li>
-                <li>
+                <!-- <li>
                     <a href="http://lessons.lumintulogic.com/"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Lessons</p>
+                    </a>
+                </li> -->
+                <li>
+                    <a
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white getApp">
                         <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Lessons</p>
                     </a>
@@ -77,3 +84,30 @@
         </ul>
     </div>
 </div>
+
+<?php $token = $_COOKIE['X-LUMINTU-TOKEN'] ?>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    $( ".getApp" ).click(function( event ) {
+    event.preventDefault();
+    let token = '<?php echo $token ?>';
+
+        $.ajax({
+            // url: "https://192.168.18.95/prokid-front-end/signin.php",
+            // url: "https://lessons.lumintulogic.com/formData.php",
+            url: "{url_tujuan}",
+            method: "POST",
+            data: {
+                "token" : token
+            },
+            success: function(res){
+                console.log(res);
+            },
+            error: function(res){
+                console.log(res);
+            }
+
+        })
+    });
+</script>

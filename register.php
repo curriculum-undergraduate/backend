@@ -245,7 +245,7 @@ include_once "templates/header.php"; // templating: include file templates/heade
                     <div class="mt-6 text-white">
                         Sudah punya akun?
                         <a class="text-white font-bold underline" href="login.php">
-                            Masuk sekarang
+                            Masuk
                         </a>
                     </div>
                 </div>
