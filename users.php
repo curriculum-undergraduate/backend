@@ -177,7 +177,7 @@ $user_data = $user->get_data( Session::get('email') );
                 <div class="flex items-center gap-x-4 justify-between">
                     <p class="text-xl text-dark-green font-semibold">List All User With Roles</p>
 
-                    <a href="user.php" type="button" 
+                    <a href="user-form.php" type="button" 
                         class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
                         <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -310,7 +310,7 @@ $user_data = $user->get_data( Session::get('email') );
                                                 <td>
                                                     <button type="button"
                                                         class="py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                        <a href="user.php?user_email=<?php echo $_user['user_email'] ?>">
+                                                        <a href="user-form.php?user_email=<?php echo $_user['user_email'] ?>">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
                                                                 fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"

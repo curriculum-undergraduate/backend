@@ -2,26 +2,6 @@
 
 require_once 'core/init.php';
 
-require './vendor/autoload.php';
-
-use PHPMailer\PHPMailer\PHPMailer;
-
-$mail = new PHPMailer();
-
-$mail->isSMTP();
-$mail->SMTPDebug = 0;
-$mail->Host = 'send.smtp.mailtrap.io';
-$mail->SMTPAuth = true;
-$mail->Username = 'api';
-$mail->Password = 'bbbef8482d588fcd413720d14e7e0aac';
-$mail->SMTPSecure = 'tls';
-$mail->Port = 587;
-
-$mail->setFrom('no-reply@antheiz.me', 'no-reply');
-// $mail->addReplyTo('mail@antheiz.me', 'Theis A'); 
-
-$mail->isHTML(true);
-
 if (!$user->is_loggedIn()) {
     Session::flash('login', 'Anda harus login terlebih dahulu');
     Redirect::to('login');
@@ -34,52 +14,6 @@ if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('e
 }
 
 $errors = array();
-
-// Add batch
-// if ( Input::get('submit') ) {
-if (isset($_POST['submit'])) {
-    if (Token::check($_POST['token'])) {
-
-        // Call Validation Object
-
-        $validation = new Validation();
-
-        // Check Method
-        $validation = $validation->check(array(
-            'batch_name' => array(
-                'required' => true,
-            ),
-            'start_date' => array(
-                'required' => true,
-            ),
-            'end_date' => array(
-                'required' => true,
-            ),
-            // 'status' => array(
-            //             'required' => true,
-            //             ),
-        ));
-
-        // Check Passed
-        if ($validation->passed()) {
-
-            $batch->add_batch(array(
-                'batch_name' => $_POST['batch_name'],
-                'batch_start_date' => $_POST['start_date'],
-                'batch_end_date' => $_POST['end_date'],
-                // 'status' => $_POST['status'],
-            ));
-
-            Session::flash("batch", "Batch Berhasil ditambahkan");
-            Redirect::to('batch');
-
-        }
-        else {
-            $errors = $validation->errors();
-        }
-    }
-
-} 
 
 $user_data = $user->get_data( Session::get('email') );
 
@@ -257,7 +191,7 @@ $batch_data = $batch->get_batch();
                 <div class="flex items-center gap-x-4 justify-between">
                     <p class="text-xl text-dark-green font-semibold">List All Batch</p>
 
-                    <button type="button" data-modal-toggle="adduser-modal"
+                    <a href="batch-form.php"  data-modal-toggle="adduser-modal"
                         class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
                         <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -265,7 +199,7 @@ $batch_data = $batch->get_batch();
                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
                         Add Batch
-                    </button>
+                    </a href="batch-form.php">
                 </div>
             <?php endif;?>
 
@@ -342,15 +276,17 @@ $batch_data = $batch->get_batch();
 
                                             <?php if ($user->is_admin(Session::get('email'))) : ?>
                                                 <td>
-                                                    <button type="button" data-modal-toggle="update-modal"
+                                                    <button type="button"
                                                         class=" py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
-                                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                                                d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                                                        </svg>
+                                                        <a href="batch-form.php?batch_id=<?php echo $_batch['batch_id'] ?>">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
+                                                                fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                                            </svg>
+                                                        </a>
                                                     </button>
-                                                    <button type="button" data-modal-toggle="delete-modal<?php echo $_batch['batch_id'] ?>"
+                                                    <button type="button" data-modal-toggle="delete-modal"
                                                         class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -372,15 +308,15 @@ $batch_data = $batch->get_batch();
         </div>
     </div>
 
+    <?php foreach ( $batch as $_batch ) : ?>
     <!-- Modals untuk Delete -->
-    <?php foreach ( $batch_data as $_batch ) : ?>
-    <div id="delete-modal<?php echo $_batch['batch_id'] ?>" tabindex="-1"
+    <div id="delete-modal" tabindex="-1"
         class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 md:inset-0 h-modal md:h-full">
         <div class="relative p-4 w-full max-w-md h-full md:h-auto">
             <div class="relative bg-white rounded-lg shadow ">
                 <button type="button"
                     class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                    data-modal-toggle="delete-modal<?php echo $_batch['batch_id'] ?>">
+                    data-modal-toggle="delete-modal">
                     <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd"
                             d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
@@ -395,7 +331,7 @@ $batch_data = $batch->get_batch();
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500">Apakah kamu yakin untuk menghapus user ini?</h3>
                     
-                    <a href="batch-delete.php?batch_id=<?php echo $_batch['batch_id'] ?>" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    <a href="batch_delete.php?batch_id=<?php echo $_batch['batch_id'] ?>" data-modal-toggle="delete-modal" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Ya, Saya yakin
                     </a>
                     <button data-modal-toggle="delete-modal" type="button"
@@ -407,120 +343,6 @@ $batch_data = $batch->get_batch();
     </div>
     <?php endforeach; ?>
 
-    <!-- Modals untuk Update -->
-    <div id="update-modal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <button type="button"
-                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                    data-modal-toggle="update-modal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div class="py-6 px-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900">Edit Akun</h3>
-                    <form class="space-y-6" action="#" method="POST">
-                        <div>
-                            <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                        </div>
-                        <div>
-                            <label for="batch_name" class="block mb-2 text-sm font-medium text-gray-900">Batch name</label>
-                            <input type="text" name="batch_name" id="batch_name" placeholder="batch_name" value=""
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <div>
-                            <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
-                            <input type="date" name="start_date" id="start_date" placeholder="start_date" value=""
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <div>
-                            <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>
-                            <input type="date" name="end_date" id="end_date" placeholder="end_date" value=""
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <!-- TODO: Status Batch -->
-                        <!-- <div>
-                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                            <select id="countries" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="active">Active</option>
-                                <option value="unactive">Non Active</option>
-                            </select>
-                        </div> -->
-                        <button type="submit" name="update"
-                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Modals untuk Adduser -->
-    <div id="adduser-modal" tabindex="-1" aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full md:inset-0 h-modal md:h-full">
-        <div class="relative p-4 w-full max-w-md h-full md:h-auto">
-
-            <!-- Modal content -->
-            <div class="relative bg-white rounded-lg shadow">
-                <button type="button"
-                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
-                    data-modal-toggle="adduser-modal">
-                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd"
-                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                            clip-rule="evenodd"></path>
-                    </svg>
-                </button>
-                <div class="py-6 px-6 lg:px-8">
-                    <h3 class="mb-4 text-xl font-medium text-gray-900">Add Batch</h3>
-                    <form class="space-y-6" action="#" method="POST">
-                    <div>
-                        <input type="hidden" name="token" value="<?php echo Token::generate(); ?>">
-                    </div>
-                        <div>
-                            <label for="batch_name" class="block mb-2 text-sm font-medium text-gray-900">Batch name</label>
-                            <input type="text" name="batch_name" id="batch_name" placeholder="batch_name"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <div>
-                            <label for="start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date</label>
-                            <input type="date" name="start_date" id="start_date" placeholder="start_date"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <div>
-                            <label for="end_date" class="block mb-2 text-sm font-medium text-gray-900">End Date</label>
-                            <input type="date" name="end_date" id="end_date" placeholder="end_date"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                required>
-                        </div>
-                        <!-- TODO: Status Batch -->
-                        <!-- <div>
-                            <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Status</label>
-                            <select id="countries" name="status"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                <option value="active">Active</option>
-                                <option value="unactive">Non Active</option>
-                            </select>
-                        </div> -->
-                        <button type="submit" name="submit"
-                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
     <script>
@@ -529,30 +351,6 @@ $batch_data = $batch->get_batch();
         btnToggle.onclick = function () {
             sidebar.classList.toggle('in-active');
         }
-
-        // For Generate Password
-        var password=document.getElementById("password");
-
-        function genPassword() {
-            var chars = "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-            var passwordLength = 12;
-            var password = "";
-            for (var i = 0; i <= passwordLength; i++) {
-                var randomNumber = Math.floor(Math.random() * chars.length);
-                password += chars.substring(randomNumber, randomNumber +1);
-            }
-            document.getElementById("password").value = password;
-        }
-
-        function copyPassword() {
-            var copyText = document.getElementById("password");
-            copyText.select();
-            navigator.clipboard.writeText(copyText.value);
-            document.execCommand("copy");  
-        }
-
-
-
     </script>
 </body>
 

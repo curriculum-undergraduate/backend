@@ -16,6 +16,18 @@ class Batch
 
     }
 
+    public function get_data($batch_id) {
+        
+        $fields = array('batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date');
+        $column = $fields['batch_id'];
+
+        return $this->_db->get_info($fields, 'batch', $column, $batch_id);
+        // if ($this->check_email($email))      
+            
+        // else
+        //     return "Info user tidak ditemukan";
+    }
+
     public function add_batch($fields = array())
     {
         if ($this->_db->insert('batch', $fields))
@@ -24,8 +36,8 @@ class Batch
             return false;
     }
 
-    public function update_batch($fields = array(), $id) {
-        if ($this->_db->update('batch', $fields, $id) ) return true;
+    public function update_batch($fields = array(), $value) {
+        if ($this->_db->update('batch', $fields, 'batch_id', $value) ) return true;
         else return false;
     }
 

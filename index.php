@@ -58,6 +58,7 @@ if ($_GET['email']) {
 if ( isset($_POST['submit']) ) {
 
     if ( Token::check( $_POST['token'] ) ) {
+        
         // Call Validation Object
 
         $validation = new Validation();
@@ -67,10 +68,10 @@ if ( isset($_POST['submit']) ) {
             'email' => array('required' => true),
             'password' => array('required' => true)
         ));
+        
 
         // Check Passed
         if ($validation->passed()) {    
-
             // Menguji email apakah sudah atau belum terdaftar di Database
             if ($user->check_email($_POST['email'])) {
 

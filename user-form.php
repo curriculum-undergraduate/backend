@@ -37,6 +37,7 @@ $user_data = $user->get_data( Session::get('email') );
 
 if ($_GET){
     $_user = $user->get_data( $_GET['user_email'] );
+    // var_dump($_user);
 }
 
 $errors = array();
@@ -70,34 +71,26 @@ if ( isset($_POST['submit']) ) {
             'batch' => array(
                         'required' => true,
                         ),
-            // 'password_verify' => array(
-            //             'required' => true,
-            //             'match' => 'password',
-            //             ),
         ));
 
         // Check Passed
-        if ($validation->passed()) {
+        if ($_GET) {
+            $role = $_POST['role'];
+            $batch = $_POST['batch'];
 
-            if ($_GET['user_email']) {
-                // $token = rand(999999, 111111);
-                $token = base64_encode(random_bytes(32));
-                $role = $_POST['role'];
-                $batch = $_POST['batch'];
+            $user->update_user(array(
+                'user_username' => $_POST['username'],
+                'user_email' => $_POST['email'],
+                'role_id' => (int)$role,
+                'batch_id' => (int)$batch,
+            ), $_POST['email']);
 
-                $user->update_user(array(
-                    'user_username' => $_POST['username'],
-                    'user_email' => $_POST['email'],
-                    'role_id' => (int)$role,
-                    'batch_id' => (int)$batch,
-                ), $_POST['email']);
+            Session::flash("users", "Data berhasil diubah!");
+            Redirect::to("users");
+        } else {  
 
-                Session::flash("users", "Data berhasil diubah!");
-                Redirect::to("users");
-
-            } else {  
-
-                // $token = rand(999999, 111111);
+            
+            if ($validation->passed()) {
                 $token = base64_encode(random_bytes(32));
                 $role = $_POST['role'];
                 $batch = $_POST['batch'];
@@ -141,20 +134,18 @@ if ( isset($_POST['submit']) ) {
                     Session::flash("users", "Data berhasil ditambah!");
                     Redirect::to("users");
                 }
-            }
-
-        } else {
-            $errors = $validation->errors();
-        }  
+            } else {
+                $errors = $validation->errors();
+            } 
+        }
+         
     }
 
 }
 
 
-// var_dump($_SESSION);
-
 $roles = $user->get_roles(); // GET semua data roles
-// $_batch = $batch->get_batch(); // GET semua data batch
+$batch = $batch->get_batch(); // GET semua data batch
 
 ?>
 
@@ -391,7 +382,7 @@ $roles = $user->get_roles(); // GET semua data roles
                             <label for="role" class="block mb-2 text-sm font-medium text-gray-900">Role</label>
                             <select id="role" name="role"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                                    <option value="<?php echo $_user['role_id'] ?>"><?php echo $_user['role_name'] ?></option>
+                                    <option value="<?php echo $_user['role_id'] ?>"><?php echo $_user['role_id'] ?></option>
                                     <?php foreach ($roles as $_roles): ?>
                                         <option value="<?php echo $_roles['role_id'] ?>"><?php echo $_roles['role_name'] ?></option>
                                     <?php endforeach; ?>
@@ -402,11 +393,9 @@ $roles = $user->get_roles(); // GET semua data roles
                             <select id="batch" name="batch"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                     <option value="<?php echo $_user['batch_id'] ?>"><?php echo $_user['batch_id'] ?></option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
+                                    <?php foreach ($batch as $_batch): ?>
+                                        <option value="<?php echo $_batch['batch_id'] ?>"><?php echo $_batch['batch_name'] ?></option>
+                                    <?php endforeach; ?>
                             </select>
                         </div>
                         <button type="submit" name="submit"

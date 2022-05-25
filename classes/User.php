@@ -56,7 +56,6 @@ class User
     public function update_user($fields = array(), $value) {
         if ($this->_db->update('user', $fields, 'user_email', $value) ) return true;
         else return false;
-
     }
 
     public function delete_user($table, $column, $value) {
@@ -125,7 +124,7 @@ class User
 
     public function get_data($email) {
         
-        $fields = array('user_email' => 'user_email', 'user_password' => 'user_password', 'user_status' => 'user_status');
+        $fields = array('user_email' => 'user_email', 'user_password' => 'user_password', 'user_status' => 'user_status', 'user_username' => 'user_username', 'role_id' => 'role_id', 'batch_id' => 'batch_id');
         $column = $fields['user_email'];
 
         if ($this->check_email($email))      
