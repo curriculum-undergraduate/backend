@@ -108,14 +108,6 @@ class User
 
     }
 
-    // TODO:
-    /* 
-        1. Test fitur update user dan batch
-        2. Test fitur email verifikasi
-        3. Dan lain  lain.
-        4. Selamat malam...
-    */
-
     public function get_roles() {
         
         return $this->_db->get_info('', 'role', '', '', '');
@@ -124,7 +116,7 @@ class User
 
     public function get_data($email) {
         
-        $fields = array('user_email' => 'user_email', 'user_password' => 'user_password', 'user_status' => 'user_status', 'user_username' => 'user_username', 'role_id' => 'role_id', 'batch_id' => 'batch_id');
+        $fields = array('user_email' => 'user_email', 'user_password' => 'user_password', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id');
         $column = $fields['user_email'];
 
         if ($this->check_email($email))      
@@ -135,7 +127,7 @@ class User
 
     public function get_data_token($token) {
         
-        $fields = array('user_token' => 'user_token');
+        $fields = array('user_email' => 'user_email', 'user_token' => 'user_token', 'date_created' => 'date_created');
         $column = $fields['user_token'];
         return $this->_db->get_info($fields, 'user_token', $column, $token);
     }
@@ -176,9 +168,9 @@ class User
 
     public function check_token($token_id) {
 
-        $fields = array('user_token' => 'user_token');
+        $fields = array('user_email' => 'user_email', 'user_token' => 'user_token', 'date_created' => 'date_created');
         $column = $fields['user_token'];
-        $data = $this->_db->get_info($fields, 'user_token', $token_id);
+        $data = $this->_db->get_info($fields, 'user_token', $column, $token_id);
         
         if ( empty($data) ) return false;
         else return true;

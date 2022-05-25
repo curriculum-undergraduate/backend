@@ -42,8 +42,6 @@ try {
     $payload = JWT::decode($token, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
     // var_dump($payload);        
     $user_data = $user->get_data($payload->{ 'email'});
-    unset($user_data['user_password']);
-    unset($user_data['user_profile_picture']);
     echo json_encode([
         'success' => true,
         "user" => $user_data,

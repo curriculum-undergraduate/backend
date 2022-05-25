@@ -41,8 +41,7 @@ if (!isset($email) || !isset($password)) {
 
 $user = new User();
 
-if ($user->check_name($email)) {
-
+if ($user->check_email($email)) {
   if ($user->login_user($email, $password)) {
     // TODO: Memasukan Token ke Session saat Login
 

@@ -14,7 +14,7 @@ if ($user->check_email($_GET['email'])) {
             Session::flash("password-reset", $user_token['user_email'] . " Silahkan reset password kamu");
 
         } else {
-            $user->delete_user('user_token', $user_token['user_email']);
+            $user->delete_user('user_token', 'user_email', $user_token['user_email']);
             Session::flash("login", "Link reset password sudah Expired.");
             Redirect::to("login");
         }
@@ -61,7 +61,7 @@ if ( isset($_POST['submit']) ) {
                 'user_password' => password_hash($_POST['new_password'], PASSWORD_BCRYPT),
             ), $user_token['user_email'] ); 
 
-            $user->delete_user('user_token', $user_token['user_email']);
+            $user->delete_user('user_token', 'user_email', $user_token['user_email']);
 
             Session::flash('login', 'Selamat! Password berhasil diupdate');
             Redirect::to('login');
