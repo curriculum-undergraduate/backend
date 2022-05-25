@@ -2,8 +2,12 @@
 
 require_once 'core/init.php';
 
-if ($user->is_admin(Session::get('email'))) {
-  Redirect::to('dashboard');
+// if ($user->is_admin(Session::get('email'))) {
+//   Redirect::to('dashboard');
+// }
+
+if ($user->is_admin(Session::get('email')) && $user->is_mentor(Session::get('email')) ) {
+  Redirect::to('home');
 }
 
 if (!$user->is_loggedIn()) {
