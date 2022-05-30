@@ -38,7 +38,7 @@ class User {
 
     public function get_data($email) {
         
-        $fields = array('user_email' => 'user_email', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id');
+        $fields = array('user_id' => 'user_id', 'user_email' => 'user_email', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id');
         $column = $fields['user_email'];
 
         if ($this->check_email($email))      

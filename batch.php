@@ -33,6 +33,7 @@ $batch_data = $batch->get_batch();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css" />
 
     <title>Batch | Lumintu Classsroom</title>
 
@@ -191,7 +192,7 @@ $batch_data = $batch->get_batch();
                 <div class="flex items-center gap-x-4 justify-between">
                     <p class="text-xl text-dark-green font-semibold">List All Batch</p>
 
-                    <a href="batch-form.php"  data-modal-toggle="adduser-modal"
+                    <a href="batch-form.php" id="addbatch"  data-modal-toggle="adduser-modal"
                         class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
                         <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -276,7 +277,7 @@ $batch_data = $batch->get_batch();
 
                                             <?php if ($user->is_admin(Session::get('email'))) : ?>
                                                 <td>
-                                                    <button type="button"
+                                                    <button type="button" id="edit"
                                                         class=" py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                                         <a href="batch-form.php?batch_id=<?php echo $_batch['batch_id'] ?>">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
@@ -286,7 +287,7 @@ $batch_data = $batch->get_batch();
                                                             </svg>
                                                         </a>
                                                     </button>
-                                                    <button type="button" data-modal-toggle="delete-modal"
+                                                    <button type="button" id="delete" data-modal-toggle="delete-modal"
                                                         class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -345,12 +346,46 @@ $batch_data = $batch->get_batch();
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
         btnToggle.onclick = function () {
             sidebar.classList.toggle('in-active');
         }
+    
+        // intro js
+        introJs().setOptions({
+            steps: [{
+                title: 'Welcome',
+                intro: 'Hallo Selamat Datang! 👋'
+            },
+            {
+                element: document.querySelector('#bantu1'),
+                intro: 'Ini adalah sidebar'
+            },
+            {
+                element: document.querySelector('#kembali'),
+                intro: 'Klik ini untuk kembali ke dashboard'
+            },
+            {
+                element: document.querySelector('#addbatch'),
+                intro: 'Klik ini untuk menambah batch'
+            },
+            {
+                element: document.querySelector('#edit'),
+                intro: 'Klik ini untuk mengedit data batch'
+            },
+            {
+                element: document.querySelector('#delete'),
+                intro: 'Klik ini untuk menghapus data batch'
+            },
+            {
+                title: 'Step Selesai',
+                intro: 'Thank You! 👋'
+            }]
+            }).start();
+        // end intro js
     </script>
 </body>
 

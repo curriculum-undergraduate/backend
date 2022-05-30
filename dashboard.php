@@ -2,6 +2,35 @@
 
 require_once 'core/init.php';
 
+// // For JwT 
+// require './vendor/autoload.php';
+
+// use Firebase\JWT\JWT;
+// use Firebase\JWT\Key;
+// use Dotenv\Dotenv;
+
+// // Load dotenv
+// $dotenv = Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
+// // End For JwT
+
+// if($_COOKIE['X-LUMINTU-TOKEN']) {
+//     $jwt = $_COOKIE['X-LUMINTU-TOKEN'];
+//     try {
+//         $payload = JWT::decode($jwt, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
+//         $user_data = $user->get_data($payload->{ 'email'});
+//         echo json_encode([
+//             'success' => true,
+//             "user" => $user_data,
+
+//         ]);
+//     } catch (Exception $exception){
+//         Session::flash('login', 'Anda harus login terlebih dahulu');
+//         Redirect::to('login');
+//     }
+// }
+
+
 if (!$user->is_loggedIn()) {
     Session::flash('login', 'Anda harus login terlebih dahulu');
     Redirect::to('login');
@@ -29,8 +58,9 @@ $user_data = $user->get_data( Session::get('email') );
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css" />
 
-    <title>Dashboard</title>
+    <title>Dashboard | Lumintu Classsroom</title>
 
     <!-- Flowbite CSS -->
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.1/dist/flowbite.min.css" />
@@ -129,7 +159,7 @@ $user_data = $user->get_data( Session::get('email') );
 
             <!-- card user -->
             <div class="sm:flex flex-wrap text-center items-center gap-8">
-                <div
+                <div id="tabuser"
                     class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <a href="users.php">
                         <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
@@ -142,12 +172,12 @@ $user_data = $user->get_data( Session::get('email') );
                 </div>
 
                 <!-- card batch -->
-                <div
+                <div id="tabbatch"
                     class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
                     <a href="batch.php">
                         <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
                     </a>
-                    <div class="p-5">
+                    <div class="p-5" >
                         <a href="batch.php">
                             <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">BATCH</h5>
                         </a>
@@ -157,6 +187,7 @@ $user_data = $user->get_data( Session::get('email') );
 
             <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
             <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+            <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
             <script>
 
                 let btnToggle = document.getElementById('btnToggle');
@@ -165,6 +196,35 @@ $user_data = $user->get_data( Session::get('email') );
                     sidebar.classList.toggle('in-active');
                 }
 
+
+                // intro js
+                introJs().setOptions({
+                steps: [{
+                    title: 'Welcome',
+                    intro: 'Hallo Selamat Datang! 👋'
+                },
+                {
+                    element: document.querySelector('#bantu1'),
+                    intro: 'Ini adalah sidebar'
+                },
+                {
+                    element: document.querySelector('#bantu2'),
+                    intro: 'Ini untuk keluar'
+                },
+                {
+                    element: document.querySelector('#tabuser'),
+                    intro: 'Klik ini untuk melihat user'
+                },
+                {
+                    element: document.querySelector('#tabbatch'),
+                    intro: 'Klik ini untuk melihat batch'
+                },
+                {
+                    title: 'Step Selesai',
+                    intro: 'Thank You! 👋'
+                }]
+                }).start();
+            // end intro js
             </script>
 </body>
 

@@ -36,6 +36,7 @@ $user_data = $user->get_data( Session::get('email') );
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/intro.js/minified/introjs.min.css" />
 
     <title>Users | Lumintu Classsroom</title>
 
@@ -127,7 +128,7 @@ $user_data = $user->get_data( Session::get('email') );
 
             <!-- Breadcrumb -->
             <div class="flex justify-between">
-                <a href="dashboard.php" class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center mr-2">
+                <a id="kembali" href="dashboard.php" class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center mr-2">
                     <svg class="w-6 h-6 mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
                     Back                    
                 </a>
@@ -177,7 +178,7 @@ $user_data = $user->get_data( Session::get('email') );
                 <div class="flex items-center gap-x-4 justify-between">
                     <p class="text-xl text-dark-green font-semibold">List All User With Roles</p>
 
-                    <a href="user-form.php" type="button" 
+                    <a id="adduser" href="user-form.php" type="button" 
                         class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
                         <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -192,16 +193,16 @@ $user_data = $user->get_data( Session::get('email') );
             <div class="flex flex-col mt-8 mb-16">
                 <?php $filter = $_GET['role'] ?>
                 <div class="inline-flex rounded-md shadow-sm mb-1">
-                    <a href="users.php" class="py-2 px-4 text-sm font-medium <?php if (!$filter): ?> text-blue-700 <?php endif; ?> bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="all" href="users.php" class="py-2 px-4 text-sm font-medium <?php if (!$filter): ?> text-blue-700 <?php endif; ?> bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         All
                     </a>
-                    <a href="users.php?role=student" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'student'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="student" href="users.php?role=student" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'student'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         Student
                     </a>
-                    <a href="users.php?role=lecture" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'lecture'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="lecturer" href="users.php?role=lecture" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'lecture'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         Lecture
                     </a>
-                    <a href="users.php?role=admin" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'admin'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="admin" href="users.php?role=admin" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'admin'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
                         Admin
                     </a>
                 </div>
@@ -308,7 +309,7 @@ $user_data = $user->get_data( Session::get('email') );
 
                                             <?php if ($user->is_admin(Session::get('email'))) : ?>
                                                 <td>
-                                                    <button type="button"
+                                                    <button type="button" id="edit"
                                                         class="py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                                         <a href="user-form.php?user_email=<?php echo $_user['user_email'] ?>">
                                                             <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-blue-400"
@@ -318,7 +319,7 @@ $user_data = $user->get_data( Session::get('email') );
                                                             </svg>
                                                         </a>
                                                     </button>
-                                                    <button type="button" data-modal-toggle="delete-modal<?php echo $_user['user_email'] ?>"
+                                                    <button type="button" id="delete" data-modal-toggle="delete-modal<?php echo $_user['user_email'] ?>"
                                                         class="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
                                                         <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-red-400"
                                                             fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -377,6 +378,7 @@ $user_data = $user->get_data( Session::get('email') );
 
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
@@ -404,6 +406,56 @@ $user_data = $user->get_data( Session::get('email') );
             navigator.clipboard.writeText(copyText.value);
             document.execCommand("copy");  
         }
+
+
+        // intro js
+        introJs().setOptions({
+            steps: [{
+                title: 'Welcome',
+                intro: 'Hallo Selamat Datang! 👋'
+            },
+            {
+                element: document.querySelector('#bantu1'),
+                intro: 'Ini adalah sidebar'
+            },
+            {
+                element: document.querySelector('#kembali'),
+                intro: 'Klik ini untuk kembali ke dashboard'
+            },
+            {
+                element: document.querySelector('#adduser'),
+                intro: 'Klik ini untuk menambah user'
+            },
+            {
+                element: document.querySelector('#all'),
+                intro: 'Klik ini untuk melihat semua user'
+            },
+            {
+                element: document.querySelector('#student'),
+                intro: 'Klik ini untuk melihat semua student'
+            },
+            {
+                element: document.querySelector('#lecturer'),
+                intro: 'Klik ini untuk melihat semua lecturer'
+            },
+            {
+                element: document.querySelector('#admin'),
+                intro: 'Klik ini untuk melihat semua admin'
+            },
+            {
+                element: document.querySelector('#edit'),
+                intro: 'Klik ini untuk mengedit data user'
+            },
+            {
+                element: document.querySelector('#delete'),
+                intro: 'Klik ini untuk menghapus user'
+            },
+            {
+                title: 'Step Selesai',
+                intro: 'Thank You! 👋'
+            }]
+        }).start();
+        // end intro js
 
 
 

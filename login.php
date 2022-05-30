@@ -1,7 +1,7 @@
 <?php
 
 require_once "core/init.php";
-
+// require_once "api/user.php";
 
 // For JwT 
 require './vendor/autoload.php';
@@ -13,7 +13,6 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 // End For JwT
-
 
 
 
@@ -85,7 +84,7 @@ if ( isset($_POST['submit']) ) {
 
                         // FOR JWT
                         // Menghitung waktu kadaluarsa token. Dalam kasus ini akan terjadi setelah 15 menit
-                        $expired_time = time() + (15 * 60);
+                        $expired_time = time() + (60 * 60);
 
                         // Buat payload dan access token
                         $payload = [

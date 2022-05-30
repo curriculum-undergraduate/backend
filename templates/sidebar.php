@@ -1,5 +1,5 @@
 <!-- Left side (Sidebar) -->
-<div class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
+<div id="bantu1" class="bg-white w-[350px] h-screen px-8 py-6 flex flex-col justify-between sidebar in-active">
     <!-- Top nav -->
     <div class="flex flex-col gap-y-6">
         <!-- Header -->
@@ -27,22 +27,20 @@
                     <?php endif; ?>
                 </li>
              <li>
-                    <a href="http://schedule.lumintulogic.com/"
+                    <!-- <a href="http://schedule.lumintulogic.com/"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Schedule</p>
+                    </a> -->
+                    <a href="http://schedule.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white getApp">
                         <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Schedule</p>
                     </a>
                 </li>
-                <!-- <li>
+                <li>
                     <a href="http://lessons.lumintulogic.com/"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                        <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold">Lessons</p>
-                    </a>
-                </li> -->
-                <li>
-                    <a
-                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white getApp">
                         <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Lessons</p>
                     </a>
@@ -75,7 +73,7 @@
                 </a>
             </li>
             <li>
-                <a href="logout.php"
+                <a href="logout.php" id="bantu2"
                     class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                     <img class="w-5" src="assets/icons/logout_icon.svg" alt="Log out Icon">
                     <p class="font-semibold">Log out</p>
@@ -94,18 +92,32 @@
     let token = '<?php echo $token ?>';
 
         $.ajax({
-            // url: "https://192.168.18.95/prokid-front-end/signin.php",
+            url: "http://localhost/auth/test.php",
             // url: "https://lessons.lumintulogic.com/formData.php",
-            url: "{url_tujuan}",
+            // url: "http://192.168.18.123/cobaapi/api/signin.php",
             method: "POST",
             data: {
                 "token" : token
             },
-            success: function(res){
-                console.log(res);
+            // success: function(res){
+            //     console.log(res);
+            // },
+            // error: function(res){
+            //     console.log(res);
+            // }
+
+            success: function(res) {
+                // window.location = "http://192.168.18.95:8000/pages/";
+                let val = JSON.stringify(res);
+                console.log(val)
+                // if (val.status == 200) {
+                //     window.location = "http://192.168.18.95:8000/pages/list_modal";
+                // } else {
+                //     alert(val.msg);
+                // }
             },
-            error: function(res){
-                console.log(res);
+            error: function(res) {
+                console.log('res');
             }
 
         })
