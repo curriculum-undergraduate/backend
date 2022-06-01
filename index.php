@@ -1,7 +1,7 @@
 <?php
 
 require_once "core/init.php";
-
+// require_once "api/user.php";
 
 // For JwT 
 require './vendor/autoload.php';
@@ -13,7 +13,6 @@ use Dotenv\Dotenv;
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
 // End For JwT
-
 
 
 
@@ -80,7 +79,7 @@ if ( isset($_POST['submit']) ) {
                     Session::delete('email');
                     $user_data = $user->get_data($email);
                     if ($user_data['user_status'] == 'verified') {
-                        Session::flash('profile', 'Selamat! anda berhasil login');
+                        // Session::flash('profile', 'Selamat! anda berhasil login');
                         Session::set('email', $_POST['email']);
 
                         // FOR JWT
@@ -96,7 +95,9 @@ if ( isset($_POST['submit']) ) {
                         // Men-generate access token
                         $access_token = JWT::encode($payload, $_ENV['ACCESS_TOKEN_SECRET'], 'HS256');
                         
-                        setcookie('X-LUMINTU-TOKEN', $access_token, $payload['exp'], '', '', false, true);
+                        $_SESSION['jwt'] = $access_token;
+                        $_SESSION['expiry'] = date(DATE_ISO8601, $expired_time);
+                        // setcookie('X-LUMINTU-TOKEN', $access_token, $payload['exp'], '', '', false, true);
                         // ENDFOR JWT
 
 
