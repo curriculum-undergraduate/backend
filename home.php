@@ -6,8 +6,6 @@ require_once 'core/init.php';
 //   Redirect::to('dashboard');
 // }
 
-var_dump($_SESSION);
-
 if ($user->is_admin(Session::get('email')) && $user->is_mentor(Session::get('email')) ) {
   Redirect::to('home');
 }

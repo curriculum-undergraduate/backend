@@ -67,7 +67,7 @@ require_once "templates/header.php";
 <body style="background-image: url('assets/img/background.jpg')">
     <div class="flex items-center justify-center min-h-screen px-10">
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
-            <h3 class="text-2xl font-bold text-center text-black">Change Password</h3>
+            <h3 class="text-2xl font-bold text-center text-black">Ganti Password</h3>
 
             <?php if ( !empty($errors) ) { ?>
 
@@ -102,12 +102,12 @@ require_once "templates/header.php";
                 </div>
                 <div class="mt-4">
                     <div class="mt-4">
-                        <label class="block text-black" for="old_password">Old Password<label>
+                        <label class="block text-black" for="old_password">Password lama<label>
                                 <input type="password" id="old_password" name="password"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black" required>
                     </div>
                     <div class="mt-4">
-                        <label class="block text-black" for="new_password">Password<label>
+                        <label class="block text-black" for="new_password">Password baru<label>
                         <div id="passwordInput">
                             <input type="password" name="new_password" id="new_password"
                                 class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black " required>
@@ -123,15 +123,15 @@ require_once "templates/header.php";
                         </b>
                     </div>
                     <div class="mt-4">
-                        <label class="block text-black" for="confirm_new_password">Confirm New Password<label>
+                        <label class="block text-black" for="confirm_new_password">Ulangi Password baru<label>
                                 <input type="password" id="confirm_new_password" name="confirm_new_password"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black" required>
                     </div>
                     <div class="flex">
                         <a href="account-settings.php"
-                            class="px-6 mr-2 py-2 mt-6 text-white bg-[#f72929] rounded-lg hover:bg-[#c91111]">Back</a>
+                            class="px-6 mr-2 py-2 mt-6 text-white bg-[#f72929] rounded-lg hover:bg-[#c91111]">Kembali</a>
                         <button name="submit"
-                            class="px-6 py-2 mt-6 text-white bg-[#b6833b] rounded-md hover:bg-[#c5985f]">Update</button>
+                            class="px-6 py-2 mt-6 text-white bg-[#b6833b] rounded-md hover:bg-[#c5985f]">Simpan</button>
                     </div>
                 </div>
             </form>

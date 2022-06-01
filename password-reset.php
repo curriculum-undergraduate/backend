@@ -87,7 +87,7 @@ require_once "templates/header.php";
         <div class="px-8 py-8 text-left bg-white rounded-lg md:w-1/2 lg:w-1/2">
             <div class="text-center">
                 <a href="index.php"><img class="w-[180px] logo-gradit md:ml-48 mb-6" src="assets/logo/logo_primary.svg" alt="Logo In Career"></a>
-                <h3 class="text-2xl font-bold text-gray-600 mb-8">Create New password</h3>
+                <h3 class="text-2xl font-bold text-gray-600 mb-8">Buat password baru</h3>
             </div>
             
             <?php if ( !empty($errors) ) { ?>
@@ -128,7 +128,7 @@ require_once "templates/header.php";
                 </div>
                 <div class="mt-4">
                     <div class="mt-4">
-                        <label class="block text-black" for="new_password">Password<label>
+                        <label class="block text-black" for="new_password">Kata sandi<label>
                         <div id="passwordInput">
                             <input type="password" name="new_password" id="new_password"
                                 class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black " required>
@@ -144,13 +144,13 @@ require_once "templates/header.php";
                         </b>
                     </div>
                     <div class="mt-4">
-                        <label class="block text-black" for="confirm_new_password">Confirm New Password<label>
+                        <label class="block text-black" for="confirm_new_password">Ulangi kata sandi<label>
                                 <input type="password" id="confirm_new_password" name="confirm_new_password"
                                     class="w-full px-4 py-2 mt-2 border rounded-md focus:outline-none focus:ring-1 focus:ring-blue-600 text-black" required>
                     </div>
                     <div class="flex flex-col">
                         <button name="submit"
-                            class="px-6 w-auto py-2 mt-6 text-white bg-[#b6833b] rounded-md hover:bg-[#c5985f]">Submit</button>
+                            class="px-6 w-auto py-2 mt-6 text-white bg-[#b6833b] rounded-md hover:bg-[#c5985f]">Simpan</button>
                     </div>
                 </div>
             </form>

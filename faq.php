@@ -1,5 +1,11 @@
-<?php require_once "templates/header.php" ?>
-</haad>
+<?php 
+
+require_once "templates/header.php"; 
+
+$title_page = "Faq"; 
+
+?>
+</head>
 
 <style>
             .tab {
@@ -233,7 +239,7 @@
 <footer class="p-4 bg-white rounded-lg shadow md:px-8 md:py-8">
     <div class="sm:flex sm:items-center sm:justify-between">
         <a href="#" class="flex items-center mb-4 sm:mb-0">
-            <img src="assets/logo/logo_primary.svg" class="mr-3 h-full w-36" alt="GradIT Logo">
+            <img src="assets/logo/logo_lumintu.png" class="mr-3 h-full w-36" alt="GradIT Logo">
         </a>
         <ul class="flex flex-wrap items-center mb-6 text-sm text-gray-500 sm:mb-0">
             <li>

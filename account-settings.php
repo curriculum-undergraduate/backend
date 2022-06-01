@@ -13,8 +13,6 @@ if ( !$user->is_loggedIn() ) {
 
 $user_data = $user->get_data( Session::get('email') );
 
-var_dump($_SESSION);
-
 $errors = array();
 
 
@@ -278,26 +276,25 @@ if ( isset($_POST['submit']) ) {
                                     <div class="grid sm:grid-cols-2 grid-cols-1 gap-4">
                                         <div class="mb-6">
                                             <label for="firstName"
-                                                class="block mb-2 text-sm font-medium text-gray-900">First
-                                                name</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900">Nama depan</label>
                                             <input type="text" id="firstName" name="first_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                placeholder="First name"
+                                                placeholder="Nama depan"
                                                 value="<?php echo $user_data['user_first_name'] ?>" required>
                                         </div>
                                         <div class="mb-6">
                                             <label for="lastName"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Last
-                                                name</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900">Nama 
+                                            belakang</label>
                                             <input type="text" id="lastName" name="last_name"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                placeholder="Last name"
+                                                placeholder="Nama belakang"
                                                 value="<?php echo $user_data['user_last_name'] ?>" required>
                                         </div>                                        
                                         <div class="mb-6">
                                             <label for="emailAddress"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Email
-                                                Address</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900">Alamat
+                                            email</label>
                                             <input type="email" id="emailAddress" name="email_address"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                 placeholder=" mail@example.com"
@@ -305,16 +302,15 @@ if ( isset($_POST['submit']) ) {
                                         </div>
                                         <div class="mb-6">
                                             <label for="dateOfBirth"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Date
-                                                of
-                                                Birth</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900">Tanggal
+                                            lahir</label>
                                             <input type="date" id="dateOfBirth" name="date_of_birth"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                                 value="<?php echo $user_data['user_dob'] ?>" required>
                                         </div>
                                         <div class="mb-6">
                                             <label for="gender"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Gender</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900">Jenis kelamin</label>
                                             <select id="countries" name="gender"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                                 <?php if ($user_data['user_gender'] == "Laki-laki") : ?>
@@ -335,10 +331,10 @@ if ( isset($_POST['submit']) ) {
                                         </div>
                                         <div class="mb-6">
                                             <label for="phoneNumber"
-                                                class="block mb-2 text-sm font-medium text-gray-900">Phone</label>
+                                                class="block mb-2 text-sm font-medium text-gray-900">No. Handphone</label>
                                             <input type="tel" id="phoneNumber" name="phone_number"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                                                placeholder="(+62) 012 3456 789"
+                                                placeholder="081234567890"
                                                 value="<?php echo $user_data['user_phone'] ?>" required>
                                         </div>
                                     </div>
@@ -353,8 +349,7 @@ if ( isset($_POST['submit']) ) {
                                             Domisili</label>
                                         <textarea id="alamatDomisili" name="alamat_domisili" rows="4"
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
-                                            placeholder="Jl. Jenderal Sudirman..." required><?php if ($user_data['user_first_name'] != '') : ?> <?php echo $user_data['user_address'] ?> <?php endif; ?>
-                                            </textarea>
+                                            placeholder="Jl. Jenderal Sudirman..." required><?php if ($user_data['user_first_name'] != '') : ?> <?php echo $user_data['user_address'] ?> <?php endif; ?></textarea>
                                     </div>
                                     <div class="mb-6 text-right">
                                         <button type="submit" name="submit" id="bantu4"
@@ -365,8 +360,8 @@ if ( isset($_POST['submit']) ) {
                             <div class="hidden p-4 bg-gray-50 rounded-lg" id="settings" role="tabpanel" aria-labelledby="settings-tab">
                                 <div class="mt-5">
                                     <div class="flex flex-col mb-8">
-                                        <h2 class="text-2xl mb-5">Change Password</h2>
-                                        <p class="text-sm">If you want to Change password, <a href="change-password.php" target="_blank" class="text-blue-700">click here</a></p>
+                                        <h2 class="text-2xl mb-5">Ganti password</h2>
+                                        <p class="text-sm">Jika anda ingin mengganti password, <a href="change-password.php" target="_blank" class="text-blue-700">klik disini</a></p>
                                     </div>
                                 </div>
                             </div>

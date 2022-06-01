@@ -217,7 +217,7 @@ require_once "templates/header.php";
 
                     <div class="flex">
                         <button class="w-full px-6 py-2 mt-4 text-white bg-[#b6833b] rounded-full hover:bg-[#c5985f]"
-                            name="submit">Sign In</button>
+                            name="submit">Masuk</button>
                     </div>
 
                     <div class="flex items-center justify-between mt-6">
