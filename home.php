@@ -6,6 +6,8 @@ require_once 'core/init.php';
 //   Redirect::to('dashboard');
 // }
 
+var_dump($_SESSION);
+
 if ($user->is_admin(Session::get('email')) && $user->is_mentor(Session::get('email')) ) {
   Redirect::to('home');
 }
@@ -204,42 +206,42 @@ $user_data = $user->get_data( Session::get('email') );
     <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
     <script>
                 // intro js
-                introJs().setOptions({
-                steps: [{
-                    title: 'Welcome',
-                    intro: 'Hallo Selamat Datang! 👋'
-                },
-                {
-                    element: document.querySelector('#settings'),
-                    intro: 'Klik ini untuk menuju profile kamu'
-                },
-                {
-                    element: document.querySelector('#logout'),
-                    intro: 'Klik ini untuk keluar halaman'
-                },
-                {
-                    element: document.querySelector('#bantu1'),
-                    intro: 'Klik ini untuk menuju classroom kamu'
-                },
-                {
-                    element: document.querySelector('#bantu2'),
-                    intro: 'Klik ini untuk konsultasi'
-                },
-                {
-                    element: document.querySelector('#bantu3'),
-                    intro: 'Klik ini untuk melihat jadwal kamu'
-                },
-                {
-                    element: document.querySelector('#bantu4'),
-                    intro: 'Klik ini untuk melihat tuugas kamu'
-                },
-                {
-                    title: 'Step Selesai',
-                    intro: 'Thank You! 👋'
-                }]
-                }).start();
-            // end intro js
-            </script>
+        introJs().setOptions({
+        steps: [{
+            title: 'Welcome',
+            intro: 'Hallo Selamat Datang! 👋'
+        },
+        {
+            element: document.querySelector('#settings'),
+            intro: 'Klik ini untuk menuju profile kamu'
+        },
+        {
+            element: document.querySelector('#logout'),
+            intro: 'Klik ini untuk keluar halaman'
+        },
+        {
+            element: document.querySelector('#bantu1'),
+            intro: 'Klik ini untuk menuju classroom kamu'
+        },
+        {
+            element: document.querySelector('#bantu2'),
+            intro: 'Klik ini untuk konsultasi'
+        },
+        {
+            element: document.querySelector('#bantu3'),
+            intro: 'Klik ini untuk melihat jadwal kamu'
+        },
+        {
+            element: document.querySelector('#bantu4'),
+            intro: 'Klik ini untuk melihat tuugas kamu'
+        },
+        {
+            title: 'Step Selesai',
+            intro: 'Thank You! 👋'
+        }]
+        }).start();
+    // end intro js  
+    </script>
   </div>
 </body>
 

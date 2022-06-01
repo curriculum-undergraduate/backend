@@ -130,7 +130,7 @@ $user_data = $user->get_data( Session::get('email') );
             <div class="flex justify-between">
                 <a id="kembali" href="dashboard.php" class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-1.5 text-center inline-flex items-center mr-2">
                     <svg class="w-6 h-6 mr-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"></path></svg>
-                    Back                    
+                    Kembali                    
                 </a>
                 <ol class="inline-flex items-center space-x-1 md:space-x-3">
                     <li class="inline-flex items-center">
@@ -176,7 +176,7 @@ $user_data = $user->get_data( Session::get('email') );
             <?php if ($user->is_admin(Session::get('email'))) : ?>
                 <!-- Topic Title -->
                 <div class="flex items-center gap-x-4 justify-between">
-                    <p class="text-xl text-dark-green font-semibold">List All User With Roles</p>
+                    <p class="text-xl text-dark-green font-semibold">Informasi User</p>
 
                     <a id="adduser" href="user-form.php" type="button" 
                         class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
@@ -185,7 +185,7 @@ $user_data = $user->get_data( Session::get('email') );
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                         </svg>
-                        Add User
+                        Tambah User
                     </a>
                 </div>
             <?php endif;?>
@@ -364,7 +364,7 @@ $user_data = $user->get_data( Session::get('email') );
                     </svg>
                     <h3 class="mb-5 text-lg font-normal text-gray-500">Apakah kamu yakin untuk menghapus user ini?</h3>
                     
-                    <a href="user_delete.php?user_email=<?php echo $_user['user_email'] ?>" data-modal-toggle="delete-modal<?php echo $_user['user_email'] ?>" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
+                    <a href="user-delete.php?user_email=<?php echo $_user['user_email'] ?>" data-modal-toggle="delete-modal<?php echo $_user['user_email'] ?>" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center mr-2">
                         Ya, Saya yakin
                     </a>
                     <button data-modal-toggle="delete-modal<?php echo $_user['user_email'] ?>" type="button"

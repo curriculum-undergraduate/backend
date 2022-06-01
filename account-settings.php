@@ -13,6 +13,8 @@ if ( !$user->is_loggedIn() ) {
 
 $user_data = $user->get_data( Session::get('email') );
 
+var_dump($_SESSION);
+
 $errors = array();
 
 
@@ -377,7 +379,7 @@ if ( isset($_POST['submit']) ) {
         <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
         <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
         <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
-        <script>
+        <!-- <script>
             let btnToggle = document.getElementById('btnToggle');
             let sidebar = document.querySelector('.sidebar');
             btnToggle.onclick = function () {
@@ -416,7 +418,7 @@ if ( isset($_POST['submit']) ) {
                     intro: 'Thank You! 👋'
                 }]
                 }).start();
-            // end intro js
+            // end intro js -->
         </script>
 </body>
 
