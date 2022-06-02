@@ -34,7 +34,8 @@
                     </a>
                 </li>
                 <li>
-                    <a href="http://192.168.18.117/_fe_prokidz2/auth.php?token=<?php echo $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>"
+                    <!-- <a href="http://192.168.18.117/_fe_prokidz2/auth.php?token=<?php echo $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>" -->
+                    <a href="http://lesson.lumintulogic.com/"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Lessons</p>

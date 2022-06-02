@@ -19,10 +19,6 @@ $errors = array();
 // if ( Input::get('submit') ) {
 if ( isset($_POST['submit']) ) {
 
-    // print_r($_POST);
-    // print_r($_FILES);
-    // die();
-
     if ( Token::check( $_POST['token'] ) ) {
 
         // Call Validation Object
@@ -69,14 +65,33 @@ if ( isset($_POST['submit']) ) {
             $ekstensiGambar = explode('.', $namaFile);
             $ekstensiGambar = strtolower(end($ekstensiGambar));
 
-            if (in_array($ekstensiGambar, $ekstensiGambarValid) === true) {
+            if ($namaFile) {
+                if (in_array($ekstensiGambar, $ekstensiGambarValid) === true) {
 
-                // generate nama gambar baru
-                $namaFileBaru = uniqid();
-                $namaFileBaru .= ".";
-                $namaFileBaru .= $ekstensiGambar;
-                move_uploaded_file($tmpName, 'assets/uploads/' . $namaFileBaru);
-
+                    // generate nama gambar baru
+                    $namaFileBaru = uniqid();
+                    $namaFileBaru .= ".";
+                    $namaFileBaru .= $ekstensiGambar;
+                    move_uploaded_file($tmpName, 'assets/uploads/' . $namaFileBaru);
+    
+                    $user->update_user(array(
+                        'user_first_name' => $_POST['first_name'],
+                        'user_last_name' => $_POST['last_name'],
+                        'user_email' => $_POST['email_address'],
+                        'user_dob' => $_POST['date_of_birth'],
+                        'user_gender' => $_POST['gender'],
+                        'user_phone' => $_POST['phone_number'],
+                        'user_address' => $_POST['alamat_domisili'],
+                        'user_profile_picture' => $namaFileBaru,
+                    ), $user_data['user_email'] );
+    
+                    Redirect::to('account-settings');
+                    // Alert belum bisa muncul
+                    // Session::flash("account-settings", "Profil berhasil diupdate");
+                } else {            
+                    $errors[] = "Ekstensi gambar tidak valid";
+                }               
+            } else {
                 $user->update_user(array(
                     'user_first_name' => $_POST['first_name'],
                     'user_last_name' => $_POST['last_name'],
@@ -85,14 +100,10 @@ if ( isset($_POST['submit']) ) {
                     'user_gender' => $_POST['gender'],
                     'user_phone' => $_POST['phone_number'],
                     'user_address' => $_POST['alamat_domisili'],
-                    'user_profile_picture' => $namaFileBaru,
+                    'user_profile_picture' => $user_data['user_profile_picture'],
                 ), $user_data['user_email'] );
 
                 Redirect::to('account-settings');
-                // Alert belum bisa muncul
-                // Session::flash("account-settings", "Profil berhasil diupdate");
-            } else {            
-                $errors[] = "Ekstensi gambar tidak valid";
             }
         } else {
             $errors = $validation->errors();
@@ -203,7 +214,24 @@ if ( isset($_POST['submit']) ) {
                 </div>
             </div>
 
-            <?php if ( Session::exists('profile') ) { ?>
+            <?php if ( !empty($errors) ) { ?>
+
+            <?php foreach ($errors as $error) : ?>
+                <div id="alert-1" class="flex p-4 mb-4 mt-5 bg-blue-100 rounded-lg dark:bg-blue-200" role="alert">
+                    <svg class="flex-shrink-0 w-5 h-5 text-blue-700 dark:text-blue-800" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path></svg>
+                    <div class="ml-3 text-sm font-medium text-blue-700 dark:text-blue-800">
+                        <?php echo $error; ?>
+                    </div>
+                    <button type="button" class="ml-auto -mx-1.5 -my-1.5 bg-blue-100 text-blue-500 rounded-lg focus:ring-2 focus:ring-blue-400 p-1.5 hover:bg-blue-200 inline-flex h-8 w-8 dark:bg-blue-200 dark:text-blue-600 dark:hover:bg-blue-300" data-dismiss-target="#alert-1" aria-label="Close">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                    </button>
+                </div>
+            <?php endforeach; ?>
+
+            <?php } ?>
+
+            <?php if ( Session::exists('account-settings') ) { ?>
             <div id="alert-3" class="flex p-4 mb-4 bg-green-100 rounded-lg dark:bg-green-200" role="alert">
                 <svg class="flex-shrink-0 w-5 h-5 text-green-700 dark:text-green-800" fill="currentColor"
                     viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -212,7 +240,7 @@ if ( isset($_POST['submit']) ) {
                         clip-rule="evenodd"></path>
                 </svg>
                 <div class="ml-3 text-sm font-medium text-green-700 dark:text-green-800">
-                    <?php echo Session::flash('profile'); ?>
+                    <?php echo Session::flash('account-settings'); ?>
                 </div>
                 <button type="button"
                     class="ml-auto -mx-1.5 -my-1.5 bg-green-100 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex h-8 w-8 dark:bg-green-200 dark:text-green-600 dark:hover:bg-green-300"
@@ -238,7 +266,7 @@ if ( isset($_POST['submit']) ) {
             <div class="grid sm:grid-cols-3 gap-4">
                 <div class="bg-white w-full md:mr-6 rounded-md sm:h-96 shadow-sm md:mb-40">
                     <div class="text-center py-10">
-                        <img src="https://www.shareicon.net/data/512x512/2016/07/26/802043_man_512x512.png" alt=""
+                        <img src="<?php if ($user_data['user_profile_picture'] == '') : ?>assets/img/unnamed.png<?php else: ?>assets/uploads/<?php echo $user_data['user_profile_picture'] ?><?php endif; ?>" alt=""
                             class="w-40 rounded-full mx-auto">
                         <p class="text-gray-500 mt-11">
                             <?php if ($user_data['role_id'] == 2) : ?>
@@ -338,11 +366,10 @@ if ( isset($_POST['submit']) ) {
                                                 value="<?php echo $user_data['user_phone'] ?>" required>
                                         </div>
                                     </div>
-                                    <!-- TODO: Membuat fitur Upload Profil Picture -->
-                                    <!-- <div class="mb-6">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300" for="profile_picture">Profile Picture</label>
-                                        <input type="file" id="profile_picture" name="profile_picture" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="user_avatar_help">
-                                    </div> -->
+                                    <div class="mb-6">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900" for="profile_picture">Profile Picture</label>
+                                        <input type="file" id="profile_picture" name="profile_picture" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none" aria-describedby="user_avatar_help">
+                                    </div>
                                     <div class="mb-6">
                                         <label for="alamatDomisili"
                                             class="block mb-2 text-sm font-medium text-gray-900">Alamat
@@ -374,7 +401,10 @@ if ( isset($_POST['submit']) ) {
         <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
         <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
         <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
-        <!-- <script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
+        <script>
             let btnToggle = document.getElementById('btnToggle');
             let sidebar = document.querySelector('.sidebar');
             btnToggle.onclick = function () {
@@ -382,8 +412,11 @@ if ( isset($_POST['submit']) ) {
             }
 
             // intro js
-            introJs().setOptions({
-                steps: [{
+            const intro = introJs();
+
+            intro.setOptions({
+                steps: [
+                {
                     title: 'Welcome',
                     intro: 'Hallo Selamat Datang! 👋'
                 },
@@ -412,8 +445,23 @@ if ( isset($_POST['submit']) ) {
                     title: 'Step Selesai',
                     intro: 'Thank You! 👋'
                 }]
-                }).start();
-            // end intro js -->
+            });
+
+            var name = 'IntroJS';
+            var value = localStorage.getItem(name) || $.cookie(name);
+            var func = function() {
+                if (Modernizr.localstorage) {
+                localStorage.setItem(name, 1)
+                } else {
+                    $.cookie(name, 1, {
+                    expires: 365
+                });
+                }
+            };
+            if(value == null) {
+            intro.start().oncomplete(func).onexit(func);
+            };
+
         </script>
 </body>
 
