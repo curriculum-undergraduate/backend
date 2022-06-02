@@ -73,17 +73,17 @@ $user_data = $user->get_data( Session::get('email') );
             <li>
               <a href="account-settings.php" id="settings"
                 class="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-                aria-current="page">Settings</a>
+                aria-current="page">Pengaturan</a>
             </li>
             <li>
               <a href="logout.php" id="logout"
-                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Logout</a>
+                class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Keluar</a>
           </ul>
         </div>
       </div>
     </nav>
 
-    <h1 class="text-5xl font-bold text-amber-900 tracking-wider lg:pt-5 pt-16 pl-16">Welcome, </h1>
+    <h1 class="text-5xl font-bold text-amber-900 tracking-wider lg:pt-5 pt-16 pl-16">Selamat datang, </h1>
     <h4 class="text-3xl font-semibold text-amber-900 tracking-wider lg:pt-4 pt-2 pl-16">
        
     <?php if ($user_data['user_first_name'] != '') : ?>

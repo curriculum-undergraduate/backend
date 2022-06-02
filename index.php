@@ -157,7 +157,7 @@ require_once "templates/header.php";
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:mt-8 lg:flex-1">
             <h2 class="text-4xl font-bold text-white tracking-wider lg:pt-5 pt-24">
-                GradIT Course
+                Lumintu Learning
             </h2>
             <h3 class="text-2xl font-semibold text-white tracking-wider mt-3">
                 Masuk

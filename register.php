@@ -93,7 +93,7 @@ if ( isset($_POST['submit']) ) {
                 ));
 
                 // Baris berikut untuk melakukan proses pengiriman Email ke kaun Email user 
-                $mail->Subject = "Welcome to Lumintu Logic"; // subject untuk pesan email yang dikirim.
+                $mail->Subject = "Selamat Datang di Lumintu Learning!"; // subject untuk pesan email yang dikirim.
                 $mail->addAddress($_POST['email'], $_POST['username']); // email tujuan pesan dikirim.
                 $email_template = 'templates/sendmail.html'; // template pengiriman pesan email
                 $mail->Body = file_get_contents($email_template); 
