@@ -2,6 +2,34 @@
 
 require_once 'core/init.php';
 
+// // For JwT 
+// require './vendor/autoload.php';
+
+// use Firebase\JWT\JWT;
+// use Firebase\JWT\Key;
+// use Dotenv\Dotenv;
+
+// // Load dotenv
+// $dotenv = Dotenv::createImmutable(__DIR__);
+// $dotenv->load();
+// // End For JwT
+
+// if($_COOKIE['X-LUMINTU-TOKEN']) {
+//     $jwt = $_COOKIE['X-LUMINTU-TOKEN'];
+//     try {
+//         $payload = JWT::decode($jwt, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
+//         $user_data = $user->get_data($payload->{ 'email'});
+//         echo json_encode([
+//             'success' => true,
+//             "user" => $user_data,
+
+//         ]);
+//     } catch (Exception $exception){
+//         Session::flash('login', 'Anda harus login terlebih dahulu');
+//         Redirect::to('login');
+//     }
+// }
+
 
 if (!$user->is_loggedIn()) {
     Session::flash('login', 'Anda harus login terlebih dahulu');

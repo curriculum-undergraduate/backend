@@ -35,7 +35,7 @@ if ($_GET['email']) {
     
                 $user->delete_user('user_token', 'user_email', $user_token['user_email']);
     
-                Session::flash("login", "Email" . $user_token['user_email'] . " telah di verifikasi, Silahkan masuk.!");
+                Session::flash("login", "Email " . $user_token['user_email'] . " telah di verifikasi, Silahkan masuk.!");
     
             } else {
                 $user->delete_user('user', 'user_email', $user_token['user_email']);

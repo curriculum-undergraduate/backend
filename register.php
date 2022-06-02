@@ -151,7 +151,7 @@ include_once "templates/header.php"; // templating: include file templates/heade
     <div class="container px-8 max-w-md mx-auto sm:max-w-xl md:max-w-5xl lg:flex lg:max-w-full lg:p-0">
         <div class="lg:p-16 lg:flex-1">
             <h2 class="text-4xl font-bold  tracking-wider sm:text-4xl">
-                GradIT Course
+                Lumintu Learning
             </h2>
             <h3 class="text-2xl font-semibold tracking-wider mt-3">
                 Daftar
