@@ -98,7 +98,7 @@ if ( isset($_POST['submit']) ) {
                 $email_template = 'templates/sendmail.html'; // template pengiriman pesan email
                 $mail->Body = file_get_contents($email_template); 
                 $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid');  // gambar yang di butuhkan untuk dimasukan ke pesan email
-                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token)); // link yang akan dikirim ke user
+                $link = ($_SERVER['HTTP_HOST'] . "/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token)); // link yang akan dikirim ke user
                 $username = $_POST['username']; 
 
                 $key = array('{link}', '{username}');

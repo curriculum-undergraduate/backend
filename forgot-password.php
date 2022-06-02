@@ -79,7 +79,7 @@ if ( isset($_POST['submit']) ) {
                 $mail->Body = file_get_contents($email_template);
                 $mail->addEmbeddedImage('assets/img/logo.png', 'image_cid'); 
                 // Dibuat disini untuk link Verifikasi yg Kirim ke Email
-                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/password-reset.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
+                $link = ($_SERVER['HTTP_HOST'] . "/password-reset.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
 
                 $mail->Body = str_replace("{link}", $link,  $mail->Body);
 

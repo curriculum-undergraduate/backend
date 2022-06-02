@@ -119,7 +119,7 @@ if ( isset($_POST['submit']) ) {
                 $password = $_POST['password'];
 
                 // Dibuat disini untuk link Verifikasi yg Kirim ke Email
-                $link = ($_SERVER['HTTP_HOST'] . "/auth-backend/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
+                $link = ($_SERVER['HTTP_HOST'] . "/login.php" . "?email=" . $_POST['email'] . "&token=" . urlencode($token));
 
                 $key = array('{link}', '{password}');
                 $value = array($link, $password);
@@ -362,14 +362,14 @@ $batch = $batch->get_batch(); // GET semua data batch
                         </div>
                         <div>
                             <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
-                            <input type="email" name="email" id="email" <?php if ($_GET): ?> readonly <?php endif; ?> placeholder="your email" value="<?php echo $_user['user_email'] ?>"
+                            <input type="email" name="email" id="email" <?php if ($_GET): ?> readonly <?php endif; ?> placeholder="alamat email" value="<?php echo $_user['user_email'] ?>"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                 required>
                         </div>
                         <?php if (!$_GET) : ?>
                             <div>    
                                 <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Password</label>                            
-                                <input type="password" name="password" id="password" placeholder="password generate..." value="<?php echo $_user['user_password'] ?>"
+                                <input type="password" name="password" id="password" placeholder="kata sandi" value="<?php echo $_user['user_password'] ?>"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                                     required>
                                 <div class="flex flex-row justify-between mt-2">
