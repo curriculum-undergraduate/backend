@@ -266,7 +266,7 @@ if ( isset($_POST['submit']) ) {
             <div class="grid sm:grid-cols-3 gap-4">
                 <div class="bg-white w-full md:mr-6 rounded-md sm:h-96 shadow-sm md:mb-40">
                     <div class="text-center py-10">
-                        <img src="<?php if ($user_data['user_profile_picture'] == '') : ?>assets/img/unnamed.png<?php else: ?>assets/uploads/<?php echo $user_data['user_profile_picture'] ?><?php endif; ?>" alt=""
+                        <img src="<?php if ($user_data['user_profile_picture'] == '') : ?>assets/icons/default_profile.svg<?php else: ?>assets/uploads/<?php echo $user_data['user_profile_picture'] ?><?php endif; ?>" alt=""
                             class="w-40 rounded-full mx-auto">
                         <p class="text-gray-500 mt-11">
                             <?php if ($user_data['role_id'] == 2) : ?>
@@ -459,7 +459,7 @@ if ( isset($_POST['submit']) ) {
                 }
             };
             if(value == null) {
-            intro.start().oncomplete(func).onexit(func);
+                intro.start().oncomplete(func).onexit(func);
             };
 
         </script>

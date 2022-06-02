@@ -2,34 +2,6 @@
 
 require_once 'core/init.php';
 
-// // For JwT 
-// require './vendor/autoload.php';
-
-// use Firebase\JWT\JWT;
-// use Firebase\JWT\Key;
-// use Dotenv\Dotenv;
-
-// // Load dotenv
-// $dotenv = Dotenv::createImmutable(__DIR__);
-// $dotenv->load();
-// // End For JwT
-
-// if($_COOKIE['X-LUMINTU-TOKEN']) {
-//     $jwt = $_COOKIE['X-LUMINTU-TOKEN'];
-//     try {
-//         $payload = JWT::decode($jwt, new Key($_ENV['ACCESS_TOKEN_SECRET'], 'HS256'));
-//         $user_data = $user->get_data($payload->{ 'email'});
-//         echo json_encode([
-//             'success' => true,
-//             "user" => $user_data,
-
-//         ]);
-//     } catch (Exception $exception){
-//         Session::flash('login', 'Anda harus login terlebih dahulu');
-//         Redirect::to('login');
-//     }
-// }
-
 
 if (!$user->is_loggedIn()) {
     Session::flash('login', 'Anda harus login terlebih dahulu');
@@ -188,6 +160,9 @@ $user_data = $user->get_data( Session::get('email') );
             <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
             <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
             <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
             <script>
 
                 let btnToggle = document.getElementById('btnToggle');
@@ -197,33 +172,49 @@ $user_data = $user->get_data( Session::get('email') );
                 }
 
 
-                // intro js
-                introJs().setOptions({
-                steps: [{
-                    title: 'Welcome',
-                    intro: 'Hallo Selamat Datang! 👋'
-                },
-                {
-                    element: document.querySelector('#bantu1'),
-                    intro: 'Ini adalah sidebar'
-                },
-                {
-                    element: document.querySelector('#bantu2'),
-                    intro: 'Ini untuk keluar'
-                },
-                {
-                    element: document.querySelector('#tabuser'),
-                    intro: 'Klik ini untuk melihat user'
-                },
-                {
-                    element: document.querySelector('#tabbatch'),
-                    intro: 'Klik ini untuk melihat batch'
-                },
-                {
-                    title: 'Step Selesai',
-                    intro: 'Thank You! 👋'
-                }]
-                }).start();
+                const intro = introJs();
+
+                intro.setOptions({
+                    steps: [{
+                        title: 'Welcome',
+                        intro: 'Hallo Selamat Datang! 👋'
+                    },
+                    {
+                        element: document.querySelector('#bantu1'),
+                        intro: 'Ini adalah sidebar'
+                    },
+                    {
+                        element: document.querySelector('#bantu2'),
+                        intro: 'Ini untuk keluar'
+                    },
+                    {
+                        element: document.querySelector('#tabuser'),
+                        intro: 'Klik ini untuk melihat user'
+                    },
+                    {
+                        element: document.querySelector('#tabbatch'),
+                        intro: 'Klik ini untuk melihat batch'
+                    },
+                    {
+                        title: 'Step Selesai',
+                        intro: 'Thank You! 👋'
+                    }]
+                });
+
+                var name = 'IntroJS';
+                var value = localStorage.getItem(name) || $.cookie(name);
+                var func = function() {
+                    if (Modernizr.localstorage) {
+                    localStorage.setItem(name, 1)
+                    } else {
+                        $.cookie(name, 1, {
+                        expires: 365
+                    });
+                    }
+                };
+                if(value == null) {
+                    intro.start().oncomplete(func).onexit(func);
+                };
             // end intro js
             </script>
 </body>

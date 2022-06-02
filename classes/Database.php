@@ -208,7 +208,7 @@ class Database
 
         // Jika tidak ada parameter pada fungsi saat fungsi dipanggil, maka kondisi akan dijalankan.
         else {                        
-            $query = "SELECT * FROM user JOIN batch ON user.batch_id = batch.batch_id JOIN role ON user.role_id = role.role_id";
+            $query = "SELECT * FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id)";
             $result = $this->mysqli->query($query);
 
             // Menampilkan data dalam tipe array_associatipe

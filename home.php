@@ -51,7 +51,7 @@ $user_data = $user->get_data( Session::get('email') );
     <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
       <div class="container flex flex-wrap justify-between items-center mx-auto">
         <a href="https://flowbite.com" class="flex items-center">
-          <img src="assets/logo/logo_primary.svg" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
+          <img src="assets/logo/logo_lumintu.png" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
         </a>
         <button data-collapse-toggle="mobile-menu" type="button"
           class="inline-flex items-center p-2 ml-3 text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
@@ -100,13 +100,13 @@ $user_data = $user->get_data( Session::get('email') );
         <div class="flex flex-wrap -m-4">
           <div class="p-4 md:w-1/3" id="bantu1">
             <div class="h-full rounded-xl bg-white overflow-hidden">
-              <a href="https://assignment.lumintulogic.com/">
+            <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index">
                 <img
                   class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
                   src="https://images.unsplash.com/photo-1618172193622-ae2d025f4032?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
                   alt="blog">
               </a>
-              <a href="https://assignment.lumintulogic.com/">
+              <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index">
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">My Classroom</h1>
@@ -120,16 +120,16 @@ $user_data = $user->get_data( Session::get('email') );
           </div>
           <div class="p-4 md:w-1/3" id="bantu2">
             <div class="h-full rounded-xl bg-white overflow-hidden">
-              <a href="https://consultation.lumintulogic.com/">
+              <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>">
                 <img
                   class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
                   src="https://images.unsplash.com/photo-1652598113005-a75ff204263b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80"
                   alt="blog">
               </a>
-              <a href="https://consultation.lumintulogic.com/">
+              <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>">
                 <div class="p-6">
                   <br>
-                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Consultation</h1>
+                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Konsultasi</h1>
                   <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
                     microdosing tousled waistcoat.</p>
                   <div class="flex items-center flex-wrap ">
@@ -149,7 +149,7 @@ $user_data = $user->get_data( Session::get('email') );
               <a href="https://schedule.lumintulogic.com/">
                 <div class="p-6">
                   <br>
-                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Schedule</h1>
+                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Jadwal</h1>
                   <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
                     microdosing tousled waistcoat.</p>
                   <div class="flex items-center flex-wrap ">
@@ -160,16 +160,16 @@ $user_data = $user->get_data( Session::get('email') );
           </div>
           <div class="p-4 md:w-1/3" id="bantu4">
             <div class="h-full rounded-xl bg-white overflow-hidden">
-              <a href="https://schedule.lumintulogic.com/">
+              <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
                 <img
                   class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
                   src="https://images.unsplash.com/photo-1646898157740-ffc540df3adb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=290&q=80"
                   alt="blog">
               </a>
-              <a href="https://schedule.lumintulogic.com/">
+              <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
                 <div class="p-6">
                   <br>
-                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Assignment</h1>
+                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Penugasan</h1>
                   <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
                     microdosing tousled waistcoat.</p>
                   <div class="flex items-center flex-wrap ">
@@ -190,7 +190,7 @@ $user_data = $user->get_data( Session::get('email') );
       </span>
       <br>
       <a href="https://flowbite.com" class="flex items-center mb-6 sm:mb-0 mt-2">
-        <img src="assets/logo/logo_primary.svg" class="mr-3 h-8" alt="GradIT Logo">
+        <img src="assets/logo/logo_lumintu.png" class="mr-3 h-8" alt="GradIT Logo">
     </footer>
 
     <!-- Flowbite CSS -->
@@ -202,43 +202,63 @@ $user_data = $user->get_data( Session::get('email') );
     <!-- CDN TailwindCSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <script>
-                // intro js
-        introJs().setOptions({
-        steps: [{
-            title: 'Welcome',
-            intro: 'Hallo Selamat Datang! 👋'
-        },
-        {
-            element: document.querySelector('#settings'),
-            intro: 'Klik ini untuk menuju profile kamu'
-        },
-        {
-            element: document.querySelector('#logout'),
-            intro: 'Klik ini untuk keluar halaman'
-        },
-        {
-            element: document.querySelector('#bantu1'),
-            intro: 'Klik ini untuk menuju classroom kamu'
-        },
-        {
-            element: document.querySelector('#bantu2'),
-            intro: 'Klik ini untuk konsultasi'
-        },
-        {
-            element: document.querySelector('#bantu3'),
-            intro: 'Klik ini untuk melihat jadwal kamu'
-        },
-        {
-            element: document.querySelector('#bantu4'),
-            intro: 'Klik ini untuk melihat tuugas kamu'
-        },
-        {
-            title: 'Step Selesai',
-            intro: 'Thank You! 👋'
-        }]
-        }).start();
+        // intro js
+        const intro = introJs();
+
+        intro.setOptions({
+          steps: [{
+              title: 'Welcome',
+              intro: 'Hallo Selamat Datang! 👋'
+          },
+          {
+              element: document.querySelector('#settings'),
+              intro: 'Klik ini untuk menuju profile kamu'
+          },
+          {
+              element: document.querySelector('#logout'),
+              intro: 'Klik ini untuk keluar halaman'
+          },
+          {
+              element: document.querySelector('#bantu1'),
+              intro: 'Klik ini untuk menuju classroom kamu'
+          },
+          {
+              element: document.querySelector('#bantu2'),
+              intro: 'Klik ini untuk konsultasi'
+          },
+          {
+              element: document.querySelector('#bantu3'),
+              intro: 'Klik ini untuk melihat jadwal kamu'
+          },
+          {
+              element: document.querySelector('#bantu4'),
+              intro: 'Klik ini untuk melihat tuugas kamu'
+          },
+          {
+              title: 'Step Selesai',
+              intro: 'Thank You! 👋'
+          }]
+        });
     // end intro js  
+
+    var name = 'IntroJS';
+    var value = localStorage.getItem(name) || $.cookie(name);
+    var func = function() {
+        if (Modernizr.localstorage) {
+        localStorage.setItem(name, 1)
+        } else {
+            $.cookie(name, 1, {
+            expires: 365
+        });
+        }
+    };
+    if(value == null) {
+        intro.start().oncomplete(func).onexit(func);
+    };
     </script>
   </div>
 </body>

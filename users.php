@@ -253,10 +253,10 @@ $user_data = $user->get_data( Session::get('email') );
                                             </td>
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="flex items-center">
-                                                    <!-- <div class="flex-shrink-0 w-10 h-10">
-                                                            <img class="w-10 h-10 rounded-full" src="https://source.unsplash.com/user/erondu"
-                                                                alt="admin dashboard ui">
-                                                        </div> -->
+                                                    <div class="flex-shrink-0 w-10 h-10">
+                                                        <img src="<?php if ($_user['user_profile_picture'] == '') : ?>assets/icons/default_profile.svg<?php else: ?>assets/uploads/<?= $_user['user_profile_picture'] ?><?php endif; ?>" alt=""
+                                                            class="w-10 h-10 rounded-full">
+                                                    </div>
 
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium leading-5 text-gray-900">
@@ -379,6 +379,9 @@ $user_data = $user->get_data( Session::get('email') );
     <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/intro.js/minified/intro.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js"></script>
     <script>
         let btnToggle = document.getElementById('btnToggle');
         let sidebar = document.querySelector('.sidebar');
@@ -409,7 +412,9 @@ $user_data = $user->get_data( Session::get('email') );
 
 
         // intro js
-        introJs().setOptions({
+        const intro = introJs();
+
+        intro.setOptions({
             steps: [{
                 title: 'Welcome',
                 intro: 'Hallo Selamat Datang! 👋'
@@ -454,7 +459,22 @@ $user_data = $user->get_data( Session::get('email') );
                 title: 'Step Selesai',
                 intro: 'Thank You! 👋'
             }]
-        }).start();
+        });
+
+        var name = 'IntroJS';
+        var value = localStorage.getItem(name) || $.cookie(name);
+        var func = function() {
+            if (Modernizr.localstorage) {
+            localStorage.setItem(name, 1)
+            } else {
+                $.cookie(name, 1, {
+                expires: 365
+            });
+            }
+        };
+        if(value == null) {
+            intro.start().oncomplete(func).onexit(func);
+        };
         // end intro js
 
 

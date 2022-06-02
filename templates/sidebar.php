@@ -16,45 +16,77 @@
                     <a href="dashboard.php"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/home_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold">Dashboard</p>
+                        <p class="font-semibold">Beranda</p>
                     </a>
                     <?php else: ?>
                     <a href="home.php"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/home_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold">Dashboard</p>
+                        <p class="font-semibold">Beranda</p>
                     </a>
                     <?php endif; ?>
                 </li>
-             <li>
-                    <a href="http://schedule.lumintulogic.com/"
-                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
-                        <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold">Schedule</p>
-                    </a>
-                </li>
+                <?php if ($user->is_mentor(Session::get('email'))) : ?>
                 <li>
-                    <!-- <a href="http://192.168.18.117/_fe_prokidz2/auth.php?token=<?php echo $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>" -->
-                    <a href="http://lesson.lumintulogic.com/"
+                    <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5 fill-black" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold">Lessons</p>
+                        <p class="font-semibold">Materi</p>
                     </a>
                 </li>
                 <li>
-                    <a href="http://assignment.lumintulogic.com/"
+                    <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/attendance_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold">Assignment</p>
+                        <p class="font-semibold">Penugasan</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/discussion_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold"> Konsultasi</p>
+                    </a>
+                </li> 
+                <li>
+                    <a href="https://schedule.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Jadwal</p>
+                    </a>
+                </li>      
+                <?php elseif (!$user->is_mentor(Session::get('email')) && !$user->is_admin(Session::get('email'))): ?>
+                <li>
+                    <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/attendance_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Penugasan</p>
                     </a>
                 </li>
                 <li>
-                    <a href="http://consultation.lumintulogic.com/"
+                    <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=score"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/score_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Nilai</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/discussion_icon.svg" alt="Dashboard Icon">
-                        <p class="font-semibold"> Consultation</p>
+                        <p class="font-semibold"> Konsultasi</p>
                     </a>
-                </li>                        
+                </li> 
+                <li>
+                    <a href="https://schedule.lumintulogic.com/"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Jadwal</p>
+                    </a>
+                </li>      
+                <?php endif; ?>                 
             </ul>
         </div>
     </div>
@@ -65,14 +97,14 @@
                 <a href="faq.php"
                     class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                     <img class="w-5" src="assets/icons/help_icon.svg" alt="Help Icon">
-                    <p class="font-semibold">Help</p>
+                    <p class="font-semibold">Bantuan</p>
                 </a>
             </li>
             <li>
                 <a href="logout.php" id="bantu2"
                     class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                     <img class="w-5" src="assets/icons/logout_icon.svg" alt="Log out Icon">
-                    <p class="font-semibold">Log out</p>
+                    <p class="font-semibold">Keluar</p>
                 </a>
             </li>
         </ul>

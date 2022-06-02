@@ -15,7 +15,6 @@ $dotenv->load();
 // End For JwT
 
 
-
 if ( $user->is_loggedIn() ) {
     Redirect::to('account-settings');
 }
@@ -36,20 +35,20 @@ if ($_GET['email']) {
     
                 $user->delete_user('user_token', 'user_email', $user_token['user_email']);
     
-                Session::flash("login", $user_token['user_email'] . " Has been activated! Please login.");
+                Session::flash("login", "Email" . $user_token['user_email'] . " telah di verifikasi, Silahkan masuk.!");
     
             } else {
                 $user->delete_user('user', 'user_email', $user_token['user_email']);
                 $user->delete_user('user_token', 'user_email', $user_token['user_email']);
-                Session::flash("login", "Account activation failed! Token expired.");
+                Session::flash("login", "Akun gagal di verifikasi! Token Kedaluwarsa.");
             }
         } else {
-            Session::flash("login", "Account activation failed! Wrong token.");
+            Session::flash("login", "Akun gagal di verifikasi! Token salah.");
         }
         
     } else {
     
-       Session::flash("login", "Account activation failed! Wrong email.");
+       Session::flash("login", "Akun gagal di verifikasi! Email salah.");
     
     }
 }
