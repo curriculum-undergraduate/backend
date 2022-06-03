@@ -50,13 +50,20 @@
                     </a>
                 </li> 
                 <li>
-                    <a href="https://schedule.lumintulogic.com/"
+                    <a href="https://schedule.lumintulogic.com/auth.php?token=<?= ($_SESSION['jwt']); ?>&expiry=<?= $_SESSION["expiry"]; ?>"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Jadwal</p>
                     </a>
                 </li>      
                 <?php elseif (!$user->is_mentor(Session::get('email')) && !$user->is_admin(Session::get('email'))): ?>
+                <li>
+                    <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>"
+                        class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
+                        <img class="w-5" src="assets/icons/course_icon.svg" alt="Dashboard Icon">
+                        <p class="font-semibold">Materi</p>
+                    </a>
+                </li>
                 <li>
                     <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
@@ -80,7 +87,7 @@
                     </a>
                 </li> 
                 <li>
-                    <a href="https://schedule.lumintulogic.com/"
+                    <a href="https://schedule.lumintulogic.com/auth.php?token=<?= ($_SESSION['jwt']); ?>&expiry=<?= $_SESSION["expiry"]; ?>"
                         class="flex items-center gap-x-4 h-[50px] rounded-xl px-4 hover:bg-cream text-dark-green hover:text-white">
                         <img class="w-5" src="assets/icons/schedule_icon.svg" alt="Dashboard Icon">
                         <p class="font-semibold">Jadwal</p>

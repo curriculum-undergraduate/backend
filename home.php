@@ -109,7 +109,7 @@ $user_data = $user->get_data( Session::get('email') );
               <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index">
                 <div class="p-6">
                   <br>
-                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">My Classroom</h1>
+                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Penugasan</h1>
                   <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
                     microdosing tousled waistcoat.</p>
                   <div class="flex items-center flex-wrap ">
@@ -140,13 +140,13 @@ $user_data = $user->get_data( Session::get('email') );
           </div>
           <div class="p-4 md:w-1/3" id="bantu3">
             <div class="h-full rounded-xl bg-white overflow-hidden">
-              <a href="https://schedule.lumintulogic.com/">
+              <a href="https://schedule.lumintulogic.com/auth.php?token=<?= ($_SESSION['jwt']); ?>&expiry=<?= $_SESSION["expiry"]; ?>">
                 <img
                   class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
                   src="https://images.unsplash.com/photo-1653299832314-5d3dc1e5a83c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1854"
                   alt="blog">
               </a>
-              <a href="https://schedule.lumintulogic.com/">
+              <a href="https://schedule.lumintulogic.com/auth.php?token=<?= ($_SESSION['jwt']); ?>&expiry=<?= $_SESSION["expiry"]; ?>">
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Jadwal</h1>
@@ -158,6 +158,7 @@ $user_data = $user->get_data( Session::get('email') );
               </a>
             </div>
           </div>
+          <?php if (!$user->is_mentor(Session::get('email')) && !$user->is_admin(Session::get('email'))): ?>
           <div class="p-4 md:w-1/3" id="bantu4">
             <div class="h-full rounded-xl bg-white overflow-hidden">
               <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
@@ -169,7 +170,7 @@ $user_data = $user->get_data( Session::get('email') );
               <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
                 <div class="p-6">
                   <br>
-                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Penugasan</h1>
+                  <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Materi</h1>
                   <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
                     microdosing tousled waistcoat.</p>
                   <div class="flex items-center flex-wrap ">
@@ -178,6 +179,7 @@ $user_data = $user->get_data( Session::get('email') );
               </a>
             </div>
           </div>
+          <?php endif; ?>
         </div>
       </div>
     </section>

@@ -59,6 +59,10 @@ class User {
 
     }
 
+    public function get_user() {
+        return $this->_db->get_info('', '', '', '', '');
+    }
+
     public function get_batchs($batch_id) {
              
         $fields = array('batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date');
