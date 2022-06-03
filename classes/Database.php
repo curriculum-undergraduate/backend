@@ -193,7 +193,16 @@ class Database
         // Jika $role pada fungsi diisi saat fungsi dipanggil, maka kondisi akan dijalankan.
         else if ($role != '') {
 
-            $query = "SELECT * FROM user JOIN role ON user.role_id = role.role_id WHERE role.role_name LIKE '$role' ";
+            // Get Values
+            $valueArrays = array();
+            $i = 0;
+            foreach ($fields as $key => $values) {
+                $valueArrays[$i] = $key;
+                $i++;
+            }
+            $row = implode(", ", $valueArrays); 
+
+            $query = "SELECT $row FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id) WHERE role.role_name = '$role' GROUP BY user.user_id DESC";
 
             $result = $this->mysqli->query($query);
 
@@ -217,7 +226,7 @@ class Database
             }
             $row = implode(", ", $valueArrays);   
             
-            $query = "SELECT $row FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id)";
+            $query = "SELECT $row FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id) GROUP BY user.user_id DESC";
                 
             // query untuk pagination : SELECT * FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id) ORDER BY user.user_id DESC LIMIT 1, 8;
             $result = $this->mysqli->query($query);
