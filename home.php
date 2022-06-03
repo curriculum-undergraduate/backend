@@ -50,7 +50,7 @@ $user_data = $user->get_data( Session::get('email') );
 
     <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800">
       <div class="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="https://flowbite.com" class="flex items-center">
+        <a href="https://account.lumintulogic.com/home.php" class="flex items-center">
           <img src="assets/logo/logo_lumintu.png" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo">
         </a>
         <button data-collapse-toggle="mobile-menu" type="button"

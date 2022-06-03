@@ -244,6 +244,9 @@ class Database
 
     public function get_users_batch($role_id)
     {
+        // TODO: GANTI LIKE ke =, kalo like berarti batch dengan angka 3 akan muncul juga.
+        // TODO: Join dengan Role lagi.
+        // SELECT * FROM batch JOIN user ON batch.batch_id = user.batch_id WHERE batch.batch_id = 3; 
         $query = "SELECT user_id, role_id, user.batch_id, user_email, user_username, user_first_name, user_last_name, user_dob, user_address, user_gender, user_phone, user_status, batch_name, batch_start_date, batch_end_date FROM user JOIN batch ON user.batch_id = batch.batch_id WHERE batch.batch_id LIKE $role_id";
         // die($query);
         $result = $this->mysqli->query($query);
