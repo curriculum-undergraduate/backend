@@ -194,16 +194,16 @@ $user_data = $user->get_data( Session::get('email') );
             <div class="flex flex-col mt-8 mb-16">
                 <?php $filter = $_GET['role'] ?>
                 <div class="inline-flex rounded-md shadow-sm mb-1">
-                    <a id="all" href="users.php" class="py-2 px-4 text-sm font-medium <?php if (!$filter): ?> text-blue-700 <?php endif; ?> bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="all" href="users.php" class="py-2 px-4 text-sm font-medium <?php if (!$filter): ?> text-blue-700 <?php endif; ?> bg-white rounded-l-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                         All
                     </a>
-                    <a id="student" href="users.php?role=student" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'student'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="student" href="users.php?role=student" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'student'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                         Student
                     </a>
-                    <a id="lecturer" href="users.php?role=lecture" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'lecture'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="lecturer" href="users.php?role=lecture" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'lecture'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                         Lecture
                     </a>
-                    <a id="admin" href="users.php?role=admin" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'admin'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-blue-500 dark:focus:text-white">
+                    <a id="admin" href="users.php?role=admin" class="py-2 px-4 text-sm font-medium <?php if ($filter == 'admin'): ?> text-blue-700 <?php else: ?> text-gray-900 <?php endif; ?> bg-white rounded-r-md border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700">
                         Admin
                     </a>
                 </div>

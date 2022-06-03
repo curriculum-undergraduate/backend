@@ -158,32 +158,48 @@ $user_data = $user->get_data( Session::get('email') );
             </div>
 
             <!-- card user -->
-            <div class="sm:flex flex-wrap text-center items-center gap-8">
-                <div id="tabuser"
-                    class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="users.php">
-                        <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
-                    </a>
-                    <div class="p-5">
-                        <a href="users.php">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">USER</h5>
-                        </a>
+            <div class="flex flex-wrap -m-4">
+                <div class="p-4 md:w-1/3" id="tabuser">
+                <div class="h-full rounded-xl bg-white overflow-hidden">
+                <a href="users.php">
+                    <img
+                    class="lg:h-48 md:h-36 w-full object-top pt-5 scale-110 transition-all duration-400 hover:scale-100"
+                    src="assets/img/Consulting-rafiki(1).svg"
+                    alt="blog">
+                </a>
+                <a href="users.php">
+                    <div class="p-6">
+                    <br>
+                    <h1 class="title-font text-lg font-medium text-gray-600 mb-3">User</h1>
+                    <p class="leading-relaxed mb-3">Melihat daftar data user.</p>
+                    <div class="flex items-center flex-wrap ">
                     </div>
-                </div>
-
-                <!-- card batch -->
-                <div id="tabbatch"
-                    class="max-w-sm bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700">
-                    <a href="batch.php">
-                        <img class="rounded-t-lg" src="assets/img/background.jpg" alt="" />
-                    </a>
-                    <div class="p-5" >
-                        <a href="batch.php">
-                            <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">BATCH</h5>
-                        </a>
                     </div>
+                </a>
                 </div>
             </div>
+
+            <!-- card batch -->
+            <div class="p-4 md:w-1/3" id="tabbatch">
+                <div class="h-full rounded-xl bg-white overflow-hidden">
+                <a href="batch.php">
+                    <img
+                    class="lg:h-48 md:h-36 w-full object-top pt-5 scale-110 transition-all duration-400 hover:scale-100"
+                    src="assets/img/Add tasks-pana.svg"
+                    alt="blog">
+                </a>
+                <a href="batch.php">
+                    <div class="p-6">
+                    <br>
+                    <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Batch</h1>
+                    <p class="leading-relaxed mb-3">Melihat daftar data batch.</p>
+                    <div class="flex items-center flex-wrap ">
+                    </div>
+                    </div>
+                </a>
+                </div>
+            </div>
+        </div>
 
             <script src="https://unpkg.com/flowbite@1.4.1/dist/flowbite.js"></script>
             <script defer src="https://unpkg.com/alpinejs@3.2.4/dist/cdn.min.js"></script>

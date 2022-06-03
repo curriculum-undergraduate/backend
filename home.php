@@ -96,14 +96,14 @@ $user_data = $user->get_data( Session::get('email') );
 
     <!-- component -->
     <section class="text-gray-600 body-font bg-slate-100">
-      <div class="container px-5 py-24 mx-auto bg-slate-100">
+      <div class="container px-16 py-20 mx-auto bg-slate-100">
         <div class="flex flex-wrap -m-4">
-          <div class="p-4 md:w-1/3" id="bantu1">
+          <div class="p-4 md:w-1/4" id="bantu1">
             <div class="h-full rounded-xl bg-white overflow-hidden">
             <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index">
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
-                  src="https://images.unsplash.com/photo-1618172193622-ae2d025f4032?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1064&q=80"
+                  class="lg:h-48 md:h-36 w-full object-top scale-100 transition-all duration-400 hover:scale-90"
+                  src="assets/img/Add tasks-pana.svg"
                   alt="blog">
               </a>
               <a href="https://assignment.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>&page=index">
@@ -117,12 +117,12 @@ $user_data = $user->get_data( Session::get('email') );
               </a>
             </div>
           </div>
-          <div class="p-4 md:w-1/3" id="bantu2">
+          <div class="p-4 md:w-1/4" id="bantu2">
             <div class="h-full rounded-xl bg-white overflow-hidden">
               <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>">
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
-                  src="https://images.unsplash.com/photo-1652598113005-a75ff204263b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1332&q=80"
+                  class="lg:h-48 md:h-36 w-full object-center scale-110 transition-all duration-400 hover:scale-100"
+                  src="assets/img/Consulting-rafiki(1).svg"
                   alt="blog">
               </a>
               <a href="https://consultation.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt']; ?>&expiry=<?= $_SESSION['expiry']; ?>">
@@ -136,19 +136,19 @@ $user_data = $user->get_data( Session::get('email') );
               </a>
             </div>
           </div>
-          <div class="p-4 md:w-1/3" id="bantu3">
+          <div class="p-4 md:w-1/4" id="bantu3">
             <div class="h-full rounded-xl bg-white overflow-hidden">
               <a href="https://schedule.lumintulogic.com/auth.php?token=<?= ($_SESSION['jwt']); ?>&expiry=<?= $_SESSION["expiry"]; ?>">
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
-                  src="https://images.unsplash.com/photo-1653299832314-5d3dc1e5a83c?crop=entropy&cs=tinysrgb&fm=jpg&ixlib=rb-1.2.1&q=80&raw_url=true&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1854"
+                  class="lg:h-48 md:h-36 w-full object-center scale-110 transition-all duration-400 hover:scale-100"
+                  src="assets/img/Calendar-cuate(1).svg"
                   alt="blog">
               </a>
               <a href="https://schedule.lumintulogic.com/auth.php?token=<?= ($_SESSION['jwt']); ?>&expiry=<?= $_SESSION["expiry"]; ?>">
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Jadwal</h1>
-                  <p class="leading-relaxed mb-3">Daftar tabel kegiatan dengan pembagian waktu pelaksanaan.</p>
+                  <p class="leading-relaxed mb-3">Daftar tabel kegiatan dengan pembagian waktu pelaksaan.</p>
                   <div class="flex items-center flex-wrap ">
                   </div>
                 </div>
@@ -156,19 +156,19 @@ $user_data = $user->get_data( Session::get('email') );
             </div>
           </div>
           <?php if (!$user->is_mentor(Session::get('email')) && !$user->is_admin(Session::get('email'))): ?>
-          <div class="p-4 md:w-1/3" id="bantu4">
+          <div class="p-4 md:w-1/4" id="bantu4">
             <div class="h-full rounded-xl bg-white overflow-hidden">
               <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
                 <img
-                  class="lg:h-48 md:h-36 w-full object-cover object-center scale-110 transition-all duration-400 hover:scale-100"
-                  src="https://images.unsplash.com/photo-1646898157740-ffc540df3adb?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=290&q=80"
+                  class="lg:h-48 md:h-36 w-full object-center scale-110 transition-all duration-400 hover:scale-100"
+                  src="assets/img/Consulting-bro.svg"
                   alt="blog">
               </a>
               <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Materi</h1>
-                  <p class="leading-relaxed mb-3">Sesuatu yang menjadi bahan (untuk dipikirkan, bicarakan, dan sebagainya).</p>
+                  <p class="leading-relaxed mb-3">Sesuatu yang menjadi bahan (untuk dipikirkan, bicarakan, dan sebagainya)</p>
                   <div class="flex items-center flex-wrap ">
                   </div>
                 </div>
