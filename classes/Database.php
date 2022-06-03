@@ -204,11 +204,22 @@ class Database
 
             return $results;
 
-        }
-
+        } 
         // Jika tidak ada parameter pada fungsi saat fungsi dipanggil, maka kondisi akan dijalankan.
-        else {                        
-            $query = "SELECT * FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id)";
+        else {          
+
+            // Get Values
+            $valueArrays = array();
+            $i = 0;
+            foreach ($fields as $key => $values) {
+                $valueArrays[$i] = $key;
+                $i++;
+            }
+            $row = implode(", ", $valueArrays);   
+            
+            $query = "SELECT $row FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id)";
+                
+            // query untuk pagination : SELECT * FROM user LEFT JOIN batch USING(batch_id) JOIN role USING(role_id) ORDER BY user.user_id DESC LIMIT 1, 8;
             $result = $this->mysqli->query($query);
 
             // Menampilkan data dalam tipe array_associatipe
@@ -217,6 +228,7 @@ class Database
             }
 
             return $results;
+
         }
 
     }

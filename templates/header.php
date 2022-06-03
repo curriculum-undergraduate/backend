@@ -9,3 +9,10 @@
     <link href="assets/css/loader.css" rel="stylesheet" /> <!-- File Loader CSS -->
     <link href="assets/css/style.css" rel="stylesheet" /> <!-- File Style CSS -->
     <title><?php echo $title_page ?> | Lumintu Classsroom</title>
+    <meta property="og:locale" content="id_ID" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Lumintu Logic" />
+    <meta property="og:description" content="We Are Lumintu’s Stack " />
+    <meta property="og:url" content="https://lms.lumintulogic.com/" />
+    <meta property="og:site_name" content="Lumintu Learning" />
+    <meta property="og:image" content="https://account.lumintulogic.com/assets/img/logo.png" />

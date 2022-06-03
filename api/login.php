@@ -45,7 +45,7 @@ if ($user->check_email($email)) {
   if ($user->login_user($email, $password)) {
     // TODO: Memasukan Token ke Session saat Login
 
-    // Menghitung waktu kadaluarsa token. Dalam kasus ini akan terjadi setelah 15 menit
+    // Menghitung waktu kadaluarsa token. Dalam kasus ini akan terjadi setelah 60 menit
     $expired_time = time() + (60 * 60);
 
     // Buat payload dan access token

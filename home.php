@@ -110,8 +110,7 @@ $user_data = $user->get_data( Session::get('email') );
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Penugasan</h1>
-                  <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
-                    microdosing tousled waistcoat.</p>
+                  <p class="leading-relaxed mb-3">Tugas yang ditentukan untuk dilakukan.</p>
                   <div class="flex items-center flex-wrap ">
                   </div>
                 </div>
@@ -130,8 +129,7 @@ $user_data = $user->get_data( Session::get('email') );
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Konsultasi</h1>
-                  <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
-                    microdosing tousled waistcoat.</p>
+                  <p class="leading-relaxed mb-3">Pertukaran pikiran untuk mendapatkan kesimpulan.</p>
                   <div class="flex items-center flex-wrap ">
                   </div>
                 </div>
@@ -150,8 +148,7 @@ $user_data = $user->get_data( Session::get('email') );
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Jadwal</h1>
-                  <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
-                    microdosing tousled waistcoat.</p>
+                  <p class="leading-relaxed mb-3">Daftar tabel kegiatan dengan pembagian waktu pelaksanaan.</p>
                   <div class="flex items-center flex-wrap ">
                   </div>
                 </div>
@@ -171,8 +168,7 @@ $user_data = $user->get_data( Session::get('email') );
                 <div class="p-6">
                   <br>
                   <h1 class="title-font text-lg font-medium text-gray-600 mb-3">Materi</h1>
-                  <p class="leading-relaxed mb-3">Photo booth fam kinfolk cold-pressed sriracha leggings jianbing
-                    microdosing tousled waistcoat.</p>
+                  <p class="leading-relaxed mb-3">Sesuatu yang menjadi bahan (untuk dipikirkan, bicarakan, dan sebagainya).</p>
                   <div class="flex items-center flex-wrap ">
                   </div>
                 </div>
