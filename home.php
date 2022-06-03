@@ -155,7 +155,7 @@ $user_data = $user->get_data( Session::get('email') );
               </a>
             </div>
           </div>
-          <?php if (!$user->is_mentor(Session::get('email')) && !$user->is_admin(Session::get('email'))): ?>
+          <?php if ($user->is_mentor(Session::get('email'))): ?>
           <div class="p-4 md:w-1/4" id="bantu4">
             <div class="h-full rounded-xl bg-white overflow-hidden">
               <a href="https://lessons.lumintulogic.com/auth.php?token=<?= $_SESSION['jwt'] ?>&expiry=<?php echo $_SESSION['expiry'] ?>">
