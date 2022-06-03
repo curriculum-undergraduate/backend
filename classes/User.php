@@ -99,13 +99,13 @@ class User
 
     public function get_users() {
         // NEW
-        $fields = array('user_email' => 'user_email', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date', 'role_name' => 'role_name');
+        $fields = array('user_email' => 'user_email', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date', 'role_name' => 'role_name', 'date_created' => 'date_created');
         return $this->_db->get_info($fields, '', '', '', '');
     }
 
     public function get_users_role($role) {
         // NEW
-        $fields = array('user_email' => 'user_email', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date', 'role_name' => 'role_name');
+        $fields = array('user_email' => 'user_email', 'user_username' => 'user_username', 'user_first_name' => 'user_first_name', 'user_last_name' => 'user_last_name', 'user_status' => 'user_status', 'user_dob' => 'user_dob', 'user_phone' => 'user_phone', 'user_address' => 'user_address', 'user_profile_picture' => 'user_profile_picture','role_id' => 'role_id', 'batch_id' => 'batch_id', 'batch_name' => 'batch_name', 'batch_start_date' => 'batch_start_date', 'batch_end_date' => 'batch_end_date', 'role_name' => 'role_name', 'date_created' => 'date_created');
         return $this->_db->get_info($fields, '', '', '', $role);
 
     }

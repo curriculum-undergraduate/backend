@@ -82,6 +82,7 @@ if ( isset($_POST['submit']) ) {
                     'user_username' => $_POST['username'],
                     'user_email' => $_POST['email'],
                     'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT), // Hash password yang di input user
+                    'date_created' => time()
                 ));
 
                 /* Memanggil fungsi send_mail() dan Menyimpan data sementara user, 

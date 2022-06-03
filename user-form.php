@@ -101,6 +101,7 @@ if ( isset($_POST['submit']) ) {
                     'user_password' => password_hash($_POST['password'], PASSWORD_BCRYPT),
                     'role_id' => (int)$role,
                     'batch_id' => (int)$batch,
+                    'date_created' => time()
                 ), $_POST['email']);
 
                 $user->verifikasi_account(array(

@@ -235,6 +235,9 @@ $user_data = $user->get_data( Session::get('email') );
                                     <th
                                         class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                         Batch</th>
+                                    <th
+                                        class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
+                                        Terdaftar</th>
                                     <?php if ($user->is_admin(Session::get('email'))) : ?>
                                     <th
                                         class="px-6 py-3 text-left text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
@@ -305,6 +308,11 @@ $user_data = $user->get_data( Session::get('email') );
                                             <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                 <div class="text-sm leading-5 text-gray-500">
                                                     <?php echo $_user['batch_name'] ?>
+                                                </div>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                <div class="text-sm leading-5 text-gray-500">
+                                                    <?php echo date("Y-m-d H:i:s", substr($_user['date_created'], 0, 10)) ?>
                                                 </div>
                                             </td>
 
