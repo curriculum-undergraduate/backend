@@ -61,6 +61,7 @@ try {
         
     // }
     $users = $user->get_user();
+    print_r($users);
     echo json_encode([
         'success' => true,
         "data" => $users,

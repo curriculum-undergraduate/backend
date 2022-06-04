@@ -13,7 +13,7 @@ if (!$user->is_admin(Session::get('email')) && !$user->is_mentor(Session::get('e
     Redirect::to('403');
 }
 
-if ( $_GET['role'] ) {
+if ($_GET) {
     $users = $user->get_users_role( $_GET['role'] );
 } else {
     $users = $user->get_users();

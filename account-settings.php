@@ -341,6 +341,7 @@ if ( isset($_POST['submit']) ) {
                                                 class="block mb-2 text-sm font-medium text-gray-900">Jenis kelamin</label>
                                             <select id="countries" name="gender"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
+                                                <!-- TODO: User gender problem *check log* -->
                                                 <?php if ($user_data['user_gender'] == "Laki-laki") : ?>
                                                 <option value="Laki-laki">
                                                     <?php echo $user_data['user_gender'] ?>

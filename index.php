@@ -22,21 +22,18 @@ if ( $user->is_loggedIn() ) {
 $errors = array();
 
 // Process Check Email Verifikasi
-if ($_GET['email']) {
+if ($_GET) {
+
     if ($user->check_email($_GET['email'])) {
         if ($user->check_token($_GET['token'])) {
             $user_token = $user->get_data_token($_GET['token']);
             if  (time() - $user_token['date_created'] < (60*60*24)) {
-    
-                $status = 'verified';
-                $user->update_user(array(
-                    'user_status' => $status
-                ), $user_token['user_email'] );
-    
-                $user->delete_user('user_token', 'user_email', $user_token['user_email']);
-    
-                Session::flash("login", "Email " . $user_token['user_email'] . " telah di verifikasi, Silahkan masuk.!");
-    
+                    $status = 'verified';
+                    $user->update_user(array(
+                        'user_status' => $status
+                    ), $user_token['user_email'] );            
+                $user->delete_user('user_token', 'user_email', $user_token['user_email']);            
+                    Session::flash("login", "Email " . $user_token['user_email'] . " telah di verifikasi, Silahkan masuk.!");    
             } else {
                 $user->delete_user('user', 'user_email', $user_token['user_email']);
                 $user->delete_user('user_token', 'user_email', $user_token['user_email']);
@@ -44,13 +41,11 @@ if ($_GET['email']) {
             }
         } else {
             Session::flash("login", "Akun gagal di verifikasi! Token salah.");
-        }
-        
-    } else {
-    
-       Session::flash("login", "Akun gagal di verifikasi! Email salah.");
-    
+        }    
+    } else {     
+        Session::flash("login", "Akun gagal di verifikasi! Email salah.");
     }
+
 }
 
 if ( isset($_POST['submit']) ) {

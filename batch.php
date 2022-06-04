@@ -221,9 +221,9 @@ $batch_data = $batch->get_batch();
                                 <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                                     End date</th>
-                                <th
+                                <!-- <th
                                     class="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                                    Status</th>
+                                    Status</th> -->
                                 <?php if ($user->is_admin(Session::get('email'))) : ?>
                                 <th
                                     class="px-6 py-3 text-left text-xs font-medium leading-4 tracking-wider text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
@@ -265,19 +265,20 @@ $batch_data = $batch->get_batch();
                                             </div>
                                         </td>
 
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            <?php if ($_batch['batch_status'] == 'Active'): ?>
+                                        <!-- TODO: Tambahkan column batch status -->
+                                        <!-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            <?//php if ($_batch['batch_status'] == 'Active'): ?>
                                                 <span
                                                     class="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                                                    <?php echo $_batch['batch_status'] ?>
+                                                    <?//php echo $_batch['batch_status'] ?>
                                                 </span>
-                                            <?php else: ?>
+                                            <?//php else: ?>
                                                 <span
                                                     class="inline-flex px-2 text-xs font-semibold leading-5 text-red-800 bg-red-100 rounded-full">
-                                                    <?php echo $_batch['batch_status'] ?>
+                                                    <?//php echo $_batch['batch_status'] ?>
                                                 </span>
-                                            <?php endif; ?>
-                                        </td>
+                                            <?//php endif; ?>
+                                        </td> -->
 
                                         <?php if ($user->is_admin(Session::get('email'))) : ?>
                                             <td>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.3/dist/flowbite.min.css" />
     <link href="assets/css/loader.css" rel="stylesheet" /> <!-- File Loader CSS -->
     <link href="assets/css/style.css" rel="stylesheet" /> <!-- File Style CSS -->
-    <title><?php echo $title_page ?> | Lumintu Classsroom</title>
+    <title><?php echo $title_page ?> | Lumintu Learning</title>
     <meta property="og:locale" content="id_ID" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Lumintu Logic" />
