@@ -259,7 +259,7 @@ if ( isset($_POST['submit']) ) {
             <div>
                 <ul class="flex items-center gap-x-4">
                     <li>
-                        <a class="text-light-green text-2xl" href="#">Profile</a>
+                        <a class="text-light-green text-2xl" href="#">Profil user</a>
                     </li>
                 </ul>
             </div>
@@ -288,10 +288,10 @@ if ( isset($_POST['submit']) ) {
                         <div class="mb-4 border-b border-gray-200">
                             <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="myTab" data-tabs-toggle="#myTabContent" role="tablist">
                                 <li class="mr-2" role="presentation">
-                                    <button class="inline-block p-4 rounded-t-lg border-b-2" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+                                    <button class="inline-block p-4 rounded-t-lg border-b-2" id="profile-tab" data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profil</button>
                                 </li>
                                 <li class="mr-2 setting" role="presentation">
-                                    <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Settings</button>
+                                    <button class="inline-block p-4 rounded-t-lg border-b-2 border-transparent hover:text-gray-600 hover:border-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Pengaturan</button>
                                 </li>
                             </ul>
                         </div>
@@ -339,22 +339,18 @@ if ( isset($_POST['submit']) ) {
                                         <div class="mb-6">
                                             <label for="gender"
                                                 class="block mb-2 text-sm font-medium text-gray-900">Jenis kelamin</label>
-                                            <select id="countries" name="gender"
+                                            <select id="gender" name="gender"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
                                                 <!-- TODO: User gender problem *check log* -->
                                                 <?php if ($user_data['user_gender'] == "Laki-laki") : ?>
-                                                <option value="Laki-laki">
-                                                    <?php echo $user_data['user_gender'] ?>
-                                                </option>
-                                                <option value="Perempuan">Perempuan</option>
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
                                                 <?php elseif ($user_data['user_gender'] == "Perempuan") : ?>
-                                                <option value="Perempuan">
-                                                    <?php echo $user_data['user_gender'] ?>
-                                                </option>
-                                                <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
+                                                    <option value="Laki-laki">Laki-laki</option>
                                                 <?php else : ?>
-                                                <option value="Laki-laki">Laki-laki</option>
-                                                <option value="Perempuan">Perempuan</option>
+                                                    <option value="Laki-laki">Laki-laki</option>
+                                                    <option value="Perempuan">Perempuan</option>
                                                 <?php endif; ?>
                                             </select>
                                         </div>

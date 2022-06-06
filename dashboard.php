@@ -30,6 +30,8 @@ require_once 'core/init.php';
 //     }
 // }
 
+// var_dump($user->get_data('student01@lumintu.com'));
+
 
 if (!$user->is_loggedIn()) {
     Session::flash('login', 'Anda harus login terlebih dahulu');
