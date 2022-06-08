@@ -214,6 +214,7 @@ class Database
             return $results;
 
         } 
+
         // Jika tidak ada parameter pada fungsi saat fungsi dipanggil, maka kondisi akan dijalankan.
         else {          
 

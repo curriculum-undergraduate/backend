@@ -126,6 +126,7 @@ class User
         else
             return "Info user tidak ditemukan";
     }
+    
 
     public function get_data_token($token) {
         

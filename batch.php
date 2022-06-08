@@ -185,11 +185,11 @@ $batch_data = $batch->get_batch();
 
         <?php } ?>
 
-        <?php if ($user->is_admin(Session::get('email'))) : ?>
-            <!-- Topic Title -->
-            <div class="flex items-center gap-x-4 justify-between">
-                <p class="text-xl text-dark-green font-semibold">Informasi Batch</p>
+        <!-- Topic Title -->
+        <div class="flex items-center gap-x-4 justify-between">
+            <p class="text-xl text-dark-green font-semibold">Informasi Batch</p>
 
+            <?php if ($user->is_admin(Session::get('email'))) : ?>
                 <a id="adduser" href="batch-form.php" type="button" 
                     class="text-[#bd9161] bg-gray-50 hover:bg-[#bd9161] border border-[#bd9161] hover:text-white focus:ring-4 focus:outline-none focus:ring-[#DDB07F] font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2">
                     <svg class="w-5 h-4 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"
@@ -199,8 +199,8 @@ $batch_data = $batch->get_batch();
                     </svg>
                     Tambah Batch
                 </a>
-            </div>
-        <?php endif;?>
+            <?php endif;?>
+        </div>
 
         <div class="flex flex-col mt-8 mb-16">
             <div class="py-2 -my-2 overflow-x-auto sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
